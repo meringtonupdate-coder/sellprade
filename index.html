@@ -154,6 +154,26 @@ html[data-compact="1"] .card{padding:11px}html[data-compact="1"] .it{padding:6px
 .tiny{font-size:.66rem;color:var(--mu)}
 .mono{font-family:ui-monospace,monospace}
 
+/* V7 · colored navigation, status tags, search, progress */
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--dot,var(--p));box-shadow:0 0 0 3px color-mix(in srgb,var(--dot,var(--p)) 18%,transparent);vertical-align:middle;flex-shrink:0}
+.tab .dot{margin-right:6px;vertical-align:1px}
+.shitem .dot{margin:0 3px}
+.icdot{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--dot,var(--p)) 13%,var(--c2));border:1px solid color-mix(in srgb,var(--dot,var(--p)) 26%,transparent);flex-shrink:0}
+.icdot .dot{width:11px;height:11px;box-shadow:0 0 0 3px color-mix(in srgb,var(--dot,var(--p)) 20%,transparent)}
+.tagline{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.bar{height:8px;border-radius:99px;background:var(--c2);overflow:hidden;margin:7px 0}
+.bar>i{display:block;height:100%;background:var(--grad);border-radius:99px;transition:width .35s}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sgrid .fl{margin-bottom:0}
+.alpha{display:flex;flex-wrap:wrap;gap:6px}
+.alet{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:44px;padding:7px 4px;border:1px solid var(--bd);border-radius:11px;background:color-mix(in srgb,var(--c2) 60%,transparent);cursor:default}
+.alet b{font-size:.9rem;line-height:1;font-weight:800}
+.alet small{font-size:.58rem;color:var(--mu);line-height:1}
+.alet.var{border-color:color-mix(in srgb,var(--p) 38%,transparent);background:color-mix(in srgb,var(--p) 10%,transparent)}
+.sres{display:flex;flex-direction:column;gap:6px}
+.passbox{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;padding:8px 10px;border:1px dashed var(--bd);border-radius:10px;background:var(--bg)}
+.passbox code{font-family:ui-monospace,monospace;font-size:.76rem;word-break:break-all}
+
 /* ==========================================================================
    PREMIUM LAYER — refined palette, five accent families, depth & motion
    ========================================================================== */
@@ -415,11 +435,12 @@ const vPass=s=>!s||s.length<6||s.length>72?'Clavis: 6–72 signa':/\s/.test(s)?'
 
 /* ---------- state ---------- */
 const TABS=[
-  ['holb','Holb','🏠'],['seg','Segnalи','🔔'],['bank','Sellprade','💳'],['prad','Pradи','🛒'],
-  ['labor','Labor','🛠'],['caten','Caten','🏛'],['chat','Chatи','💬'],['jur','Juriės','🗣'],
-  ['news','Tvordzhи','📰'],['vlada','Vlada','⚖'],['quaere','Quaere','🔎'],['help','Haiess','🆘'],
-  ['ust','Ustroy','⚙'],['root','ROOT','🛡']
+  ['holb','Holb','#8aa4ff'],['seg','Segnalи','#fb7185'],['bank','Sellprade','#34d399'],['prad','Pradи','#fbbf24'],
+  ['caten','Caten','#b07bff'],['chat','Chatи','#22d3ee'],['jur','Juriės','#f472b6'],['news','Tvordzhи','#e8c37a'],
+  ['vlada','Vlada','#a3e635'],['quaere','Quaere','#94a3b8'],['help','Haiess','#fb923c'],
+  ['ust','Ustroy','#8b98b8'],['root','ROOT','#ff5c7c']
 ];
+const NAVCOLOR=Object.fromEntries(TABS.map(t=>[t[0],t[2]]));
 const FREE=['holb','seg','chat','ust','help'];
 const ACCENTS=[
   ['royal','Royal','#8aa4ff','#b07bff'],
@@ -430,22 +451,28 @@ const ACCENTS=[
 ];
 const STATUS_LABEL={neophyte:'Neophytus',civis:'Civis',abrodie:'Abrodié',exsul:'Exsul'};
 const STATUS_CLASS={neophyte:'wn',civis:'ok',abrodie:'ad',exsul:'er'};
+const TAG_LABEL={pisach:'Pisach',legislator:'Legislator',support:'Support'};
+const TAG_CLASS={pisach:'pp2',legislator:'ad',support:'ok'};
 const UI={
   tab:'holb', bsub:'ledger', bF:'all', bQ:'', open:new Set(),
   pcat:'Omnes', mk:'nundinae', mkQ:'',
+  catQ:'', catTab:'all',
   jcat:'Omnes', jq:'', jsort:'new', th:null,
-  nwOpen:null, vsub:'sinedra',
+  nwOpen:null, nwCat:'Omnes', nwQ:'', nwSub:false,
+  vsub:'sinedra', lawKind:'all', lawQ:'',
   chat:null, grp:null, csub:'dm', chQ:'',
   ticket:null, tkF:'all', faq:null, q:'',
+  sq:'', sk:'', sc:'', sfrom:'', sto:'', ssort:'new', smin:'', smax:'', sres:null, sload:false,
   sheet:false, rootOk:false, rootQ:'', rootP:'all', rootTab:'users',
-  laborTab:'all', catTab:'all', segNew:false,
+  segNew:false,
   hide:localStorage.getItem('app_hide')==='1',
   sound:localStorage.getItem('app_sound')==='1',
   lang:localStorage.getItem('app_lang')||'la',
   theme:localStorage.getItem('app_theme')||'dark',
-  accent:localStorage.getItem('app_accent')||'sunset',
+  accent:localStorage.getItem('app_accent')||'royal',
   compact:localStorage.getItem('app_compact')==='1',
-  authMode:'login', _unread:0, _lastTab:null
+  authMode:'login', _unread:0, _lastTab:null, _msgMax:0, _notifMax:0,
+  _pollTimer:null, _chatTimer:null, _pollBusy:false, _chatBusy:false
 };
 function applyTheme(){
   const h=document.documentElement;
@@ -474,12 +501,18 @@ function left(iso){
 }
 const ini=n=>esc(String(n||'?').slice(0,2).toUpperCase());
 const ava=(u,cls='av')=>`<div class="${cls}">${ini(u&&u.nick)}</div>`;
-const e=(text,icon='')=>`<div class="em"><span class="ic">${icon}</span>${esc(text)}</div>`;
+const dot=c=>`<span class="dot" style="--dot:${c||'var(--p)'}"></span>`;
+const e=(text,color='')=>`<div class="em"><span class="ic">${color?dot(color):''}</span>${esc(text)}</div>`;
 const tag=(text,cls='')=>`<span class="pl ${cls}">${esc(text)}</span>`;
 const bt=(label,act,val='',cls='g sm')=>`<button class="bt ${cls}" data-a="${act}"${val!==''?` data-v="${esc(val)}"`:''}>${label}</button>`;
 const C=(title,body,extra='')=>`<div class="card"><h3>${title}${extra}</h3>${body}</div>`;
 const statusTag=s=>tag(STATUS_LABEL[s]||s,STATUS_CLASS[s]||'');
 const plTag=u=>u&&u.status?statusTag(u.status):'';
+const tagsHtml=u=>{
+  if(!u||!Array.isArray(u.tags)||!u.tags.length)return'';
+  return u.tags.map(t=>tag(TAG_LABEL[t]||t,TAG_CLASS[t]||'')).join('');
+};
+const rankTag=u=>u&&u.rank?tag(u.rank,'pp2'):'';
 const starsHtml=n=>{const k=Math.max(0,Math.min(5,Math.round(+n||0)));return '★'.repeat(k)+'☆'.repeat(5-k);};
 const toTop=()=>window.scrollTo(0,0);
 const nick=n=>`<b>@${esc(n)}</b>`;
@@ -549,15 +582,15 @@ function drawModal(){
 
 /* ---------- i18n: text walker ---------- */
 const UKD={
-'Holb':'Головна','Segnalи':'Сигнали','Sellprade':'Банк','Pradи':'Ринок','Labor':'Праця','Caten':'Компанії','Chatи':'Чати','Juriės':'Форум','Tvordzhи':'Новини','Vlada':'Влада','Quaere':'Пошук','Haiess':'Підтримка','Ustroy':'Налаштування',
-'Respublica Nationalie':'Республіка Національна','Cives':'Громадяни','Aerarium':'Скарбниця','Portorium':'Мито','Stipendium':'Стипендія','Polog':'Статус','Rébnostь':'Ранг','Balans':'Баланс','Novissimi motti':'Останні операції','Actiones celeres':'Швидкі дії','Status civitatis':'Стан держави',
+'Holb':'Головна','Segnalи':'Сигнали','Sellprade':'Банк','Pradи':'Ринок','Caten':'Компанії','Chatи':'Чати','Juriės':'Форум','Tvordzhи':'Новини','Vlada':'Влада','Quaere':'Пошук','Haiess':'Підтримка','Ustroy':'Налаштування',
+'Respublica Nationalie':'Республіка Національна','Cives':'Громадяни','Aerarium':'Скарбниця','Portorium':'Мито','Polog':'Статус','Rang':'Ранг','Rébnostь':'Робота','Balans':'Баланс','Salarium':'Зарплата','Salaria':'Зарплати','Novissimi motti':'Останні операції','Actiones celeres':'Швидкі дії','Status civitatis':'Стан держави',
 'Inscriptio':'Реєстрація','Aditus':'Вхід','Nomen · Klиchka':'Імʼя · Нікнейм','Clavis':'Пароль','Ĵamya':'Імʼя','Pofil':'Прізвище','Intra':'Увійти','Crea Iékzalьzи':'Створити Iékzalьzи','Habes Nomen?':'Вже маєте імʼя?','Nomen novum?':'Нове імʼя?',
 'Profil':'Профіль','Fama':'Репутація','Operationes':'Операції','Sodalitates':'Компанії','Ultimus aditus':'Останній вхід','Muta':'Змінити','Archivum meum':'Мій архів','Lexicon':'Словник','Data':'Дані','Modus':'Режим','Versio':'Версія','Thema':'Тема','Lingua':'Мова','Modus compactus':'Компактний режим','Limites hodierni':'Денні ліміти','Exitus':'Вихід','Serva':'Зберегти','Claude':'Закрити','Dele':'Видалити','Confirma':'Підтвердити','Mitte':'Надіслати','Crea':'Створити','Pone':'Опублікувати',
-'Interfacies':'Інтерфейс','Color':'Колір','Celare Kapol':'Приховати Kapol','Sonus':'Звук','Hodie':'Сьогодні',
+'Interfacies':'Інтерфейс','Color':'Колір','Celare Kapol aliis':'Приховати Kapol від інших','Sonus':'Звук','Hodie':'Сьогодні','Status accessus':'Статуси доступу','Status functionales':'Функціональні статуси','Subscriptiones':'Підписки','Categoriae':'Категорії','Diurnaria':'Новинарні агенції','Instrumenta':'Інструменти',
 'Segnalи':'Сигнали','Omnia lecta':'Усе прочитано','Purga':'Очистити','Nihil novi':'Нічого нового','Omnes':'Усі','Nova':'Нові','Nova':'Нові',
-'Motti':'Операції','Petitiones':'Запити','Sequester':'Ескроу','Pete':'Запросити','Depone':'Покласти','Introitus':'Надходження','Cusio':'Карбування','Mitto':'Переказ','Solve':'Сплатити','Nega':'Відхилити','Abroga':'Скасувати','Trada':'Передав','Libera':'Вивільнити','Custodi':'Заблокувати','Historia':'Історія','Termini':'Терміни',
+'Motti':'Операції','Petitiones':'Запити','Pete':'Запросити','Depone':'Покласти','Introitus':'Надходження','Cusio':'Карбування','Mitto':'Переказ','Solve':'Сплатити','Nega':'Відхилити','Abroga':'Скасувати','Historia':'Історія','Termini':'Терміни',
 'Nundinae':'Торги','Auctiones':'Аукціони','Mea':'Мої','Eme':'Купити','Offero':'Поставити','Renuntia':'Відгук','Lot':'Лот','Pretium':'Ціна','Venditor':'Продавець','Finis':'Кінець','Top':'Топ','Rating':'Рейтинг','Status':'Статус',
-'Opera':'Роботи','Merces':'Оплата','Pete opus':'Відгукнутися','Accipe':'Прийняти','Dimitte':'Відхилити','Candidati':'Кандидати','Candidatus':'Кандидат','Opera desunt':'Робіт немає','Aperta':'Відкриті',
+'Dimitte':'Відхилити','Aperta':'Відкриті',
 'Membra':'Учасники','Conditor':'Засновник','Aerarium sodalitatis':'Каса компанії','Retrahe':'Зняти','Adde membrum':'Додати учасника','Sodalitas':'Компанія','Conditio':'Умова',
 'Directi':'Особисті','Greges':'Групи','Nuntius':'Повідомлення','Nuntius...':'Повідомлення...','Novo chat':'Новий чат','Grex novus':'Нова група','Chat desunt':'Чатів немає','Greges desunt':'Груп немає','Nemo inventum':'Нікого не знайдено',
 'Tema':'Тема','Temata':'Теми','Responsa':'Відповіді','Responsa desunt':'Відповідей немає','Popularia':'Популярні','Commenta':'Коментарі','Commenta desunt':'Коментарів немає','Acta':'Новини','Acta desunt':'Новин немає','Lice':'Вподобати','Licitum':'Вподобано','Commentum':'Коментар','Lege':'Читати',
@@ -596,7 +629,6 @@ const unread=()=>((DB&&DB.notifications)||[]).filter(n=>!n.read).length;
 const myChats=()=>(DB&&DB.chats)||[];
 const myGroups=()=>(DB&&DB.groups)||[];
 const myLots=()=>(DB&&DB.lots)||[];
-const myJobs=()=>(DB&&DB.jobs)||[];
 const myCompanies=()=>(DB&&DB.companies)||[];
 const myTickets=()=>(DB&&DB.tickets)||[];
 const myTopics=()=>(DB&&DB.topics)||[];
@@ -605,17 +637,47 @@ const myCases=()=>(DB&&DB.cases)||[];
 const myLaws=()=>(DB&&DB.laws)||[];
 const myReports=()=>(DB&&DB.reports)||[];
 const myAudit=()=>(DB&&DB.audit)||[];
-const cfg=()=>(DB&&DB.config)||{tax:5,ubi:2};
+const mySalaries=()=>(DB&&DB.salaries)||[];
+const cfg=()=>(DB&&DB.config)||{tax:3,ubi:0};
+function cats(kind){return ((DB&&DB.categories)||[]).filter(c=>c.kind===kind&&c.active).sort((a,b)=>(a.sort-b.sort)||a.name.localeCompare(b.name));}
+function catOpts(kind){return cats(kind).map(c=>({v:c.name,l:c.name}));}
+function catsReady(kind){
+  if(cats(kind).length)return true;
+  toast('Categoriae desunt: pete ab Abrodié','e');return false;
+}
+function isSub(kind,target){
+  return ((DB&&DB.subs)||[]).some(s=>s.kind===kind&&String(s.target)===String(target));
+}
+function hasTag(t){return !!(ME&&Array.isArray(ME.tags)&&ME.tags.includes(t));}
+const isStaff=()=>!!(ME&&(ME.admin||ME.staff||hasTag('support')));
+function agencyCompanies(){
+  return myCompanies().filter(c=>c.status==='active'&&c.agency&&(ME.admin||c.owner===ME.nick||c.members.includes(ME.nick)));
+}
 function rate(n){const a=+(n&&n.avg)||0;return a?('★ '+a.toFixed(2)+' ('+(n.n||0)+')'):'—';}
-const balText=v=>UI.hide?'••••':fm(v)+' h';
+const balText=v=>fm(v)+' h';
+const balOther=v=>v==null?'privatim':fm(v)+' h';
 const rows=arr=>arr.map(([k,v])=>`<div class="rw"><span>${k}</span><b>${v}</b></div>`).join('');
 const todayCount=a=>(DB&&DB.limits&&+DB.limits[a])||0;
 const LIMITS=[
   ['mitto','Transmissiones',30],['forum','Temata fori',10],['reply','Responsa fori',15],
   ['msg','Nuntii chat',300],['lots','Lots novi',5],['bid','Licitationes',60],
-  ['ticket','Zvernennia',5],['tkreply','Responsa Haiess',30],['report','Delationes',5],
-  ['job','Opera posita',5],['jobapply','Candidaturae',10],['law','Leges',3],['case','Causae',2]
+  ['ticket','Zvernennia',3],['tkreply','Responsa Haiess',30],['report','Delationes',10],
+  ['news','Acta publicata',1],['petitio','Petitiones',5],['law','Leges',3],
+  ['case','Causae',2],['nwcm','Commenta actis',40],['search','Quaestiones',2000]
 ];
+function newsCap(){
+  if(ME.admin)return 100;
+  if(agencyCompanies().length)return 10;
+  if(hasTag('pisach'))return 7;
+  return 1;
+}
+function ticketCap(){return isStaff()?10:3;}
+function openCap(){return isStaff()?10:3;}
+function urgentCap(){return isStaff()?3:1;}
+function urgentToday(){
+  const d=new Date();d.setHours(0,0,0,0);
+  return myTickets().filter(t=>t.by===ME.nick&&t.priority==='urgens'&&new Date(t.ts)>=d).length;
+}
 function unreadDM(c){return (c.messages||[]).filter(m=>m.from!==ME.nick&&!m.read).length;}
 function unreadGrp(g){const seen=g.seen?new Date(g.seen).getTime():0;return (g.messages||[]).filter(m=>m.from!==ME.nick&&new Date(m.ts).getTime()>seen).length;}
 function unreadChats(){
@@ -641,6 +703,79 @@ function showInfo(html){
   trDom(host);
 }
 
+/* ---------- live delivery (no realtime on the private schema) ---------- */
+function pollingStart(){
+  if(UI._pollTimer)return;
+  UI._pollTimer=setInterval(pollPulse,6000);
+  UI._chatTimer=setInterval(pollChat,2300);
+}
+async function pollPulse(){
+  if(!ME||UI._pollBusy||document.visibilityState==='hidden')return;
+  UI._pollBusy=true;
+  try{
+    const d=await rpc('api_pulse');
+    const n=+d.notif||0,m=+d.msg||0;
+    if(!UI._notifMax&&!UI._msgMax){UI._notifMax=n;UI._msgMax=m;return;}
+    if(n>UI._notifMax||m>UI._msgMax){
+      UI._notifMax=n;UI._msgMax=m;
+      if(+d.notif_unread>0||+d.msg_unread>0)beep();
+      await sync();
+    }
+  }catch(e){}
+  finally{UI._pollBusy=false;}
+}
+function chatAfter(c){
+  const arr=(c&&c.messages)||[];
+  return arr.length?Math.max(...arr.map(m=>+m.id||0)):0;
+}
+function bubble(m,self,isGrp){
+  return `<div class="ms ${self?'s':'o'}" data-mid="${m.id}">${esc(m.text)}<small>${isGrp?'@'+esc(m.from)+' · '+dt(m.ts):dt(m.ts)+(self?(m.read?' ✓✓':' ✓'):'')}</small></div>`;
+}
+function appendBubbles(html){
+  const box=$('.cm');if(!box)return;
+  const empty=box.querySelector('.em');if(empty)empty.remove();
+  box.insertAdjacentHTML('beforeend',html);
+  box.scrollTop=box.scrollHeight;
+}
+async function pollChat(){
+  if(!ME||UI._chatBusy||UI.tab!=='chat'||document.visibilityState==='hidden')return;
+  if(!UI.chat&&!UI.grp)return;
+  UI._chatBusy=true;
+  try{
+    if(UI.chat){
+      const c=myChats().find(x=>x.id===UI.chat);if(!c)return;
+      const after=chatAfter(c);
+      const d=await rpc('api_chat_poll',{p_chat:UI.chat,p_after:after});
+      const msgs=(d&&d.messages)||[];
+      if(msgs.length){
+        const known=new Set((c.messages||[]).map(m=>+m.id));
+        const fresh=msgs.filter(m=>!known.has(+m.id)).sort((a,b)=>(+a.id)-(+b.id));
+        if(fresh.length){
+          c.messages=(c.messages||[]).concat(fresh);
+          fresh.forEach(m=>{if(m.from!==ME.nick)m.read=true;});
+          appendBubbles(fresh.map(m=>bubble(m,m.from===ME.nick,false)).join(''));
+          beep();
+        }
+      }
+    }else{
+      const g=myGroups().find(x=>x.id===UI.grp);if(!g)return;
+      const after=chatAfter(g);
+      const d=await rpc('api_group_poll',{p_group:UI.grp,p_after:after});
+      const msgs=(d&&d.messages)||[];
+      if(msgs.length){
+        const known=new Set((g.messages||[]).map(m=>+m.id));
+        const fresh=msgs.filter(m=>!known.has(+m.id)).sort((a,b)=>(+a.id)-(+b.id));
+        if(fresh.length){
+          g.messages=(g.messages||[]).concat(fresh);
+          appendBubbles(fresh.map(m=>bubble(m,m.from===ME.nick,true)).join(''));
+          beep();
+        }
+      }
+    }
+  }catch(e){}
+  finally{UI._chatBusy=false;}
+}
+
 /* ---------- auth / sync ---------- */
 async function boot(){
   try{
@@ -660,7 +795,9 @@ async function sync(){
     throw error;
   }
   DB=data;ME=data.me;
+  UI.hide=!!ME.hide_bal;
   if(UI.tab==='root'&&!ME.admin)UI.tab='holb';
+  pollingStart();
   const nu=unread()+unreadChats();
   if(UI._unread&&nu>UI._unread)beep();
   UI._unread=nu;
@@ -692,46 +829,45 @@ function header(){
   return `<header>
     <div class="br"><div class="lg">Ś</div><div><small>Respublica Nationalie</small><b>Sellprade Appentanskie</b></div></div>
     <div class="ua">
-      <span class="chip" data-a="tab" data-v="bank"><b>${UI.hide?'••••':fm(ME.balance)}</b> h</span>
+      <span class="chip" data-a="tab" data-v="bank"><b>${fm(ME.balance)}</b> h</span>
       <span class="chip" data-a="tab" data-v="ust">@${esc(ME.nick)}</span>
-      <button class="bt g sm" data-a="logout" title="Exitus">🚪</button>
+      <button class="bt g sm" data-a="logout" title="Exitus">Exi</button>
     </div>
   </header>`;
 }
 function badge(id,u){const n=id==='seg'?u:id==='chat'?unreadChats():0;return n?` <em>${n>99?'99+':n}</em>`:'';}
 function nav(){
   const u=unread();
-  return `<div class="tabs">`+TABS.filter(t=>t[0]!=='root'||ME.admin).map(([id,label,ic])=>{
+  return `<div class="tabs">`+TABS.filter(t=>t[0]!=='root'||ME.admin).map(([id,label,color])=>{
     const locked=ME.status==='neophyte'&&!FREE.includes(id);
-    return `<button class="tab ${UI.tab===id?'on':''} ${locked?'lk':''}" data-a="tab" data-v="${id}">${ic} ${label}${badge(id,u)}</button>`;
+    return `<button class="tab ${UI.tab===id?'on':''} ${locked?'lk':''}" data-a="tab" data-v="${id}">${dot(color)}${label}${badge(id,u)}</button>`;
   }).join('')+`</div>`;
 }
 function bottomNav(){
   const u=unread(),cu=unreadChats();
-  const items=[['holb','Holb','🏠'],['seg','Segnalи','🔔'],['bank','Sellprade','💳'],['chat','Chatи','💬']];
-  return `<nav class="bnav">`+items.map(([id,l,ic])=>{
+  const items=[['holb','Holb'],['seg','Segnalи'],['bank','Sellprade'],['chat','Chatи']];
+  return `<nav class="bnav">`+items.map(([id,l])=>{
     const n=id==='seg'?u:id==='chat'?cu:0;
-    return `<button class="${UI.tab===id?'on':''}" data-a="tab" data-v="${id}"><span class="bi">${ic}</span>${l}${n?`<span class="bdg">${n>99?'99+':n}</span>`:''}</button>`;
-  }).join('')+`<button class="${items.some(x=>x[0]===UI.tab)?'':'on'}" data-a="sheet"><span class="bi">➕</span>Plus</button></nav>`;
+    return `<button class="${UI.tab===id?'on':''}" data-a="tab" data-v="${id}"><span class="bi">${dot(NAVCOLOR[id])}</span>${l}${n?`<span class="bdg">${n>99?'99+':n}</span>`:''}</button>`;
+  }).join('')+`<button class="${items.some(x=>x[0]===UI.tab)?'':'on'}" data-a="sheet"><span class="bi">${dot(NAVCOLOR.quaere)}</span>Plus</button></nav>`;
 }
 function sheetHtml(){
   return `<div class="sheet"><div class="sh"><h4>Omnes sectiones <button class="bt g sm" data-a="closesh">Claude</button></h4><div class="shg">`+
-    TABS.filter(t=>t[0]!=='root'||ME.admin).map(([id,l,ic])=>{
+    TABS.filter(t=>t[0]!=='root'||ME.admin).map(([id,l,color])=>{
       const locked=ME.status==='neophyte'&&!FREE.includes(id);
-      return `<button class="shitem ${UI.tab===id?'on':''}" data-a="tab" data-v="${id}"><span class="si">${ic}</span><span class="stx">${l}${locked?' 🔒':''}</span></button>`;
+      return `<button class="shitem ${UI.tab===id?'on':''}" data-a="tab" data-v="${id}">${dot(color)}<span class="stx">${l}${locked?' · clausa':''}</span></button>`;
     }).join('')+`</div></div></div>`;
 }
 function footer(){
-  return `<div class="foot">Sellprade Appentanskie · v6<br>Kapol · h · Rébnostь · 2026</div>`;
+  return `<div class="foot">Sellprade Appentanskie · v7<br>Kapol · h · Rébnostь · 2026</div>`;
 }
 function tabContent(){
-  if(ME.status==='neophyte'&&!FREE.includes(UI.tab))return C('Accessus clausus',`<div class="al">⚠ Polog «Neophytus» — accessus limitatus.</div><div class="gs">${bt('Pete Polog','verify','','p')}</div>`);
+  if(ME.status==='neophyte'&&!FREE.includes(UI.tab))return C('Accessus clausus',`<div class="al">Polog «Neophytus» — accessus limitatus.</div><div class="gs">${bt('Pete Polog','verify','','p')}</div>`);
   switch(UI.tab){
     case 'holb':return holb();
     case 'seg':return seg();
     case 'bank':return bank();
     case 'prad':return prad();
-    case 'labor':return labor();
     case 'caten':return caten();
     case 'chat':return chat();
     case 'jur':return jur();
@@ -747,7 +883,7 @@ function tabContent(){
 
 /* ---------- shared pieces ---------- */
 function ledgerRows(list,own){
-  if(!list||!list.length)return e('Motti desunt','🧾');
+  if(!list||!list.length)return e('Motti desunt','#8b98b8');
   return list.map(l=>{
     const plus=own&&l.dst===ME.nick;
     const amount=own?(plus?+l.net:+l.amount):+l.amount;
@@ -765,12 +901,16 @@ Tempus: ${dt(l.ts)}${l.note?'\nNota: '+esc(l.note):''}</div>`:''}
     </div>`;
   }).join('');
 }
-function icFor(k){
-  const m={mitto:'💸',petitio:'📥',sequester:'🔐',stipendium:'🏛',cude:'✨',ure:'🔥',multa:'⚖',prad:'🛒',auctio:'🔨',merces:'🛠',sodalitas:'🏛',burn:'🔥',refund:'↩'};
-  return m[k]||'•';
-}
+const KIND_COLOR={
+  mitto:'#34d399',petitio:'#22d3ee',prad:'#fbbf24',auctio:'#f59e0b',
+  sodalitas:'#b07bff',salarium:'#8aa4ff',cude:'#e8c37a',ure:'#fb7185',
+  multa:'#fb7185',burn:'#f472b6',refund:'#94a3b8',escrow_burn:'#94a3b8',
+  escrow_refund:'#94a3b8',escrow_closed:'#94a3b8',sys:'#64748b',status:'#8aa4ff',
+  chat:'#22d3ee',news:'#e8c37a',law:'#a3e635',support:'#fb923c',company:'#b07bff'
+};
+function icFor(k){return `<span class="dot" style="--dot:${KIND_COLOR[k]||'#8b98b8'}"></span>`;}
 function notifRow(n){
-  return `<div class="it ${n.read?'':'un'}"><div class="r" data-a="notif" data-v="${n.id}"><i>${icFor(n.kind)||'🔔'}</i><div class="in"><b>${esc(n.text)}</b><small>${dt(n.ts)}</small></div>${n.read?'':'<span class="pl wn">Nova</span>'}</div></div>`;
+  return `<div class="it ${n.read?'':'un'}"><div class="r" data-a="notif" data-v="${n.id}"><i>${icFor(n.kind)}</i><div class="in"><b>${esc(n.text)}</b><small>${dt(n.ts)}</small></div>${n.read?'':'<span class="pl wn">Nova</span>'}</div></div>`;
 }
 function statBox(label,val){return `<div>${esc(label)}<b>${val}</b></div>`;}
 
@@ -779,44 +919,48 @@ function holb(){
   const s=(DB&&DB.stats)||{};
   const m=ME;
   const news=(DB.news||[]).slice(0,3);
+  const tags=tagsHtml(m);
   return `<section class="pp">
     <div class="pph"><div class="av">${ini(m.nick)}</div><div style="min-width:0">
       <div class="nm">${esc(m.name)} ${esc(m.sur)}</div>
       <div class="sub">@${esc(m.nick)} · ${esc(m.id)}</div>
-      <div class="meta">${statusTag(m.status)}<span class="pl">${esc(m.roy)}</span>${m.muted?`<span class="pl er">🔇 Mutus</span>`:''}</div>
+      <div class="meta">${statusTag(m.status)}${rankTag(m)}${tags}${m.muted?`<span class="pl er">Mutus</span>`:''}</div>
     </div></div>
     <div class="pfoot">
       <div>Balans<b>${balText(m.balance)}</b></div>
-      <div>Rébnostь<b>${esc(m.reb)}</b></div>
+      <div>Rang<b>${esc(m.rank||'—')}</b></div>
+      <div>Rébnostь<b>${esc(m.reb||'—')}</b></div>
       <div>Polog<b>${STATUS_LABEL[m.status]||m.status}</b></div>
+      ${+m.salary>0?`<div>Salarium<b>${fm(m.salary)} h</b></div>`:''}
     </div>
   </section>
-  ${m.status==='neophyte'?`<div class="al">⚠ Polog «Neophytus» — accessus limitatus.<div class="gs" style="margin-top:8px">${bt('Pete Polog','verify','','p')}${bt('Scribe Abrodié','newchat','','g')}</div></div>`:''}
-  ${m.muted?`<div class="al e">🔇 Mutus: scriptura clausa${m.muted_until?' ad '+dt(m.muted_until):''}.</div>`:''}
+  ${m.status==='neophyte'?`<div class="al">Polog «Neophytus» — accessus limitatus.<div class="gs" style="margin-top:8px">${bt('Pete Polog','verify','','p')}${bt('Scribe Abrodié','newchat','','g')}</div></div>`:''}
+  ${m.muted?`<div class="al e">Mutus: scriptura clausa${m.muted_until?' ad '+dt(m.muted_until):''}.</div>`:''}
   <div class="gr">
     ${statBox('Cives',s.cives||0)}
-    ${statBox('Aerarium',UI.hide?'••••':fm(s.treasury||0)+' h')}
+    ${statBox('Aerarium',fm(s.treasury||0)+' h')}
     ${statBox('Portorium',fm(cfg().tax)+'%')}
-    ${statBox('Stipendium',fm(cfg().ubi)+' h')}
+    ${statBox('Acta',s.news||0)}
   </div>
   <div class="cols"><div class="stack">
     ${C('Actiones celeres',`<div class="gs">
-      ${bt('💸 Mitte','newtransfer','','p')}${bt('📥 Pete','newrequest','')}${bt('🔐 Sequester','newescrow','')}
-      ${bt('🛒 Lot','newlot','')}${bt('➕ Tema','newtopic','')}${bt('🆘 Haiess','newticket','')}
+      ${bt('Mitte','newtransfer','','p')}${bt('Pete','newrequest','')}${bt('Lot','newlot','')}
+      ${bt('Tema','newtopic','')}${bt('Haiess','newticket','')}${bt('Quaere','tab','quaere','g')}
     </div>`)}
     ${C('Iékzalьzи',rows([
       ['Klиchka','@'+esc(m.nick)],['Ĵamya',esc(m.name)],['Pofil',esc(m.sur)],
-      ['Roy',esc(m.roy)],['Polog',statusTag(m.status)],['Rébnostь',esc(m.reb)],
+      ['Roy',esc(m.roy)],['Rang',esc(m.rank||'—')],['Rébnostь',esc(m.reb||'—')],
+      ['Polog',statusTag(m.status)],['Status',tags||'—'],
       ['id','<span class="mono">'+esc(m.id)+'</span>'],['Inscriptio',dt(m.created)],['Ultimus aditus',dt(m.last)]
-    ])+`<div class="gs" style="margin-top:8px">${bt('⧉ ID','copyid',m.id,'g sm')}${bt('👤 Profil','prof',m.nick,'g sm')}</div>`)}
+    ])+`<div class="gs" style="margin-top:8px">${bt('ID','copyid',m.id,'g sm')}${bt('Profil','prof',m.nick,'g sm')}${bt('Ustroy','tab','ust','g sm')}</div>`)}
     ${C('Novissimi motti',ledgerRows((DB.ledger||[]).slice(0,6),true),'<span class="hp">'+bt('Omnes','tab','bank','g sm')+'</span>')}
   </div><div class="stack">
-    ${C('Segnalи',(DB.notifications||[]).slice(0,6).map(notifRow).join('')||e('Nihil novi','🔔'),'<span class="hp">'+bt('Omnes','tab','seg','g sm')+'</span>')}
-    ${C('Acta',news.map(n=>`<div class="it"><div class="r" data-a="nwopen" data-v="${n.id}"><i>📰</i><div class="in"><b>${esc(n.title)}</b><small>${dt(n.ts)} · @${esc(n.by)}</small></div></div></div>`).join('')||e('Acta desunt','📰'),'<span class="hp">'+bt('Omnes','tab','news','g sm')+'</span>')}
+    ${C('Segnalи',(DB.notifications||[]).slice(0,6).map(notifRow).join('')||e('Nihil novi','#fb7185'),'<span class="hp">'+bt('Omnes','tab','seg','g sm')+'</span>')}
+    ${C('Acta',news.map(n=>`<div class="it"><div class="r" data-a="nwopen" data-v="${n.id}"><i>${icFor('news')}</i><div class="in"><b>${esc(n.title)}</b><small>${dt(n.ts)} · @${esc(n.by)}${n.company_name?' · '+esc(n.company_name):''}</small></div></div></div>`).join('')||e('Acta desunt','#e8c37a'),'<span class="hp">'+bt('Omnes','tab','news','g sm')+'</span>')}
     ${C('Res publica',rows([
       ['Cives',s.cives||0],['Lots in Pradи',s.lots||0],['Temata fori',s.topics||0],
-      ['Acta',s.news||0],['Aerarium',UI.hide?'••••':fm(s.treasury||0)+' h'],
-      ['Sequestris in custodia',UI.hide?'••••':fm(s.escrow||0)+' h']
+      ['Acta',s.news||0],['Sodalitates',s.companies||0],
+      ['Aerarium',fm(s.treasury||0)+' h']
     ]))}
   </div></div>`;
 }
@@ -830,7 +974,7 @@ function seg(){
       <button class="fchip ${UI.segNew?'on':''}" data-a="segfilter" data-v="new">Nova (${all.filter(n=>!n.read).length})</button>
     </div>
     <div class="gs" style="margin-bottom:10px">${bt('✓ Omnia lecta','notifreadall','','ok sm')}${bt('Purga','notifclear','','d sm')}</div>
-    ${list.map(notifRow).join('')||e('Nihil novi','🔔')}`)}`;
+    ${list.map(notifRow).join('')||e('Nihil novi','#fb7185')}`)}`;
 }
 
 /* ---------- Bank ---------- */
@@ -840,23 +984,23 @@ function reqRow(r){
     r.to===me?`<div class="gs" style="margin-top:8px">${bt('Solve','payreq',r.id,'ok sm')}${bt('Nega','declinereq',r.id,'d sm')}</div>`:
     r.from===me?`<div class="gs" style="margin-top:8px">${bt('Abroga','cancelreq',r.id,'d sm')}</div>`:''
   ):'';
-  return `<div class="it"><div class="r"><i>${r.to===me?'📥':'📤'}</i><div class="in"><b>@${esc(r.from)} → @${esc(r.to)} · ${fm(r.amount)} h</b><small>${dt(r.ts)} · ${esc(r.status)}${r.note?' · '+esc(r.note):''}</small></div></div>${act}</div>`;
+  return `<div class="it"><div class="r"><i>${dot(r.to===me?'#22d3ee':'#94a3b8')}</i><div class="in"><b>@${esc(r.from)} → @${esc(r.to)} · ${fm(r.amount)} h</b><small>${dt(r.ts)} · ${esc(r.status)}${r.note?' · '+esc(r.note):''}</small></div></div>${act}</div>`;
 }
 function bank(){
   const sub=UI.bsub||'ledger';
-  const tabs=[['ledger','Motti'],['req','Petitiones'],['esc','Sequester'],['book','Liber Fisci']];
+  const tabs=[['ledger','Motti'],['req','Petitiones'],['book','Liber Fisci']];
   const me=ME.nick,mine=DB.ledger||[];
   const inn=mine.filter(l=>l.dst===me).reduce((s,l)=>s+(+l.net||0),0);
   const out=mine.filter(l=>l.src===me).reduce((s,l)=>s+(+l.amount||0),0);
   const fee=mine.filter(l=>l.src===me).reduce((s,l)=>s+(+l.fee||0),0);
   const openReq=(DB.requests||[]).filter(r=>r.status==='open'&&(r.to===me||r.from===me)).length;
   return `<div class="banner"><div class="sub">Balans · @${esc(me)}</div><div class="amt">${balText(ME.balance)}</div>
-    <div class="sub">Portorium ${fm(cfg().tax)}% · id ${esc(ME.id)}</div>
-    <div class="gs" style="margin-top:10px">${bt('💸 Mitte','newtransfer','','p')}${bt('📥 Pete','newrequest','')}${bt('🔐 Sequester','newescrow','')}</div></div>
+    <div class="sub">Portorium ${fm(cfg().tax)}% · id ${esc(ME.id)}${+ME.salary>0?' · salarium '+fm(ME.salary)+' h':''}</div>
+    <div class="gs" style="margin-top:10px">${bt('Mitte','newtransfer','','p')}${bt('Pete','newrequest','')}</div></div>
     <div class="gr">
-      ${statBox('Introitus',UI.hide?'••••':fm(inn)+' h')}
-      ${statBox('Exitus',UI.hide?'••••':fm(out)+' h')}
-      ${statBox('Portorium',UI.hide?'••••':fm(fee)+' h')}
+      ${statBox('Introitus',fm(inn)+' h')}
+      ${statBox('Exitus',fm(out)+' h')}
+      ${statBox('Portorium',fm(fee)+' h')}
       ${statBox('Operationes',mine.length)}
     </div>
     <div class="subtabs">${tabs.map(([id,l])=>`<button class="sbt ${sub===id?'on':''}" data-a="bsub" data-v="${id}">${l}${id==='req'&&openReq?` · ${openReq}`:''}</button>`).join('')}</div>
@@ -869,67 +1013,58 @@ function bankBody(sub){
     const list=(DB.ledger||[]).filter(l=>{
       if(UI.bF==='in'&&l.dst!==me)return false;
       if(UI.bF==='out'&&l.src!==me)return false;
-      if(UI.bF==='mint'&&!['cude','ure','burn','stipendium','multa','refund'].includes(l.kind))return false;
+      if(UI.bF==='mint'&&!['cude','ure','burn','salarium','multa','refund'].includes(l.kind))return false;
       if(q&&!((l.note||'')+' '+(l.src||'')+' '+(l.dst||'')+' '+l.kind).toLowerCase().includes(q))return false;
       return true;
     });
-    return `<div class="tb"><div class="filters">${[['all','Omnia'],['in','Introitus'],['out','Exitus'],['mint','Cusio']].map(([id,l])=>`<button class="fchip ${UI.bF===id?'on':''}" data-a="bfilter" data-v="${id}">${l}</button>`).join('')}</div>
-      <button class="bt g sm" data-a="bcsv">⬇ CSV</button></div>
-      <div class="tb"><input class="srch" id="bq" maxlength="60" value="${esc(UI.bQ||'')}" placeholder="Quaere: nota, contrahens…"><button class="bt p sm" data-a="bsearch">Quaere</button></div>
+    return `<div class="tb"><div class="filters">${[['all','Omnia'],['in','Introitus'],['out','Exitus'],['mint','Fiscus']].map(([id,l])=>`<button class="fchip ${UI.bF===id?'on':''}" data-a="bfilter" data-v="${id}">${l}</button>`).join('')}</div>
+      <button class="bt g sm" data-a="bcsv">CSV</button></div>
+      <div class="tb"><input class="srch" id="bq" maxlength="60" value="${esc(UI.bQ||'')}" placeholder="Quaere: nota, contrahens, typus…"><button class="bt p sm" data-a="bsearch">Quaere</button></div>
       ${C('Motti',ledgerRows(list,true))}`;
   }
   if(sub==='book')return C('Liber Fisci',ledgerRows(DB.book||[],false));
-  if(sub==='req'){
-    const rs=DB.requests||[];
-    return `${C('Introitus',rs.filter(r=>r.to===me&&r.status==='open').map(reqRow).join('')||e('Petitiones desunt','📥'))}
-      ${C('Misae',rs.filter(r=>r.from===me&&r.status==='open').map(reqRow).join('')||e('Petitiones desunt','📤'))}
-      ${C('Historia',rs.filter(r=>r.status!=='open').map(reqRow).join('')||e('Historia vacua','🗂'))}`;
-  }
-  const es=DB.escrows||[];
-  return C('Sequester',(es.map(x=>{
-      let act='';
-      if(x.status==='held'||x.status==='delivered'){
-        if(x.payee===ME.nick&&x.status==='held')act+=bt('Trada','escdeliver',x.id,'ok sm');
-        if(x.payer===ME.nick&&(x.status==='held'||x.status==='delivered'))act+=bt('Libera','escrelease',x.id,'p sm');
-        if(x.payer===ME.nick&&x.status==='held')act+=bt('Abroga','esccancel',x.id,'d sm');
-      }
-      return `<div class="it"><div class="r"><i>🔐</i><div class="in"><b>@${esc(x.payer)} → @${esc(x.payee)} · ${fm(x.amount)} h</b><small>${dt(x.ts)} · ${esc(x.status)} · ${esc(x.note)}</small></div></div>${act?`<div class="gs" style="margin-top:8px">${act}</div>`:''}</div>`;
-    }).join('')||e('Sequester nullus','🔐')));
+  const rs=DB.requests||[];
+  return `${C('Introitus',rs.filter(r=>r.to===me&&r.status==='open').map(reqRow).join('')||e('Petitiones desunt','#22d3ee'))}
+    ${C('Misae',rs.filter(r=>r.from===me&&r.status==='open').map(reqRow).join('')||e('Petitiones desunt','#94a3b8'))}
+    ${C('Historia',rs.filter(r=>r.status!=='open').map(reqRow).join('')||e('Historia vacua','#64748b'))}`;
 }
 
 /* ---------- Pradи ---------- */
-const MCAT=['Machina','Vestis','Cibus','Libri','Opera','Alia'];
 function prad(){
   const sub=UI.mk||'nundinae';
   const q=(UI.mkQ||'').trim().toLowerCase();
+  const catList=cats('lot').map(c=>c.name);
+  const cat=catList.includes(UI.pcat)?UI.pcat:'Omnes';
   const list=myLots().filter(l=>{
     if(sub==='nundinae'&&l.kind!=='sale')return false;
     if(sub==='auctiones'&&l.kind!=='auction')return false;
     if(sub==='mea'&&l.seller!==ME.nick&&l.buyer!==ME.nick)return false;
-    if(UI.pcat!=='Omnes'&&l.cat!==UI.pcat)return false;
+    if(cat!=='Omnes'&&l.cat!==cat)return false;
     if(q&&!(l.title+' '+l.body+' '+l.seller).toLowerCase().includes(q))return false;
     return true;
   });
-  return `<div class="tb">${bt('➕ Lot','newlot','','p')}</div>
+  return `<div class="tb">${bt('Lot novus','newlot','','p')}<span class="mut">${list.length} lots</span></div>
     <div class="subtabs">${[['nundinae','Nundinae'],['auctiones','Auctiones'],['mea','Mea']].map(([id,l])=>`<button class="sbt ${sub===id?'on':''}" data-a="mk" data-v="${id}">${l}</button>`).join('')}</div>
     <div class="tb"><input class="srch" id="mkq" maxlength="60" value="${esc(UI.mkQ||'')}" placeholder="Quaere lots…"><button class="bt p sm" data-a="mksearch">Quaere</button></div>
-    <div class="tb"><div class="filters">${['Omnes',...MCAT].map(c=>`<button class="fchip ${UI.pcat===c?'on':''}" data-a="pcat" data-v="${c}">${c}</button>`).join('')}</div></div>
-    <div class="grid3">${list.map(lotCard).join('')||e('Lots hoc filtro desunt','🛒')}</div>`;
+    <div class="tb"><div class="filters">${['Omnes',...catList].map(c=>`<button class="fchip ${cat===c?'on':''}" data-a="pcat" data-v="${c}">${c}</button>`).join('')}</div></div>
+    <div class="grid3">${list.map(lotCard).join('')||e('Lots hoc filtro desunt','#fbbf24')}</div>`;
 }
 function lotCard(l){
   const mine=l.seller===ME.nick, live=l.status==='live';
   const isA=l.kind==='auction';
   let acts='';
   if(live&&!mine){
-    if(isA)acts+=bt('🔨 Offero','bid',l.id,'p');
-    else acts+=bt('🛒 Eme','buy',l.id,'p');
+    if(isA)acts+=bt('Offero','bid',l.id,'p');
+    else acts+=bt('Eme','buy',l.id,'p');
   }
   if(live&&mine){
-    if(isA)acts+=bt('⏹ Claude auctio','lotclose',l.id,'ok');
-    else acts+=bt('✏ Muta','lotupd',l.id);
+    if(isA)acts+=bt('Claude auctio','lotclose',l.id,'ok');
+    else acts+=bt('Muta','lotupd',l.id);
   }
-  if(live&&(mine||ME.admin))acts+=bt('🗑','lotdel',l.id,'d');
-  if(l.status==='sold'&&l.buyer===ME.nick&&!l.reviewed)acts+=bt('⭐ Renuntia','review',l.id,'ok');
+  if(live&&(mine||ME.admin))acts+=bt('Dele','lotdel',l.id,'d');
+  if(l.status==='sold'&&l.buyer===ME.nick&&!l.reviewed)acts+=bt('Renuntia','review',l.id,'ok');
+  if(!mine)acts+=bt('Delatio','report','lot|'+l.id+'|'+l.title,'d sm');
+  if(ME.admin&&!live)acts+=bt('Recense','adminedit','lot|'+l.id,'g sm');
   return `<div class="card"><h3>${esc(l.title)} <span class="hp">${tag(isA?'Auctio':'Venditio',isA?'pp2':'')}${mine?'<span class="tg">MEA</span>':''}${tag(l.status,l.status==='live'?'ok':'')}</span></h3>
     <div class="mut">@${esc(l.seller)} · ${esc(l.cat)} · ${rate(l.rating)}</div>
     <div class="dt">${esc(l.body)}</div>
@@ -941,54 +1076,30 @@ function lotCard(l){
   </div>`;
 }
 
-/* ---------- Labor ---------- */
-function labor(){
-  const sub=UI.laborTab||'all';
-  const myComps=myCompanies().filter(c=>c.owner===ME.nick||c.members.includes(ME.nick)).map(c=>c.id);
-  const list=myJobs().filter(j=>{
-    if(sub==='open')return j.status==='open';
-    if(sub==='mine')return j.by===ME.nick||j.worker===ME.nick||j.applied||(j.company&&myComps.includes(j.company));
-    return true;
-  });
-  return `<div class="tb">${bt('➕ Opus','newjob','','p')}</div>
-    <div class="subtabs">${[['all','Omnia'],['open','Aperta'],['mine','Mea']].map(([id,l])=>`<button class="sbt ${sub===id?'on':''}" data-a="labortab" data-v="${id}">${l}</button>`).join('')}</div>
-    ${list.map(jobCard).join('')||C('Opera',e('Opera desunt','🛠'))}`;
-}
-function jobCard(j){
-  const owner=j.by===ME.nick||ME.admin, applied=j.applied;
-  let acts='';
-  if(j.status==='open'&&!owner&&!applied)acts+=bt('Pete opus','applyjob',j.id,'p');
-  if(j.status==='open'&&owner)acts+=bt('🗑 Dele','deljob',j.id,'d');
-  if(j.apps&&j.apps.length&&owner)acts+=`<div class="quote" style="margin-top:8px">Candidati:<br>${j.apps.map(a=>`@${esc(a.by)}${a.note?' · '+esc(a.note):''} <span class="gs" style="display:inline-flex;margin-left:6px">${bt('Accipe','acceptjob',j.id+':'+a.by,'ok sm')}${bt('Dimitte','rejectjob',j.id+':'+a.by,'d sm')}</span>`).join('<br>')}</div>`;
-  return `<div class="card"><h3>${esc(j.title)} <span class="hp">${tag(j.status,j.status==='open'?'ok':'')}${j.company_name?tag(j.company_name,'pp2'):''}</span></h3>
-    <div class="mut">${j.company_name?esc(j.company_name):'@'+esc(j.by)} · ${dt(j.ts)}${j.worker?' · worker @'+esc(j.worker):''}</div>
-    <div class="dt">${esc(j.body)}</div>
-    <div class="rw"><span>Merces</span><b>${fm(j.pay)} h</b></div>
-    ${applied&&j.status==='open'?'<div class="mut">✓ Candidatura missa</div>':''}
-    ${acts?`<div class="gs" style="margin-top:8px">${acts}</div>`:''}
-  </div>`;
-}
-
 /* ---------- Caten ---------- */
-const CCAT=['Mercatura','Fabrica','Agricultura','Servitia','Ars','Alia'];
 function caten(){
-  const list=myCompanies().filter(c=>UI.catTab==='all'||c.cat===UI.catTab);
-  return `<div class="tb">${bt('➕ Sodalitas','newcompany','','p')}</div>
-    <div class="tb"><div class="filters">${[['all','Omnes'],...CCAT.map(c=>[c,c])].map(([id,l])=>`<button class="fchip ${UI.catTab===id?'on':''}" data-a="cattab" data-v="${id}">${l}</button>`).join('')}</div></div>
-    ${list.map(companyCard).join('')||C('Sodalitates',e('Sodalitates desunt','🏛'))}`;
+  const catList=cats('company').map(c=>c.name);
+  const cat=catList.includes(UI.catTab)?UI.catTab:'all';
+  const q=(UI.catQ||'').trim().toLowerCase();
+  const list=myCompanies().filter(c=>(cat==='all'||c.cat===cat)&&(!q||(c.name+' '+c.about+' '+c.owner).toLowerCase().includes(q)));
+  return `<div class="tb">${bt('Sodalitas nova','newcompany','','p')}<span class="mut">${list.length} sodalitates</span></div>
+    <div class="tb"><input class="srch" id="catq" maxlength="60" value="${esc(UI.catQ||'')}" placeholder="Quaere sodalitates…"><button class="bt p sm" data-a="catsearch">Quaere</button></div>
+    <div class="tb"><div class="filters">${[['all','Omnes'],...catList.map(c=>[c,c])].map(([id,l])=>`<button class="fchip ${cat===id?'on':''}" data-a="cattab" data-v="${id}">${l}</button>`).join('')}</div></div>
+    ${list.map(companyCard).join('')||C('Sodalitates',e('Sodalitates desunt','#b07bff'))}`;
 }
 function companyCard(c){
   const owner=c.owner===ME.nick, member=c.members.includes(ME.nick), open=c.status==='active';
-  const jobs=myJobs().filter(j=>j.company===c.id);
   let acts='';
-  if(owner&&open)acts+=bt('⬇ Depone','compdep',c.id)+bt('⬆ Retrahe','compwd',c.id)+bt('➕ Membrum','compadd',c.id)+bt('⏹ Claude','compclose',c.id,'d');
-  if((owner||member)&&open)acts+=bt('➕ Opus','compjob',c.id);
-  return `<div class="card"><h3>${esc(c.name)} <span class="hp">${tag(c.status,c.status==='active'?'ok':'er')}${tag(c.cat,'pp2')}</span></h3>
-    <div class="mut">Conditor @${esc(c.owner)} · ${c.members.length+1} membra · ${jobs.length} opera · ${dt(c.ts)}</div>
+  if(owner&&open)acts+=bt('Depone','compdep',c.id)+bt('Retrahe','compwd',c.id)+bt('Membrum','compadd',c.id)+bt('Claude','compclose',c.id,'d');
+  if(open&&!owner)acts+=bt(c.sub?'Sequi desine':'Sequi','subscribe','company|'+c.id,c.sub?'g sm':'p sm');
+  if(ME.admin)acts+=bt('Diurnaria','adminagency',c.id,c.agency?'ok sm':'g sm')+bt('Recense','adminedit','company|'+c.id,'g sm');
+  if(!owner)acts+=bt('Delatio','report','company|'+c.id+'|'+c.name,'d sm');
+  return `<div class="card"><h3>${esc(c.name)} <span class="hp">${tag(c.status,c.status==='active'?'ok':'er')}${tag(c.cat,'pp2')}${c.agency?tag('Diurnaria','ad'):''}</span></h3>
+    <div class="mut">Conditor @${esc(c.owner)} · ${c.members.length+1} membra · ${c.followers||0} sequentes · ${dt(c.ts)}</div>
     <div class="dt">${esc(c.about)}</div>
-    <div class="rw"><span>Aerarium sodalitatis</span><b>${UI.hide?'••••':fm(c.balance)+' h'}</b></div>
+    <div class="rw"><span>Aerarium sodalitatis</span><b>${fm(c.balance)} h</b></div>
     <div class="quote">Membra: @${esc(c.owner)}${c.members.map(m=>`, @${esc(m)}${owner&&open?` ${bt('×','comprem',c.id+':'+m,'d sm')}`:''}`).join('')}</div>
-    ${jobs.length?`<div style="margin-top:8px">${jobs.slice(0,4).map(j=>`<div class="rw"><span>🛠 ${esc(j.title)} · ${esc(j.status)}</span><b>${fm(j.pay)} h</b></div>`).join('')}</div>`:''}
+    ${c.agency?`<div class="mut" style="margin-top:6px">Status diurnariae: potest acta publicare nomine sodalitatis.</div>`:''}
     ${acts?`<div class="gs" style="margin-top:8px">${acts}</div>`:''}
   </div>`;
 }
@@ -999,23 +1110,23 @@ function chat(){
   if(UI.grp){
     const g=myGroups().find(x=>x.id===UI.grp);
     if(!g){UI.grp=null;return chat();}
-    return `<div class="tb">${bt('← Retro','chatexit')}<div class="grow"><b>${esc(g.name)}</b><div class="tiny">@${esc(g.owner)} · ${g.members.length} membra</div></div></div>
-      <div class="card"><h3>👥 ${esc(g.name)} <span class="hp"><span class="pl">${g.members.length} membra</span></span></h3>
+    return `<div class="tb">${bt('Retro','chatexit')}<div class="grow"><b>${esc(g.name)}</b><div class="tiny">@${esc(g.owner)} · ${g.members.length} membra</div></div></div>
+      <div class="card"><h3>${esc(g.name)} <span class="hp"><span class="pl">${g.members.length} membra</span>${tag('live','ok')}</span></h3>
       <div class="quote">${g.members.map(n=>'@'+esc(n)).join(' · ')}</div>
-      <div class="cm" id="cm">${(g.messages||[]).map(m=>`<div class="ms ${m.from===ME.nick?'s':'o'}">${esc(m.text)}<small>@${esc(m.from)} · ${dt(m.ts)}</small></div>`).join('')||e('Silentium — scribe primus','💬')}</div>
-      <div class="sr"><input id="ci" maxlength="500" placeholder="Nuntius gregis..."><button class="bt p" data-a="sendgrp">➤</button></div>
-      <div class="gs" style="margin-top:8px">${g.owner===ME.nick?bt('➕ Membrum','grpadd',g.id):''}${bt('Exi grege','grpleave',g.id,'d')}</div></div>`;
+      <div class="cm" id="cm">${(g.messages||[]).map(m=>bubble(m,m.from===ME.nick,true)).join('')||e('Silentium — scribe primus','#22d3ee')}</div>
+      <div class="sr"><input id="ci" maxlength="500" placeholder="Nuntius gregis..."><button class="bt p" data-a="sendgrp">Mitte</button></div>
+      <div class="gs" style="margin-top:8px">${g.owner===ME.nick?bt('Membrum','grpadd',g.id):''}${bt('Exi grege','grpleave',g.id,'d')}</div></div>`;
   }
   if(UI.chat){
     const c=myChats().find(x=>x.id===UI.chat);
     if(!c){UI.chat=null;return chat();}
     const p=unick(c.peer)||{nick:c.peer,name:'',sur:'',roy:''};
-    return `<div class="tb">${bt('← Retro','chatexit')}<div class="grow"><b>@${esc(c.peer)}</b><div class="tiny">${esc(p.name)} ${esc(p.sur)} · ${esc(p.roy)}</div></div>${plTag(p)}</div>
+    return `<div class="tb">${bt('Retro','chatexit')}<div class="grow"><b>@${esc(c.peer)}</b><div class="tiny">${esc(p.name)} ${esc(p.sur)} · ${esc(p.roy)}</div></div>${plTag(p)}</div>
       <div class="card"><h3><span style="display:flex;gap:9px;align-items:center;min-width:0">${ava(p,'av-sm')}<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">@${esc(c.peer)}</span></span>${plTag(p)}</h3>
-      <div class="quote">Chat privatus${p.muted?' · ⚠ Mutus':''}</div>
-      <div class="cm" id="cm">${(c.messages||[]).map(m=>`<div class="ms ${m.from===ME.nick?'s':'o'}">${esc(m.text)}<small>${dt(m.ts)}${m.from===ME.nick?(m.read?' ✓✓':' ✓'):''}</small></div>`).join('')||e('Scribe primum nuntium','💬')}</div>
-      <div class="sr"><input id="ci" maxlength="500" placeholder="Nuntius..."><button class="bt p" data-a="sendchat">➤</button></div>
-      <div class="gs" style="margin-top:8px">${bt('👤 Profil','prof',c.peer)}${bt('💸 Mitte','newtransfer',c.peer)}</div></div>`;
+      <div class="quote">Chat privatus · nuntii live${p.muted?' · Mutus':''}</div>
+      <div class="cm" id="cm">${(c.messages||[]).map(m=>bubble(m,m.from===ME.nick,false)).join('')||e('Scribe primum nuntium','#22d3ee')}</div>
+      <div class="sr"><input id="ci" maxlength="500" placeholder="Nuntius..."><button class="bt p" data-a="sendchat">Mitte</button></div>
+      <div class="gs" style="margin-top:8px">${bt('Profil','prof',c.peer)}${bt('Mitte h','newtransfer',c.peer)}${bt('Delatio','report','user|'+c.peer+'|@'+c.peer,'d sm')}</div></div>`;
   }
   const sub=UI.csub||'dm';
   const q=(UI.chQ||'').trim().toLowerCase();
@@ -1028,32 +1139,31 @@ function chat(){
   if(sub==='dm'){
     list=chats.map(c=>{
       const last=lastOf(c),un=unreadDM(c);
-      return `<div class="it ${un?'un':''}"><div class="r" data-a="openchat" data-v="${c.id}"><i>💬</i><div class="in"><b>@${esc(c.peer)}</b><small>${last?esc((last.from===ME.nick?'Tu: ':'')+last.text):'Chat privatus'}</small></div>${un?`<span class="pl wn">${un}</span>`:''}</div></div>`;
-    }).join('')||e('Chat desunt','💬');
+      return `<div class="it ${un?'un':''}"><div class="r" data-a="openchat" data-v="${c.id}"><i>${dot('#22d3ee')}</i><div class="in"><b>@${esc(c.peer)}</b><small>${last?esc((last.from===ME.nick?'Tu: ':'')+last.text):'Chat privatus'}</small></div>${un?`<span class="pl wn">${un}</span>`:''}</div></div>`;
+    }).join('')||e('Chat desunt','#22d3ee');
   }else{
     list=groups.map(g=>{
       const last=lastOf(g),un=unreadGrp(g);
-      return `<div class="it ${un?'un':''}"><div class="r" data-a="opengrp" data-v="${g.id}"><i>👥</i><div class="in"><b>${esc(g.name)}</b><small>${g.members.length} membra${last?' · @'+esc(last.from)+': '+esc(last.text):''}</small></div>${un?`<span class="pl wn">${un}</span>`:''}</div></div>`;
-    }).join('')||e('Greges desunt','👥');
+      return `<div class="it ${un?'un':''}"><div class="r" data-a="opengrp" data-v="${g.id}"><i>${dot('#b07bff')}</i><div class="in"><b>${esc(g.name)}</b><small>${g.members.length} membra${last?' · @'+esc(last.from)+': '+esc(last.text):''}</small></div>${un?`<span class="pl wn">${un}</span>`:''}</div></div>`;
+    }).join('')||e('Greges desunt','#b07bff');
   }
   const directory=users().filter(u=>u.nick!==ME.nick&&match(u))
-    .map(u=>`<div class="it"><div class="r" data-a="prof" data-v="${esc(u.nick)}">${ava(u,'av-sm')}<div class="in"><b>${esc(u.name)} ${esc(u.sur)}</b><small>@${esc(u.nick)} · ${esc(u.roy)}</small></div>${u.status==='abrodie'?'<span class="pl ad">ADM</span>':''}</div>
-      <div class="gs" style="margin-top:8px">${bt('💬 Chat','newchat',u.nick)}${bt('💸','newtransfer',u.nick)}${bt('🚩','report',u.nick,'d sm')}</div></div>`).join('');
-  return `<div class="card"><h3>Chatи <span class="hp">${bt('➕ Chat','newchat','','p sm')}${bt('➕ Grex','newgroup','')}</span></h3>
+    .map(u=>`<div class="it"><div class="r" data-a="prof" data-v="${esc(u.nick)}">${ava(u,'av-sm')}<div class="in"><b>${esc(u.name)} ${esc(u.sur)}</b><small>@${esc(u.nick)} · ${esc(u.rank||u.roy)}</small></div>${u.status==='abrodie'?'<span class="pl ad">ADM</span>':''}</div>
+      <div class="gs" style="margin-top:8px">${bt('Chat','newchat',u.nick)}${bt('h','newtransfer',u.nick)}${bt('Delatio','report','user|'+u.nick+'|@'+u.nick,'d sm')}</div></div>`).join('');
+  return `<div class="card"><h3>Chatи <span class="hp">${bt('Chat','newchat','','p sm')}${bt('Grex','newgroup','')}</span></h3>
     <div class="subtabs">${[['dm','Directi'],['grp','Greges']].map(([id,l])=>`<button class="sbt ${sub===id?'on':''}" data-a="csub" data-v="${id}">${l}</button>`).join('')}</div>
     <div class="tb"><input class="srch" id="chq" maxlength="40" value="${esc(UI.chQ||'')}" placeholder="Quaere homines…"><button class="bt p sm" data-a="chsearch">Quaere</button></div>
     ${list}</div>
-    <div class="card"><h3>Cives <small class="mu">${users().length}</small></h3>${directory||e('Nemo inventus','👥')}</div>`;
+    <div class="card"><h3>Cives <small class="mu">${users().length}</small></h3>${directory||e('Nemo inventus','#64748b')}</div>`;
 }
 function scrollChat(){const c=$('.cm');if(c)c.scrollTop=c.scrollHeight;}
 
 /* ---------- Juriės ---------- */
-const TCAT=['Disputa','Oeconomia','Cultura','Machina','Politia','Vita'];
 function pollHtml(t){
   const p=t.poll;if(!p)return'';
   const total=(p.opts||[]).reduce((s,o)=>s+(o.v||[]).length,0);
   const my=p.my;
-  return `<div class="quote">📊 ${esc(p.q)} · ${total} vota${my!=null?' · votum tuum':' · elige unum'}</div>`+
+  return `<div class="quote">${esc(p.q)} · ${total} vota${my!=null?' · votum tuum':' · elige unum'}</div>`+
     (p.opts||[]).map((o,i)=>{
       const pc=total?Math.round((o.v||[]).length*100/total):0;
       const can=my==null&&!t.locked;
@@ -1065,201 +1175,312 @@ function jur(){
     const t=myTopics().find(x=>x.id===UI.th);
     if(!t){UI.th=null;return jur();}
     const mine=t.by===ME.nick,canPost=!t.locked||ME.admin;
-    return `<div class="tb">${bt('← Retro','topicexit')}<div class="grow"><b>${esc(t.cat)}</b><div class="tiny">@${esc(t.by)} · ${dt(t.ts)}</div></div>${tag(t.locked?'LOCK':'OPEN',t.locked?'er':'ok')}</div>
+    return `<div class="tb">${bt('Retro','topicexit')}<div class="grow"><b>${esc(t.cat)}</b><div class="tiny">@${esc(t.by)} · ${dt(t.ts)}</div></div>${tag(t.locked?'LOCK':'OPEN',t.locked?'er':'ok')}</div>
       <div class="card"><h3>${t.pinned?'<span class="tg pin">PIN</span> ':''}${esc(t.title)} <span class="hp">${tag(t.cat,'pp2')}</span></h3>
-      <div class="mut">@${esc(t.by)} · ${dt(t.ts)} · 👁 ${t.views||0} · 💬 ${(t.posts||[]).length} · ❤ ${(t.likes||[]).length}</div>
+      <div class="mut">@${esc(t.by)} · ${dt(t.ts)} · ${t.views||0} visus · ${(t.posts||[]).length} responsa · ${(t.likes||[]).length} likes</div>
       <div class="dt" style="font-size:.88rem;line-height:1.7">${esc(t.body)}</div>
       ${pollHtml(t)}
       <div class="gs" style="margin-top:9px">
-        <button class="like ${t.liked?'on':''}" data-a="topiclike" data-v="${t.id}">${t.liked?'❤':'♡'} ${(t.likes||[]).length}</button>
-        ${(mine||ME.admin)?bt('🗑','topicdel',t.id,'d sm'):''}
+        <button class="like ${t.liked?'on':''}" data-a="topiclike" data-v="${t.id}">${t.liked?'♥':'♡'} ${(t.likes||[]).length}</button>
+        ${(mine||ME.admin)?bt('Dele','topicdel',t.id,'d sm'):''}
         ${ME.admin?bt(t.pinned?'Unpin':'PIN','topicpin',t.id,'g sm'):''}
         ${ME.admin?bt(t.locked?'Unlock':'LOCK','topiclock',t.id,'g sm'):''}
+        ${ME.admin?bt('Recense','adminedit','topic|'+t.id,'g sm'):''}
+        ${!mine?bt('Delatio','report','topic|'+t.id+'|'+t.title,'d sm'):''}
       </div></div>
       <div class="card"><h3>Responsa <small class="mu">${(t.posts||[]).length}</small></h3>
-        ${(t.posts||[]).map((p,i)=>`<div class="it"><div class="r">${ava(unick(p.by)||{nick:p.by},'av-sm')}<div class="in"><b>@${esc(p.by)}</b><small>${dt(p.ts)}</small></div>${(p.by===ME.nick||ME.admin)?bt('×','delpost',p.id,'d sm'):''}</div><div class="dt">${esc(p.text)}</div></div>`).join('')||e('Responsa desunt','💬')}
-        ${canPost?`<div class="sr"><input id="ri" maxlength="500" placeholder="Responsum tuum..."><button class="bt p" data-a="ftreply" data-v="${t.id}">➤</button></div>`:'<div class="al">🔒 Tema clausa est.</div>'}
+        ${(t.posts||[]).map((p,i)=>`<div class="it"><div class="r">${ava(unick(p.by)||{nick:p.by},'av-sm')}<div class="in"><b>@${esc(p.by)}</b><small>${dt(p.ts)}</small></div>${(p.by===ME.nick||ME.admin)?bt('×','delpost',p.id,'d sm'):''}</div><div class="dt">${esc(p.text)}</div>
+          <div class="gs" style="margin-top:6px">${ME.admin?bt('Recense','adminedit','post|'+p.id,'g sm'):''}${p.by!==ME.nick?bt('Delatio','report','post|'+p.id+'|responsum','d sm'):''}</div></div>`).join('')||e('Responsa desunt','#f472b6')}
+        ${canPost?`<div class="sr"><input id="ri" maxlength="500" placeholder="Responsum tuum..."><button class="bt p" data-a="ftreply" data-v="${t.id}">Mitte</button></div>`:'<div class="al">Tema clausa est.</div>'}
       </div>`;
   }
+  const catList=cats('topic').map(c=>c.name);
+  const cat=catList.includes(UI.jcat)?UI.jcat:'Omnes';
   const q=(UI.jq||'').trim().toLowerCase();
-  let list=myTopics().filter(t=>(UI.jcat==='Omnes'||t.cat===UI.jcat)&&(!q||(t.title+' '+t.body+' '+t.by).toLowerCase().includes(q)));
+  let list=myTopics().filter(t=>(cat==='Omnes'||t.cat===cat)&&(!q||(t.title+' '+t.body+' '+t.by).toLowerCase().includes(q)));
   if(UI.jsort==='pop')list=list.slice().sort((a,b)=>((b.posts||[]).length+(b.likes||[]).length+(b.views||0))-((a.posts||[]).length+(a.likes||[]).length+(a.views||0)));
   list=list.slice().sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0));
-  return `<div class="tb">${bt('➕ Tema','newtopic','','p')}<span class="mut">${list.length} temata</span></div>
+  return `<div class="tb">${bt('Tema novum','newtopic','','p')}<span class="mut">${list.length} temata</span></div>
     <div class="tb"><input class="srch" id="jq" maxlength="60" value="${esc(UI.jq||'')}" placeholder="Quaere temata…"><button class="bt p sm" data-a="jsearch">Quaere</button></div>
-    <div class="tb"><div class="filters">${['Omnes',...TCAT].map(c=>`<button class="fchip ${UI.jcat===c?'on':''}" data-a="jcat" data-v="${c}">${c}</button>`).join('')}</div></div>
+    <div class="tb"><div class="filters">${['Omnes',...catList].map(c=>`<button class="fchip ${cat===c?'on':''}" data-a="jcat" data-v="${c}">${c}</button>`).join('')}</div></div>
     <div class="tb">${[['new','Nova'],['pop','Popularia']].map(([id,l])=>`<button class="fchip ${UI.jsort===id?'on':''}" data-a="jsort" data-v="${id}">${l}</button>`).join('')}</div>
-    ${list.map(topicCard).join('')||C('Temata',e('Temata hoc filtro desunt','🗣'))}`;
+    ${list.map(topicCard).join('')||C('Temata',e('Temata hoc filtro desunt','#f472b6'))}`;
 }
 function topicCard(t){
   return `<div class="card"><h3>${t.pinned?'<span class="tg pin">PIN</span> ':''}${t.locked?'<span class="tg lock">LOCK</span> ':''}${esc(t.title)} <span class="hp">${tag(t.cat,'pp2')}</span></h3>
-    <div class="mut">@${esc(t.by)} · ${dt(t.ts)} · 👁 ${t.views||0} · 💬 ${(t.posts||[]).length} · ❤ ${(t.likes||[]).length}${t.poll?' · 📊':''}</div>
+    <div class="mut">@${esc(t.by)} · ${dt(t.ts)} · ${t.views||0} visus · ${(t.posts||[]).length} responsa · ${(t.likes||[]).length} likes${t.poll?' · poll':''}</div>
     <div class="dt" style="font-size:.82rem">${esc(t.body.slice(0,220))}${t.body.length>220?'…':''}</div>
     <div class="gs" style="margin-top:8px">
-      <button class="like ${t.liked?'on':''}" data-a="topiclike" data-v="${t.id}">${t.liked?'❤':'♡'} ${(t.likes||[]).length}</button>
-      ${bt('Lege →','topicopen',t.id,'g sm')}
+      <button class="like ${t.liked?'on':''}" data-a="topiclike" data-v="${t.id}">${t.liked?'♥':'♡'} ${(t.likes||[]).length}</button>
+      ${bt('Lege','topicopen',t.id,'g sm')}
+      ${ME.admin?bt('Recense','adminedit','topic|'+t.id,'g sm'):''}
+      ${t.by!==ME.nick?bt('Delatio','report','topic|'+t.id+'|'+t.title,'d sm'):''}
     </div>
   </div>`;
 }
 
 /* ---------- Tvordzhи ---------- */
+function newsBadges(n){
+  return `${tag(n.cat||'—','pp2')}${n.company_name?tag(n.company_name,'ad'):''}${n.agency?tag('Diurnaria','ok'):''}`;
+}
 function news(){
   const list=myNews();
   if(UI.nwOpen){
     const n=list.find(x=>x.id===UI.nwOpen);
     if(!n){UI.nwOpen=null;return news();}
-    return `<div class="tb">${bt('← Retro','nwexit')}<div class="grow"><b>Acta civitatis</b><div class="tiny">@${esc(n.by)} · ${dt(n.ts)}</div></div></div>
-      <div class="card"><h3>${esc(n.title)} <span class="hp">${ME.admin?bt('🗑','delnews',n.id,'d sm'):''}</span></h3>
-      <div class="quote">@${esc(n.by)} · ${dt(n.ts)} · ❤ ${(n.likes||[]).length} · 💬 ${(n.comments||[]).length}</div>
+    const mine=n.mine||n.by===ME.nick;
+    return `<div class="tb">${bt('Retro','nwexit')}<div class="grow"><b>Acta civitatis</b><div class="tiny">${n.company_name?'Sodalitas «'+esc(n.company_name)+'» · ':''}@${esc(n.by)} · ${dt(n.ts)}</div></div></div>
+      <div class="card"><h3>${esc(n.title)} <span class="hp">${newsBadges(n)}</span></h3>
+      <div class="quote">${n.company_name?`Editor: <b>${esc(n.company_name)}</b> · auctor @${esc(n.by)}`:`@${esc(n.by)}`} · ${dt(n.ts)} · ${(n.likes||[]).length} likes · ${(n.comments||[]).length} commenta</div>
       <div class="dt" style="font-size:.9rem;line-height:1.7">${esc(n.body)}</div>
-      <div class="gs" style="margin-top:9px"><button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'❤':'♡'} ${(n.likes||[]).length}</button></div></div>
+      <div class="gs" style="margin-top:9px">
+        <button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'♥':'♡'} ${(n.likes||[]).length}</button>
+        ${!mine?bt(isSub('author',n.author)?'Sequi desine':'Sequi auctorem','subscribe','author|'+n.author,isSub('author',n.author)?'ok sm':'g sm'):''}
+        ${n.company&&!mine?bt(isSub('company',n.company)?'Sequi desine':'Sequi sodalitatem','subscribe','company|'+n.company,isSub('company',n.company)?'ok sm':'g sm'):''}
+        ${(mine||ME.admin)?bt('Recense','adminedit','news|'+n.id,'g sm'):''}
+        ${(mine||ME.admin)?bt('Dele','delnews',n.id,'d sm'):''}
+        ${!mine?bt('Delatio','report','news|'+n.id+'|'+n.title,'d sm'):''}
+      </div></div>
       <div class="card"><h3>Commenta <small class="mu">${(n.comments||[]).length}</small></h3>
-      ${(n.comments||[]).map(c=>`<div class="it"><div class="r">${ava(unick(c.by)||{nick:c.by},'av-sm')}<div class="in"><b>@${esc(c.by)}</b><small>${dt(c.ts)}</small></div>${(c.by===ME.nick||ME.admin)?bt('×','delcomment',c.id,'d sm'):''}</div><div class="dt">${esc(c.text)}</div></div>`).join('')||e('Commenta desunt','💬')}
-      <div class="sr"><input id="nci" maxlength="400" placeholder="Commentum..."><button class="bt p" data-a="nwcm" data-v="${n.id}">➤</button></div></div>`;
+      ${(n.comments||[]).map(c=>`<div class="it"><div class="r">${ava(unick(c.by)||{nick:c.by},'av-sm')}<div class="in"><b>@${esc(c.by)}</b><small>${dt(c.ts)}</small></div>${(c.by===ME.nick||ME.admin)?bt('×','delcomment',c.id,'d sm'):''}</div><div class="dt">${esc(c.text)}</div>
+        <div class="gs" style="margin-top:6px">${ME.admin?bt('Recense','adminedit','news_comment|'+c.id,'g sm'):''}${c.by!==ME.nick?bt('Delatio','report','news_comment|'+c.id+'|commentum','d sm'):''}</div></div>`).join('')||e('Commenta desunt','#e8c37a')}
+      <div class="sr"><input id="nci" maxlength="400" placeholder="Commentum..."><button class="bt p" data-a="nwcm" data-v="${n.id}">Mitte</button></div></div>`;
   }
-  return `<div class="tb">${ME.admin?bt('➕ Acta','newnews','','p'):''}</div>
-    ${list.map(n=>`<div class="card"><h3>${esc(n.title)} <span class="hp">${ME.admin?bt('🗑','delnews',n.id,'d sm'):''}</span></h3>
-      <div class="mut">@${esc(n.by)} · ${dt(n.ts)} · ❤ ${(n.likes||[]).length} · 💬 ${(n.comments||[]).length}</div>
+  const catList=cats('news').map(c=>c.name);
+  const cat=catList.includes(UI.nwCat)?UI.nwCat:'Omnes';
+  const q=(UI.nwQ||'').trim().toLowerCase();
+  const filtered=list.filter(n=>{
+    if(cat!=='Omnes'&&n.cat!==cat)return false;
+    if(UI.nwSub&&!n.sub)return false;
+    if(q&&!(n.title+' '+n.body+' '+n.by+' '+(n.company_name||'')).toLowerCase().includes(q))return false;
+    return true;
+  });
+  return `<div class="tb">${bt('Acta nova','newnews','','p')}<span class="mut">${filtered.length} acta</span></div>
+    <div class="tb"><input class="srch" id="nwq" maxlength="60" value="${esc(UI.nwQ||'')}" placeholder="Quaere acta…"><button class="bt p sm" data-a="nwsearch">Quaere</button></div>
+    <div class="tb"><div class="filters">${['Omnes',...catList].map(c=>`<button class="fchip ${cat===c?'on':''}" data-a="nwcat" data-v="${c}">${c}</button>`).join('')}<button class="fchip ${UI.nwSub?'on':''}" data-a="nwsub">Subscriptiones</button></div></div>
+    ${filtered.map(n=>{const mine=n.mine||n.by===ME.nick;return `<div class="card"><h3>${esc(n.title)} <span class="hp">${newsBadges(n)}</span></h3>
+      <div class="mut">${n.company_name?'Sodalitas «'+esc(n.company_name)+'» · ':''}@${esc(n.by)} · ${dt(n.ts)} · ${(n.likes||[]).length} likes · ${(n.comments||[]).length} commenta</div>
       <div class="dt" style="font-size:.82rem">${esc(n.body.slice(0,240))}${n.body.length>240?'…':''}</div>
-      <div class="gs" style="margin-top:8px"><button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'❤':'♡'} ${(n.likes||[]).length}</button>${bt('Lege →','nwopen',n.id,'g sm')}</div>
-    </div>`).join('')||C('Acta',e('Acta desunt','📰'))}`;
+      <div class="gs" style="margin-top:8px"><button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'♥':'♡'} ${(n.likes||[]).length}</button>${bt('Lege','nwopen',n.id,'g sm')}${!mine?bt(isSub('author',n.author)?'Sequi desine':'Sequi','subscribe','author|'+n.author,isSub('author',n.author)?'ok sm':'g sm'):''}${(mine||ME.admin)?bt('Recense','adminedit','news|'+n.id,'g sm'):''}${!mine?bt('Delatio','report','news|'+n.id+'|'+n.title,'d sm'):''}</div>
+    </div>`;}).join('')||C('Acta',e('Acta desunt','#e8c37a'))}`;
 }
 
 /* ---------- Vlada ---------- */
+function lawCard(l){
+  const y=+((l.votes||{}).y)||0,n=+((l.votes||{}).n)||0,tot=y+n;
+  const pc=tot?Math.round(y*100/tot):0;
+  const pet=l.kind==='petitio',goal=Math.max(1,+l.goal||0);
+  const gpc=pet?Math.min(100,Math.round(y*100/goal)):0;
+  const open=l.status==='vote';
+  const cls=l.status==='passed'?'ok':l.status==='rejected'?'er':'wn';
+  const mine=l.author===ME.uid;
+  return `<div class="card"><h3>${esc(l.title)} <span class="hp">${tag(pet?'Petitio':'Votum',pet?'pp2':'ad')}${tag(l.status,cls)}</span></h3>
+    <div class="mut">@${esc(l.by)} · ${dt(l.ts)}${pet?' · meta '+y+' / '+goal:''}</div>
+    <div class="dt">${esc(l.body)}</div>
+    ${pet?`<div class="pollopt" style="cursor:default"><span class="pbar" style="width:${gpc}%"></span><span class="pv"><span>${y} / ${goal}</span><span>${gpc}%</span></span></div>`:
+      `<div class="pollopt" style="cursor:default"><span class="pbar" style="width:${pc}%"></span><span class="pv"><span>${y} pro · ${n} contra</span><span>${pc}%</span></span></div>`}
+    ${open?`<div class="gs" style="margin-top:7px">
+      ${pet?(l.my==='y'?'<span class="pl ok">Sustentum</span>':bt('Sustine','lawvote',l.id+':y','p sm')):
+        bt('Pro','lawvote',l.id+':y',l.my==='y'?'p sm':'g sm')+bt('Contra','lawvote',l.id+':n',l.my==='n'?'d sm':'g sm')}
+      ${ME.admin?bt('Proba','lawdecide',l.id+':pass','ok sm')+bt('Improba','lawdecide',l.id+':fail','d sm'):''}
+    </div>`:`<div class="mut">Suffragium clausum</div>`}
+    <div class="gs" style="margin-top:7px">${ME.admin?bt('Recense','adminedit','law|'+l.id,'g sm'):''}${!mine?bt('Delatio','report','law|'+l.id+'|'+l.title,'d sm'):''}</div>
+  </div>`;
+}
 function vlada(){
   const tabs=[['sinedra','Sinedra'],['fisk','Fisk'],['tribunal','Tribunal']];
-  return `<div class="subtabs">${tabs.map(([id,l])=>`<button class="sbt ${UI.vsub===id?'on':''}" data-a="vsub" data-v="${id}">${l}</button>`).join('')}</div>${vladaBody()}`;
+  return `<div class="subtabs">${tabs.map(([id,l])=>`<button class="sbt ${UI.vsub===id?'on':''}" data-a="vsub" data-v="${id}">${dot(id==='sinedra'?'#a3e635':id==='fisk'?'#34d399':'#f472b6')}${l}</button>`).join('')}</div>${vladaBody()}`;
 }
 function vladaBody(){
   if(UI.vsub==='fisk'){
     const s=DB.stats||{};
-    const claimed=todayCount('ubi')>=1;
-    return `<div class="banner"><div class="sub">Aerarium · FISK</div><div class="amt">${UI.hide?'••••':fm(s.treasury||0)+' h'}</div>
-      <div class="sub">Portorium ${fm(cfg().tax)}% · Stipendium ${fm(cfg().ubi)} h / 24 h</div></div>
+    return `<div class="banner"><div class="sub">Aerarium · FISK</div><div class="amt">${fm(s.treasury||0)} h</div>
+      <div class="sub">Portorium ${fm(cfg().tax)}% · salaria e Fisco</div></div>
       <div class="gr">
-        ${statBox('Portorium summa',UI.hide?'••••':fm(s.fees||0)+' h')}
-        ${statBox('In Fiscum',UI.hide?'••••':fm(s.fisk_in||0)+' h')}
-        ${statBox('Ex Fisco',UI.hide?'••••':fm(s.fisk_out||0)+' h')}
+        ${statBox('Portorium summa',fm(s.fees||0)+' h')}
+        ${statBox('In Fiscum',fm(s.fisk_in||0)+' h')}
+        ${statBox('Ex Fisco',fm(s.fisk_out||0)+' h')}
         ${statBox('Operationes',s.ops||s.ledger_count||0)}
       </div>
-      ${C('Stipendium cotidianum',`<div class="rw"><span>Hodie</span><b>${todayCount('ubi')} / 1 · ${fm(cfg().ubi)} h</b></div>
-        <div class="gs" style="margin-top:8px">${cfg().ubi>0?(claimed?'<span class="pl ok">Hodie vindicatum</span>':bt('🏛 Vindica stipendium','claim','','ok')):'<span class="pl er">Stipendium non est</span>'}${ME.admin?bt('⚙ Configurare','fiskcfg'):''}</div>`)}
+      ${C('Portorium',`<div class="rw"><span>Rate</span><b>${fm(cfg().tax)}%</b></div><div class="mut">Vectigal ex auctionibus et venditionibus in Fiscum.</div>
+        <div class="gs" style="margin-top:8px">${ME.admin?bt('Configurare','fiskcfg','','p'):''}</div>`)}
       ${C('Liber Fisci',ledgerRows(DB.book||[],false))}`;
   }
   if(UI.vsub==='tribunal'){
-    return `<div class="tb">${bt('➕ Causa','newcase','','p')}</div>
+    return `<div class="tb">${bt('Nova causa','newcase','','p')}</div>
       ${myCases().map(c=>`<div class="card"><h3>@${esc(c.by)} → @${esc(c.against)} <span class="hp">${tag(c.status,c.status==='open'?'wn':c.status==='guilty'?'er':'ok')}</span></h3>
         <div class="mut">${dt(c.ts)}${c.judge?' · iudex @'+esc(c.judge):''}</div>
         <div class="dt">${esc(c.body)}${c.evidence?'\n\nProbationes: '+esc(c.evidence):''}</div>
         ${c.verdict?`<div class="quote">Verdictum: ${esc(c.verdict)}</div>`:''}
-        ${ME.admin&&c.status==='open'?`<div class="gs" style="margin-top:8px">${bt('⚖ Iudica','judge',c.id,'p')}</div>`:''}
-      </div>`).join('')||C('Causae',e('Causae desunt','⚖'))}`;
+        ${ME.admin&&c.status==='open'?`<div class="gs" style="margin-top:8px">${bt('Iudica','judge',c.id,'p')}</div>`:''}
+      </div>`).join('')||C('Causae',e('Causae desunt','#f472b6'))}`;
   }
-  return `<div class="tb">${bt('➕ Lex','newlaw','','p')}</div>
-    ${myLaws().map(l=>{
-      const y=+l.votes.y||0,n=+l.votes.n||0,tot=y+n,pc=tot?Math.round(y*100/tot):0;
-      const cls=l.status==='passed'?'ok':l.status==='rejected'?'er':'wn';
-      return `<div class="card"><h3>${esc(l.title)} <span class="hp">${tag(l.status,cls)}</span></h3>
-        <div class="mut">@${esc(l.by)} · ${dt(l.ts)}</div>
-        <div class="dt">${esc(l.body)}</div>
-        ${l.status==='vote'?`<div class="pollopt" style="cursor:default"><span class="pbar" style="width:${pc}%"></span><span class="pv"><span>✓ ${y} · ✗ ${n}</span><span>${pc}% pro</span></span></div>
-          <div class="gs" style="margin-top:7px">${bt('✓ Pro','lawvote',l.id+':y',l.my==='y'?'p sm':'g sm')}${bt('✗ Contra','lawvote',l.id+':n',l.my==='n'?'d sm':'g sm')}${ME.admin?bt('✔ Proba','lawdecide',l.id+':pass','ok sm')+bt('✖ Improba','lawdecide',l.id+':fail','d sm'):''}</div>`:
-          `<div class="rw"><span>Pro / Contra</span><b><span class="gn">${y}</span> / <span class="rd">${n}</span> · ${pc}%</b></div><div class="mut">Suffragium clausum</div>`}
-      </div>`;
-    }).join('')||C('Leges',e('Leges desunt','⚖'))}`;
+  const canLaw=ME.admin||hasTag('legislator');
+  const q=(UI.lawQ||'').trim().toLowerCase();
+  const kind=UI.lawKind||'all';
+  const list=myLaws().filter(l=>{
+    if(kind!=='all'&&l.kind!==kind)return false;
+    if(q&&!(l.title+' '+l.body+' '+l.by).toLowerCase().includes(q))return false;
+    return true;
+  });
+  return `<div class="tb"><input class="srch" id="lawq" maxlength="80" value="${esc(UI.lawQ||'')}" placeholder="Quaere leges…"><button class="bt p sm" data-a="lawsearch">Quaere</button>${bt('Nova petitio','newlaw','','p')}${canLaw?bt('Nova lex','newlaw','votum'):''}</div>
+    <div class="tb"><div class="filters">${[['all','Omnia'],['petitio','Petitiones'],['votum','Vota']].map(([id,l])=>`<button class="fchip ${kind===id?'on':''}" data-a="lkind" data-v="${id}">${l}</button>`).join('')}</div></div>
+    ${list.map(lawCard).join('')||C('Leges',e('Leges desunt','#a3e635'))}`;
 }
 
 /* ---------- Quaere ---------- */
+const KINDS=[['','Omnia'],['user','Cives'],['lot','Lots'],['company','Sodalitates'],['topic','Temata'],['news','Acta'],['law','Leges']];
+const KIND_NAME={user:'Civis',lot:'Lot',company:'Sodalitas',topic:'Tema',news:'Acta',law:'Lex'};
+const KIND_ICON={user:'#8aa4ff',lot:'#fbbf24',company:'#b07bff',topic:'#f472b6',news:'#e8c37a',law:'#a3e635'};
+function searchCats(){
+  if(UI.sk==='law')return [['petitio','Petitio'],['votum','Votum']];
+  if(UI.sk==='user')return [];
+  const names=UI.sk?cats(UI.sk).map(c=>c.name):[...new Set(['lot','company','topic','news'].flatMap(k=>cats(k).map(c=>c.name)))];
+  return names.map(n=>[n,n]);
+}
+function readSearch(){
+  const g=id=>($('#'+id)?.value||'').trim();
+  UI.sq=g('sq');UI.sfrom=g('sfrom');UI.sto=g('sto');UI.smin=g('smin');UI.smax=g('smax');
+}
+async function doSearch(){
+  if(!ME||UI.sload)return;
+  const has=UI.sq||UI.sc||UI.sfrom||UI.sto||UI.smin||UI.smax;
+  if(!has){toast('Quaestio vel filtra necessaria','i');return;}
+  UI.sload=true;render();
+  try{
+    const d=await rpc('api_search',{
+      p_q:UI.sq||'',p_kind:UI.sk||'',p_cat:UI.sc||'',
+      p_from:UI.sfrom||null,p_to:UI.sto||null,
+      p_sort:UI.ssort||'new',
+      p_min:UI.smin!==''?+UI.smin:null,
+      p_max:UI.smax!==''?+UI.smax:null
+    });
+    UI.sres=(d&&d.items)||[];
+  }catch(err){toast(errMsg(err),'e');}
+  UI.sload=false;render();
+}
+function sResRow(it){
+  const kind=it.kind;const price=it.price!=null?`<b>${fm(it.price)} h</b>`:'';
+  const extra=kind==='lot'||kind==='company'?it.cat:(kind==='law'?(it.cat==='petitio'?'Petitio':'Votum'):(it.cat||''));
+  return `<div class="it"><div class="r" data-a="sopen" data-v="${kind}|${it.id}|${esc(it.title)}"><i>${dot(KIND_ICON[kind])}</i><div class="in"><b>${esc(it.title)}</b>
+    <small>${KIND_NAME[kind]||kind}${extra?' · '+esc(extra):''}${it.by?' · @'+esc(it.by):''} · ${dt(it.ts)}</small></div>${price}</div>
+    ${it.sub&&it.sub!==it.title?`<div class="dt" style="font-size:.8rem">${esc(it.sub)}</div>`:''}</div>`;
+}
 function quaere(){
-  const q=(UI.q||'').trim().toLowerCase();
-  const body=`<div class="tb"><input class="srch" id="q" maxlength="60" value="${esc(UI.q||'')}" placeholder="Quaere cives, temata, lots, acta, sodalitates…"><button class="bt p" data-a="search">Quaere</button></div>`;
-  if(q.length<2)return body+`<div class="mut" style="padding:2px 2px 6px">Minimum 2 signa</div>`;
-  const has=(...a)=>a.join(' ').toLowerCase().includes(q);
-  const us=users().filter(u=>has(u.nick,u.name,u.sur,u.roy,u.id)).slice(0,8);
-  const ts=myTopics().filter(t=>has(t.title,t.body,t.by)).slice(0,6);
-  const ls=myLots().filter(l=>has(l.title,l.body,l.seller)).slice(0,6);
-  const ns=myNews().filter(n=>has(n.title,n.body,n.by)).slice(0,6);
-  const js=myJobs().filter(j=>has(j.title,j.body,j.by)).slice(0,6);
-  const cs=myCompanies().filter(c=>has(c.name,c.about,c.owner,c.cat)).slice(0,6);
-  const laws=myLaws().filter(l=>has(l.title,l.body,l.by)).slice(0,5);
-  const secs=[];
-  if(us.length)secs.push(C('Cives',us.map(u=>`<div class="it"><div class="r" data-a="prof" data-v="${esc(u.nick)}">${ava(u,'av-sm')}<div class="in"><b>${esc(u.name)} ${esc(u.sur)}</b><small>@${esc(u.nick)} · ${esc(u.roy)} · ${esc(u.id)}</small></div>${plTag(u)}</div></div>`).join('')));
-  if(ts.length)secs.push(C('Temata',ts.map(t=>`<div class="it"><div class="r" data-a="topicopen" data-v="${t.id}"><i>🗣</i><div class="in"><b>${esc(t.title)}</b><small>@${esc(t.by)} · ${(t.posts||[]).length} responsa · ${dt(t.ts)}</small></div></div></div>`).join('')));
-  if(ls.length)secs.push(C('Lots',ls.map(l=>`<div class="it"><div class="r" data-a="tab" data-v="prad"><i>${l.kind==='auction'?'🔨':'🛒'}</i><div class="in"><b>${esc(l.title)}</b><small>${fm(l.price)} h · @${esc(l.seller)} · ${esc(l.cat)}</small></div></div></div>`).join('')));
-  if(ns.length)secs.push(C('Acta',ns.map(n=>`<div class="it"><div class="r" data-a="nwopen" data-v="${n.id}"><i>📰</i><div class="in"><b>${esc(n.title)}</b><small>@${esc(n.by)} · ${dt(n.ts)}</small></div></div></div>`).join('')));
-  if(js.length)secs.push(C('Opera',js.map(j=>`<div class="it"><div class="r" data-a="tab" data-v="labor"><i>🛠</i><div class="in"><b>${esc(j.title)}</b><small>${fm(j.pay)} h · ${esc(j.status)} · ${dt(j.ts)}</small></div></div></div>`).join('')));
-  if(cs.length)secs.push(C('Sodalitates',cs.map(c=>`<div class="it"><div class="r" data-a="tab" data-v="caten"><i>🏛</i><div class="in"><b>${esc(c.name)}</b><small>@${esc(c.owner)} · ${esc(c.cat)} · ${c.members.length+1} membra</small></div></div></div>`).join('')));
-  if(laws.length)secs.push(C('Leges',laws.map(l=>`<div class="it"><div class="r" data-a="tab" data-v="vlada"><i>⚖</i><div class="in"><b>${esc(l.title)}</b><small>@${esc(l.by)} · ${esc(l.status)}</small></div></div></div>`).join('')));
-  return body+(secs.join('')||C('Quaere',e('Nihil inventum','🔎')));
+  const kind=UI.sk||'';
+  const scs=searchCats();
+  const priceOn=kind===''||kind==='lot';
+  return `<div class="tb"><input class="srch" id="sq" maxlength="60" value="${esc(UI.sq||'')}" placeholder="Quaere nomen, titulum, textum…"><button class="bt p sm" data-a="search">Quaere</button></div>
+    <div class="tb"><div class="filters">${KINDS.map(([id,l])=>`<button class="fchip ${kind===id?'on':''}" data-a="skind" data-v="${id}">${l}</button>`).join('')}</div></div>
+    ${scs.length?`<div class="tb"><div class="filters">${[['','Omnes'],...scs].map(([id,l])=>`<button class="fchip ${UI.sc===id?'on':''}" data-a="scat" data-v="${id}">${esc(l)}</button>`).join('')}</div></div>`:''}
+    <div class="card"><h3>Filtra</h3>
+      <div class="gr">
+        <div class="fl"><label>Ab die</label><input id="sfrom" type="date" value="${esc(UI.sfrom||'')}"></div>
+        <div class="fl"><label>Ad diem</label><input id="sto" type="date" value="${esc(UI.sto||'')}"></div>
+        ${priceOn?`<div class="fl"><label>Pretium min (h)</label><input id="smin" type="number" min="0" step="0.01" value="${esc(UI.smin||'')}"></div>
+        <div class="fl"><label>Pretium max (h)</label><input id="smax" type="number" min="0" step="0.01" value="${esc(UI.smax||'')}"></div>`:''}
+      </div>
+      <div class="filters" style="margin-top:8px">${[['new','Nova'],['old','Vetera'],['cheap','Vilia'],['expensive','Cara'],['popular','Popularia']].map(([id,l])=>`<button class="fchip ${UI.ssort===id?'on':''}" data-a="ssort" data-v="${id}">${l}</button>`).join('')}</div>
+    </div>
+    ${UI.sres===null?C('Quaere',e('Filtra elige, deinde «Quaere».','#94a3b8')):
+      `<div class="tb"><span class="mut">${UI.sres.length} resultata</span><button class="bt g sm" data-a="sclear">Purgare</button></div>
+       ${UI.sres.map(sResRow).join('')||C('Quaere',e('Nihil inventum','#94a3b8'))}`}`;
 }
 
 /* ---------- Haiess ---------- */
 const FAQ=[
-  ['Quomodo Polog confirmatur?','Neophytus mittit petitionem ex Holb. Abrodié statum in ROOT mutat. Confirmatus Civis plenum accessum accipit.'],
-  ['Quid est Portorium?','Vectigal transmissionis in Fisci aerarium. Rate ab Abrodié in Vlada → Fisk mutatur (0–15%).'],
-  ['Quid facit Sequester?','Pecuniam custodit dum venditor tradit et emptor liberat. Ante traditionem emptor potest abrogare.'],
+  ['Quomodo Polog confirmatur?','Neophytus mittit petitionem ex Holb. Abrodié statum in ROOT mutat. Civis confirmatus plenum accessum accipit.'],
+  ['Quid est Portorium?','Vectigal 3% ex venditionibus et auctionibus in Fisci aerarium. Rate in Vlada → Fisk mutatur (0–15%).'],
+  ['Qui status functionales sunt?','Pisach: 7 acta per diem. Legislator: proponit vota in Sinedra. Support: limites auxit in Haiess. Status in Ustroy videntur.'],
+  ['Quid est Salarium?','Merces statuta quam Abrodié ex Fisco solvit. Salarium et dies solutionis in Holb et Ustroy videntur.'],
   ['Cur actiones meas morantur?','Limites anti-spam: morae breves inter nuntios, lots, delationes; limites cotidiani in Ustroy videntur.'],
-  ['Quomodo sodalitas creatur?','Caten → Sodalitas. Pretium 50 h in Fiscum. Max. 2 propriae. Aerarium societatis separatum.'],
-  ['Quid est Mutus?','Interdictio scribendi ad tempus: forum, chat, lots, commenta. Aerarium, suffragium, Haiess patent.']
+  ['Quomodo sodalitas creatur?','Caten → Sodalitas. Pretium 50 h in Fiscum. Aerarium societatis separatum. Diurnaria ab Abrodié declaratur.'],
+  ['Quid sunt subscriptiones?','Sequi potes auctores acta et sodalitates. Nuntii de novis actis tantum ad subscriptores veniunt.'],
+  ['Quomodo quaero?','Quaere quaerit in civibus, lots, sodalitatibus, tematis, actis et legibus. Filtra: genus, categoria, dies, pretium, ordo.'],
+  ['Quid possum delationi subicere?','Cives, acta, commenta, temata, responsa, lots, sodalitates et leges. Delatio in ROOT recensetur.'],
+  ['Quid est Mutus?','Interdictio scribendi ad tempus: forum, chat, lots, commenta. Aerarium, suffragium, Haiess patent.'],
+  ['Cur zvernennia limita sunt?','Tria zvernennia per diem, ex quibus unum urgens. Aperta simul: tria. Support et Abrodié limites altiores habent.']
 ];
 function help(){
   const adm=ME.admin;
   if(UI.ticket){
     const t=myTickets().find(x=>x.id===UI.ticket);
     if(!t||(t.by!==ME.nick&&!adm)){UI.ticket=null;return help();}
-    return `<div class="tb">${bt('← Retro','ticketexit')}<div class="grow"><b>${esc(t.subject)}</b><div class="tiny">@${esc(t.by)} · ${dt(t.ts)} · ${(t.messages||[]).length} 💬</div></div>${t.priority==='urgens'?tag('URGENS','wn'):''}</div>
+    return `<div class="tb">${bt('Retro','ticketexit')}<div class="grow"><b>${esc(t.subject)}</b><div class="tiny">@${esc(t.by)} · ${dt(t.ts)} · ${(t.messages||[]).length} responsa</div></div>${t.priority==='urgens'?tag('URGENS','wn'):''}</div>
       <div class="card"><h3>${esc(t.subject)} <span class="hp">${tag(t.status,t.status==='open'?'ok':'er')}</span></h3>
       <div class="quote">@${esc(t.by)} · ${esc(t.priority)} · ${esc(t.status)}</div>
-      <div class="cm">${(t.messages||[]).map(m=>`<div class="ms ${m.by===ME.nick?'s':'o'}">${esc(m.text)}<small>@${esc(m.by)} · ${dt(m.ts)}</small></div>`).join('')||e('Silentium','💬')}</div>
+      <div class="cm">${(t.messages||[]).map(m=>`<div class="ms ${m.by===ME.nick?'s':'o'}">${esc(m.text)}<small>@${esc(m.by)} · ${dt(m.ts)}</small></div>`).join('')||e('Silentium','#fb923c')}</div>
       ${t.status==='open'?`<div class="sr"><input id="tr" maxlength="500" placeholder="Responsum..."><button class="bt p" data-a="replyticket">Mitte</button></div>`:'<div class="al i">Zvernennia clausum.</div>'}
-      <div class="gs" style="margin-top:9px">${t.status==='open'&&(t.by===ME.nick||adm)?bt('Claude','ticketclose',t.id,'d'):''}${t.status!=='open'&&adm?bt('Aperi','ticketreopen',t.id,'ok'):''}${adm?bt('🗑','ticketdel',t.id,'d'):''}</div></div>`;
+      <div class="gs" style="margin-top:9px">${t.status==='open'&&(t.by===ME.nick||adm)?bt('Claude','ticketclose',t.id,'d'):''}${t.status!=='open'&&adm?bt('Aperi','ticketreopen',t.id,'ok'):''}${adm?bt('Dele','ticketdel',t.id,'d'):''}</div></div>`;
   }
   const all=myTickets().filter(t=>adm||t.by===ME.nick);
   const list=adm&&UI.tkF!=='all'?all.filter(t=>t.status===UI.tkF):all;
   const openMine=myTickets().filter(t=>t.by===ME.nick&&t.status==='open').length;
-  return `${C('FAQ',FAQ.map(([q,a])=>`<div class="faqb"><button data-a="faq" data-v="${esc(q)}">${esc(q)}</button>${UI.faq===q?`<div>${esc(a)}</div>`:''}</div>`).join(''))}
-    <div class="card"><h3>Haiess <span class="hp">${openMine<3?bt('➕ Zvernennia','newticket','','p sm'):'<span class="pl wn">3 aperta</span>'}</span></h3>
+  const today=myTickets().filter(t=>t.by===ME.nick&&new Date(t.ts)>=new Date(new Date().setHours(0,0,0,0))).length;
+  const cap=ticketCap(),ucap=urgentCap();
+  return `${C('FAQ',FAQ.map(([q,a])=>`<div class="faqb"><button data-a="faq" data-v="${esc(q)}">${dot('#fb923c')}${esc(q)}</button>${UI.faq===q?`<div>${esc(a)}</div>`:''}</div>`).join(''))}
+    <div class="card"><h3>Haiess <span class="hp">${openMine<openCap()?bt('Zvernennia','newticket','','p sm'):'<span class="pl wn">'+openCap()+' aperta</span>'}</span></h3>
+      <div class="rw"><span>Hodie</span><b>${today} / ${cap}</b></div>
+      <div class="rw"><span>Urgentia hodie</span><b>${urgentToday()} / ${ucap}</b></div>
       ${adm?`<div class="tb"><div class="filters">${[['all','Omnia'],['open','Aperta'],['closed','Clausa']].map(([id,l])=>`<button class="fchip ${UI.tkF===id?'on':''}" data-a="tkF" data-v="${id}">${l}</button>`).join('')}</div></div>`:''}
-      ${list.map(t=>`<div class="it ${t.priority==='urgens'?'un':''}"><div class="r" data-a="openticket" data-v="${t.id}"><i>${t.status==='open'?'🟢':'🔴'}</i><div class="in"><b>${esc(t.subject)}</b><small>@${esc(t.by)} · ${dt(t.ts)} · ${(t.messages||[]).length} 💬</small></div>${t.priority==='urgens'?tag('URGENS','wn'):tag(t.status,t.status==='open'?'ok':'')}</div></div>`).join('')||e('Zvernennia desunt','🆘')}</div>`;
+      ${list.map(t=>`<div class="it ${t.priority==='urgens'?'un':''}"><div class="r" data-a="openticket" data-v="${t.id}"><i>${dot(t.status==='open'?'#34d399':'#fb7185')}</i><div class="in"><b>${esc(t.subject)}</b><small>@${esc(t.by)} · ${dt(t.ts)} · ${(t.messages||[]).length} responsa</small></div>${t.priority==='urgens'?tag('URGENS','wn'):tag(t.status,t.status==='open'?'ok':'')}</div></div>`).join('')||e('Zvernennia desunt','#fb923c')}</div>`;
 }
 
 /* ---------- Ustroy ---------- */
+const STATUS_GUIDE=[
+  ['Neophytus','Accessus probatorius: Holb, Segnalи, Chatи, Ustroy, Haiess tantum. Plenum ius post probationem.'],
+  ['Civis','Plenum ius civitatis: forum, mercatus, sodalitates, acta, suffragium.'],
+  ['Abrodié','Monarcha et administrator: ROOT, sanctiones, salaria, categoriae, recensio omnium.'],
+  ['Exsul','Accessus interdictus. Aerarium in Fiscum redit.']
+];
+const TAG_GUIDE=[
+  ['Pisach','Scriptor acta: 7 acta per diem (ceteri 1).'],
+  ['Legislator','Proponit vota in Sinedra; leges videntur statim.'],
+  ['Support','Minister Haiess: fines altiores (10 zvernennia, 3 urgentia) et cunctae petitiones.']
+];
 function ust(){
   const m=ME,r=m.rating||{avg:0,n:0},a=m.activity||{ops:0,topics:0,lots:0,companies:0};
   const sw=(on,act)=>`<button class="sw ${on?'on':''}" data-a="${act}"></button>`;
   const lim=(k,l,mx)=>`<div class="rw"><span>${l}</span><b>${todayCount(k)} / ${mx}</b></div>`;
-  const gloss=[['Aditus','introitus in rete'],['Inscriptio','creatio Iékzalьzи'],['Civis','plenum ius civitatis'],['Neophytus','status probatorius'],['Exsul','accessus interdictus'],['Kapol','unitas monetae'],['Aerarium · Fisk','thesaurus civitatis'],['Portorium','vectigal transmissionis'],['Stipendium','cotidianum fisci donum'],['Sequester','custodia pacti'],['Auctio','venditio ad licitationem'],['Sodalitas','societas mercatoria'],['Merces','merces operis'],['Delatio','denuntiatio abusus'],['Mutus','interdictio scribendi'],['Sinedra','consilium civitatis'],['Causa','iudicium'],['Lex','norma civitatis'],['Segnalи','nuntii systematis']];
-  const muteAlert=m.muted?`<div class="al e">🔇 Mutus: scriptura interdicta${m.muted_until?' ad '+dt(m.muted_until):''}. Aerarium, suffragium et Haiess patent.</div>`:'';
+  const sal=mySalaries().find(s=>s.uid===m.uid&&s.active);
+  const subs=(DB.subs||[]).length;
+  const muteAlert=m.muted?`<div class="al e">Mutus: scriptura interdicta${m.muted_until?' ad '+dt(m.muted_until):''}. Aerarium, suffragium et Haiess patent.</div>`:'';
   return muteAlert+`<div class="cols"><div class="stack">
     ${C('Profil',`<div class="it"><div class="r"><div class="av">${ini(m.nick)}</div><div class="in"><b>${esc(m.name)} ${esc(m.sur)}</b><small>@${esc(m.nick)} · ${esc(m.roy)}</small></div>${statusTag(m.status)}</div></div>
+      <div class="rw"><span>Rang</span><b>${esc(m.rank||'Zinkie')}</b></div>
       <div class="rw"><span>Rébnostь</span><b>${esc(m.reb)}</b></div>
+      <div class="rw"><span>Status functionales</span><b>${tagsHtml(m)||'—'}</b></div>
       <div class="rw"><span>Fama</span><b>${r.n?`<span class="stars">${starsHtml(r.avg)}</span> ${r.avg} (${r.n})`:'—'}</b></div>
-      <div class="rw"><span>Operationes</span><b>${a.ops} · temata ${a.topics} · lots ${a.lots}</b></div>
-      <div class="rw"><span>Sodalitates</span><b>${a.companies}</b></div>
+      <div class="rw"><span>Operationes</span><b>${a.ops} · temata ${a.topics} · lots ${a.lots} · acta ${a.news||0}</b></div>
+      <div class="rw"><span>Sodalitates</span><b>${a.companies} · subscriptiones ${subs}</b></div>
+      <div class="rw"><span>Salarium</span><b>${sal?fm(sal.amount)+' h / dies':'—'}</b></div>
       <div class="rw"><span>Balans</span><b>${balText(m.balance)}</b></div>
       <div class="rw"><span>id</span><b class="mono">${esc(m.id)}</b></div>
-      <div class="gs" style="margin-top:10px">${bt('✏ Muta nomen','editprofile','','p')}${bt('🔑 Muta clavem','changepass')}${bt('👤 Profil','prof',m.nick)}</div>`)}
+      <div class="gs" style="margin-top:10px">${bt('Muta nomen','editprofile','','p')}${bt('Muta clavem','changepass')}${bt('Profil','prof',m.nick)}</div>`)}
     ${C('Interfacies',`
       <div class="setrow"><span>Lingua</span><div class="seg">
         <button class="segbtn ${UI.lang==='la'?'on':''}" data-a="lang" data-v="la">Appentanskie</button>
         <button class="segbtn ${UI.lang==='uk'?'on':''}" data-a="lang" data-v="uk">Українська</button>
       </div></div>
       <div class="setrow"><span>Modus</span><div class="seg">
-        <button class="segbtn ${UI.theme==='dark'?'on':''}" data-a="theme" data-v="dark">🌙 Tenebrae</button>
-        <button class="segbtn ${UI.theme==='light'?'on':''}" data-a="theme" data-v="light">☀ Lux</button>
+        <button class="segbtn ${UI.theme==='dark'?'on':''}" data-a="theme" data-v="dark">${dot('#8aa4ff')}Tenebrae</button>
+        <button class="segbtn ${UI.theme==='light'?'on':''}" data-a="theme" data-v="light">${dot('#fbbf24')}Lux</button>
       </div></div>
       <div class="setrow"><span>Color</span><div class="accents">
         ${ACCENTS.map(([id,label,c1,c2])=>`<button class="acc ${UI.accent===id?'on':''}" style="--a1:${c1};--a2:${c2}" data-a="accent" data-v="${id}" title="${label}" aria-label="${label}"></button>`).join('')}
       </div></div>
       <div class="setrow"><span>Modus compactus</span>${sw(UI.compact,'compact')}</div>
-      <div class="setrow"><span>Celare Kapol</span>${sw(UI.hide,'hide')}</div>
-      <div class="setrow"><span>Sonus</span><span class="gs" style="align-items:center">${sw(UI.sound,'sound')}<button class="bt g sm" data-a="testsnd">🔊</button></span></div>`)}
-    ${C('Securitas',`<div class="rw"><span>Clavis</span><button class="bt g sm" data-a="changepass">🔑 Muta</button></div><div class="rw"><span>Ultimus aditus</span><b>${dt(m.last)}</b></div>
-      <div class="gs" style="margin-top:10px">${bt('⬇ Archivum meum','exportme','','g')}${bt('🚪 Exitus','logout','','d')}</div>`)}
+      <div class="setrow"><span>Celare Kapol aliis</span>${sw(UI.hide,'hide')}</div>
+      <div class="setrow"><span>Sonus</span><span class="gs" style="align-items:center">${sw(UI.sound,'sound')}<button class="bt g sm" data-a="testsnd">Proba</button></span></div>
+      <div class="hint">Celare Kapol tantum aliis celat; tu semper tuum balans vides.</div>`)}
+    ${C('Securitas',`<div class="rw"><span>Clavis</span><button class="bt g sm" data-a="changepass">Muta</button></div><div class="rw"><span>Ultimus aditus</span><b>${dt(m.last)}</b></div>
+      <div class="hint">Clavis in server ut a te lecta servatur. Prototypum privatum: cave, ne aliis ostendas.</div>
+      <div class="gs" style="margin-top:10px">${bt('Archivum meum','exportme','','g')}${bt('Exitus','logout','','d')}</div>`)}
   </div><div class="stack">
-    ${C('Limites hodierni',LIMITS.map(([k,l,mx])=>lim(k,l,mx)).join(''))}
-    ${C('Lexicon',`<div class="gl">${gloss.map(([k,v])=>`<div><b>${esc(k)}</b> — ${esc(v)}</div>`).join('')}</div>`)}
-    <div class="card"><h3>Data</h3>${rows([['Versio','Appentana 6 · cloud'],['Cives',(DB.stats||{}).cives||0],['Aerarium',balText((DB.stats||{}).treasury||0)]])}</div>
+    ${C('Status accessus',STATUS_GUIDE.map(([k,v])=>`<div class="gl"><div><b>${esc(k)}</b> — ${esc(v)}</div></div>`).join(''))}
+    ${C('Status functionales',TAG_GUIDE.map(([k,v])=>`<div class="gl"><div><b>${esc(k)}</b> — ${esc(v)}</div></div>`).join(''))}
+    ${C('Limites hodierni',LIMITS.map(([k,l,mx])=>lim(k,l,k==='ticket'?ticketCap():k==='news'?newsCap():mx)).join(''))}
+    <div class="card"><h3>Data</h3>${rows([['Versio','Appentana 7 · cloud'],['Cives',(DB.stats||{}).cives||0],['Aerarium',balText((DB.stats||{}).treasury||0)]])}</div>
   </div></div>`;
 }
 
@@ -1267,7 +1488,7 @@ function ust(){
 function root(){
   if(!ME.admin)return `<div class="al e">ROOT solum Abrodié patet.</div>`;
   if(!UI.rootOk){
-    return `<div class="gate"><div class="lg">🛡</div><div class="card"><h3>ROOT</h3>
+    return `<div class="gate"><div class="lg">Ś</div><div class="card"><h3>ROOT</h3>
       <div class="mbd">Confirma Clavem administratoris.</div>
       <div class="fl"><label>Clavis</label><input id="rpw" type="password" maxlength="72"></div>
       <div class="authmsg" id="a-err"></div>
@@ -1275,36 +1496,62 @@ function root(){
   }
   const all=users().slice().sort((a,b)=>String(a.id).localeCompare(String(b.id)));
   const q=(UI.rootQ||'').trim().toLowerCase();
-  const pu=all.filter(u=>(UI.rootP==='all'||u.status===UI.rootP)&&(!q||(u.nick+' '+u.name+' '+u.sur+' '+u.id+' '+u.roy).toLowerCase().includes(q)));
+  const pu=all.filter(u=>(UI.rootP==='all'||u.status===UI.rootP)&&(!q||(u.nick+' '+u.name+' '+u.sur+' '+u.id+' '+u.roy+' '+(u.rank||'')+' '+u.reb).toLowerCase().includes(q)));
   const pend=all.filter(u=>u.status==='neophyte');
   const reps=myReports().filter(r=>r.status==='open');
+  const sals=mySalaries();
   const s=DB.stats||{},tab=UI.rootTab||'users';
+  const salOf=uid=>sals.find(x=>x.uid===uid);
   let body='';
   if(tab==='users'){
-    body=`<div class="card"><h3>👥 Cives <span class="hp">${bt('📣 Nuntius','broadcast','','p sm')}</span></h3>
-      <div class="tb"><input class="srch" id="rootQ" maxlength="40" value="${esc(UI.rootQ||'')}" placeholder="Quaere: nomen, id, ĵamya…"><button class="bt p sm" data-a="rootsearch">Quaere</button></div>
+    body=`<div class="card"><h3>Cives <span class="hp">${bt('Nuntius','broadcast','','p sm')}</span></h3>
+      <div class="tb"><input class="srch" id="rootQ" maxlength="40" value="${esc(UI.rootQ||'')}" placeholder="Quaere: nomen, id, rang, rébnostь…"><button class="bt p sm" data-a="rootsearch">Quaere</button></div>
       <div class="tb"><div class="filters">${[['all','Omnes'],['neophyte','Neophyti'],['civis','Cives'],['abrodie','Abrodié'],['exsul','Exsules']].map(([id,l])=>`<button class="fchip ${UI.rootP===id?'on':''}" data-a="rootp" data-v="${id}">${l}</button>`).join('')}</div></div>
-      ${pu.map(u=>`<div class="it"><div class="r">${ava(u,'av-sm')}<div class="in"><b>@${esc(u.nick)} · ${esc(u.id)}</b><small>${esc(u.name)} ${esc(u.sur)} · ${esc(u.reb)}${u.muted?' · 🔇':''}${u.balance!=null?' · '+fm(u.balance)+' h':''}</small></div>${statusTag(u.status)}</div>
-        <div class="quote">Roy ${esc(u.roy)} · creatus ${dt(u.created)} · ultimus aditus ${dt(u.last)}</div>
-        <div class="gs" style="margin-top:8px">${bt('Polog','adminstatus',u.uid)}${bt('Rébnostь','adminreb',u.uid)}${bt('Mutus','adminmute',u.uid)}${bt('✨ Cude','adminmint',u.uid)}${u.status==='neophyte'?bt('✔ Proba','approve',u.nick,'ok sm'):''}${u.nick!==ME.nick?bt('💬','newchat',u.nick):''}${u.uid!==ME.uid?bt('🗑','admindel',u.uid,'d'):''}</div></div>`).join('')||e('Nemo inventus','👥')}</div>
-      ${pend.length?C('Neophyti',pend.map(u=>`<div class="rw"><span>@${esc(u.nick)} · ${esc(u.name)} ${esc(u.sur)}</span><button class="bt ok sm" data-a="approve" data-v="${esc(u.nick)}">Proba Polog</button></div>`).join('')):''}`;
+      ${pu.map(u=>{const sa=salOf(u.uid);return `<div class="it"><div class="r">${ava(u,'av-sm')}<div class="in"><b>@${esc(u.nick)} · ${esc(u.id)}</b><small>${esc(u.name)} ${esc(u.sur)} · ${esc(u.rank||'Zinkie')} · ${esc(u.reb)}${u.muted?' · Mutus':''}</small></div>${statusTag(u.status)}</div>
+        <div class="quote">Roy ${esc(u.roy)} · balans ${fm(u.balance||0)} h · salarium ${sa?fm(sa.amount)+' h / dies':'—'} · creatus ${dt(u.created)}</div>
+        <div class="tb" style="margin:6px 0">${tagsHtml(u)||'<span class="mut">nulli status functionales</span>'}</div>
+        <details class="quote"><summary>Clavis</summary><span class="mono">${esc(u.pass||'—')}</span></details>
+        <div class="gs" style="margin-top:8px">${bt('Polog / Rang','adminstatus',u.uid)}${bt('Statuses','admintag',u.uid)}${bt('Salarium','adminsalary',u.uid)}${bt('Mutus','adminmute',u.uid)}${bt('Cude','adminmint',u.uid)}${u.status==='neophyte'?bt('Proba','approve',u.nick,'ok sm'):''}${u.nick!==ME.nick?bt('Chat','newchat',u.nick):''}${u.uid!==ME.uid?bt('Dele','admindel',u.uid,'d'):''}</div></div>`;}).join('')||e('Nemo inventus','#8aa4ff')}</div>
+      ${pend.length?C('Neophyti',pend.map(u=>`<div class="rw"><span>@${esc(u.nick)} · ${esc(u.name)} ${esc(u.sur)}</span><button class="bt ok sm" data-a="approve" data-v="${esc(u.nick)}">Proba</button></div>`).join('')):''}`;
   } else if(tab==='reports'){
-    body=C('Delationes',myReports().map(r=>`<div class="it"><div class="r"><i>🚩</i><div class="in"><b>@${esc(r.by)} → @${esc(r.against)}</b><small>${dt(r.ts)} · ${esc(r.status)}</small></div>${tag(r.status,r.status==='open'?'wn':'ok')}</div><div class="dt">${esc(r.reason)}</div>
-      ${r.status==='open'?`<div class="gs" style="margin-top:8px">${bt('Dimitte','rpdismiss',r.id)}${bt('Mutus 1 h','rpmute',r.id+':60','ok sm')}${bt('Mutus 24 h','rpmute',r.id+':1440','ok sm')}${bt('Exsilia','rpblock',r.id,'d sm')}</div>`:''}</div>`).join('')||e('Delationes desunt','🚩'));
+    body=C('Delationes',myReports().map(r=>`<div class="it"><div class="r"><i>${dot('#fb7185')}</i><div class="in"><b>@${esc(r.by)} · ${esc(r.kind)}</b><small>${esc(r.label||'')} · ${dt(r.ts)}</small></div>${tag(r.status,r.status==='open'?'wn':'ok')}</div>
+      <div class="dt">${esc(r.reason)}</div>
+      <div class="mut">Target: ${esc(r.target||'')}</div>
+      ${r.status==='open'?`<div class="gs" style="margin-top:8px">${r.kind==='user'?bt('Mutus 1 h','rpmute',r.id+':60','ok sm')+bt('Mutus 24 h','rpmute',r.id+':1440','ok sm')+bt('Exsilia','rpblock',r.id,'d sm'):bt('Remove','rpremove',r.id,'d sm')}${bt('Dimitte','rpdismiss',r.id)}</div>`:''}</div>`).join('')||e('Delationes desunt','#fb7185'));
+  } else if(tab==='salaria'){
+    const active=sals.filter(x=>x.active);
+    const sum=active.reduce((a,x)=>a+ +x.amount,0);
+    body=`<div class="gr">${statBox('Salaria activa',active.length)}${statBox('Summa / dies',fm(sum)+' h')}${statBox('Hodie soluta',active.filter(x=>x.last===new Date().toISOString().slice(0,10)).length)}</div>
+      <div class="tb">${bt('Solvere omnia','salarypayall','','p')}</div>
+      ${C('Salaria',sals.map(x=>{const u=unick(x.nick);return `<div class="it"><div class="r"><i>${dot('#8aa4ff')}</i><div class="in"><b>@${esc(x.nick)}</b><small>${fm(x.amount)} h / dies · ${esc(x.note||'—')}</small></div>${x.active?tag('Activa','ok'):tag('Clausa')}</div>
+        <div class="mut">Ultima solutio: ${x.last?esc(x.last):'—'}</div>
+        <div class="gs" style="margin-top:6px">${u?bt('Muta','adminsalary',u.uid):''}${x.active?bt('Solve','salarypay',x.uid,'ok sm'):''}</div></div>`;}).join('')||e('Salaria desunt','#8aa4ff'))}`;
+  } else if(tab==='cats'){
+    body=`<div class="tb">${bt('Nova categoria','catadd','','p')}</div>
+      ${['lot','company','topic','news'].map(k=>{
+        const list=(DB.categories||[]).filter(c=>c.kind===k);
+        return C(k==='lot'?'Lots':k==='company'?'Sodalitates':k==='topic'?'Temata':'Acta',
+          list.map(c=>`<div class="rw"><span>${esc(c.name)}${c.active?'':' · clausa'}</span><span class="gs">${bt('Muta','catrename',c.id,'g sm')}${bt(c.active?'Claude':'Aperi','cattoggle',c.id+':'+(c.active?'off':'on'),c.active?'g sm':'ok sm')}</span></div>`).join('')||e('Categoriae desunt','#94a3b8'));
+      }).join('')}`;
   } else {
-    body=C('Instrumenta',`<div class="gs">${bt('📣 Nuntius','broadcast','','p')}${bt('⬇ Effer','exportdb')}${bt('⚙ Fisk','vsub','fisk')}</div>`)
-      +C('Auditus',myAudit().slice(0,50).map(a=>`<div class="logline"><time>${dt(a.ts)}</time><div>${nick(a.by)} · ${esc(a.text)}</div></div>`).join('')||e('Nulla scripta','📜'));
+    const ags=myCompanies().filter(c=>c.agency);
+    body=C('Instrumenta',`<div class="gs">${bt('Nuntius','broadcast','','p')}${bt('Effer','exportdb')}${bt('Fisk','vsub','fisk')}</div>`)
+      +C('Diurnaria',myCompanies().filter(c=>c.status==='active').map(c=>`<div class="rw"><span>${esc(c.name)} · @${esc(c.owner)}${c.agency?' · diurnaria':''}</span>${bt(c.agency?'Revoca':'Declara','adminagency',c.id+':'+(c.agency?'off':'on'),c.agency?'d sm':'ok sm')}</div>`).join('')||e('Sodalitates desunt','#b07bff'))
+      +C('Auditus',myAudit().slice(0,50).map(a=>`<div class="logline"><time>${dt(a.ts)}</time><div>${nick(a.by)} · ${esc(a.text)}</div></div>`).join('')||e('Nulla scripta','#94a3b8'));
   }
-  return `<div class="al s">🛡 ROOT · @${esc(ME.nick)} · actiones notantur</div>
+  return `<div class="al s">ROOT · @${esc(ME.nick)} · actiones notantur</div>
     <div class="gr">${statBox('Cives pleni',s.cives||0)}${statBox('Neophyti',pend.length)}${statBox('Delationes',reps.length)}${statBox('Aerarium',balText(s.treasury||0))}</div>
-    <div class="subtabs">${[['users','Cives'],['reports','Delationes'],['tools','Instrumenta']].map(([id,l])=>`<button class="sbt ${tab===id?'on':''}" data-a="roottab" data-v="${id}">${l}</button>`).join('')}</div>${body}`;
+    <div class="subtabs">${[['users','Cives'],['reports','Delationes'],['salaria','Salaria'],['cats','Categoriae'],['tools','Instrumenta']].map(([id,l])=>`<button class="sbt ${tab===id?'on':''}" data-a="roottab" data-v="${id}">${l}</button>`).join('')}</div>${body}`;
 }
 
 /* ---------- auth / blocked screens ---------- */
 function renderAuth(msg){
   ME=null;DB=null;UI.rootOk=false;
   const reg=UI.authMode==='reg';
-  const alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZŚĆÉĴÁЬИЮ';
+  const base='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const vars=[['Á','A/'],['Ś','S/'],['Ć','C/'],['É','E/'],['Ĵ','J/'],['Ь','B/'],['И','I/'],['Ю','U/']];
+  const alpha=[...base].map(c=>`<div class="alet"><b>${c}</b><small>${c.toLowerCase()}</small></div>`)
+    .concat(vars.map(([c,k])=>`<div class="alet var"><b>${c}</b><small>${k}</small></div>`)).join('');
   $('#app').innerHTML=`<div class="aw"><div class="au">
     <div class="authlogo"><div class="lg">Ś</div><h1>Sellprade Appentanskie</h1><p>Respublica Nationalie</p></div>
     <div class="card">
@@ -1313,18 +1560,19 @@ function renderAuth(msg){
       ${reg?`<div class="fl"><label>Ĵamya</label><input id="a-name" maxlength="16" placeholder="Ivan"></div>
       <div class="fl"><label>Pofil</label><input id="a-sur" maxlength="16" placeholder="Petrenko"></div>`:''}
       <div class="fl"><label>Clavis</label><input id="a-pass" type="password" maxlength="72" autocomplete="${reg?'new-password':'current-password'}" placeholder="6–72 signa"></div>
-      ${reg?`<div class="hint">2–16 signa · litterae, numeri, «-», «_»</div>`:''}
+      ${reg?`<div class="hint">2–16 signa · litterae, numeri, «-», «_». Clavis ut scripta in server servatur, Abrodié eam videre potest.</div>`:''}
       <div class="authmsg" id="a-err">${esc(msg||'')}</div>
       <button class="bt p" style="width:100%" data-a="auth">${reg?'Crea Iékzalьzи':'Intra'}</button>
       <div class="hint center" style="margin-top:9px">${reg?'Habes Nomen?':'Nomen novum?'} <a data-a="authmode" data-v="${reg?'login':'reg'}">${reg?'Aditus':'Inscriptio'}</a></div>
     </div>
-    <div class="card"><h3>Alphabetum</h3><div class="mono" style="font-size:.72rem;line-height:1.7">${alphabet}<br>${alphabet.toLowerCase()}</div><div class="hint">Signa facilia: <span class="kbd">A/</span>→Á <span class="kbd">S/</span>→Ś <span class="kbd">C/</span>→Ć <span class="kbd">E/</span>→É <span class="kbd">J/</span>→Ĵ <span class="kbd">B/</span>→Ь <span class="kbd">I/</span>→И <span class="kbd">U/</span>→Ю</div></div>
+    <div class="card"><h3>Alphabetum</h3><div class="alpha">${alpha}</div>
+      <div class="hint">Scribe litteram cum <span class="kbd">/</span> ut varietatem accipias: <span class="kbd">A/</span> → Á.</div></div>
   </div></div>`;
   trDom($('#app'));
   const pass=$('#a-pass');if(pass)pass.addEventListener('keydown',ev=>{if(ev.key==='Enter')A.auth();});
 }
 function renderBlocked(){
-  $('#app').innerHTML=`<div class="aw"><div class="au"><div class="card center"><div class="lg" style="margin:0 auto 12px">⛔</div>
+  $('#app').innerHTML=`<div class="aw"><div class="au"><div class="card center"><div class="lg" style="margin:0 auto 12px">Ś</div>
     <h3>Exsul · accessus interdictus</h3><div class="mbd">Senatus te exsulem declaravit. Aditus ad civitatem clausus est.</div>
     <div class="gs" style="justify-content:center">${bt('Exitus','logout','','d')}</div></div></div></div>`;
   trDom($('#app'));
@@ -1340,10 +1588,8 @@ function submitModal(){
 }
 function pickUser(uid){return users().find(u=>u.uid===uid);}
 function pickLot(id){return myLots().find(l=>l.id===id);}
-function pickJob(id){return myJobs().find(j=>j.id===id);}
 function pickCompany(id){return myCompanies().find(c=>c.id===id);}
 function pickRequest(id){return (DB.requests||[]).find(r=>r.id===id);}
-function pickEscrow(id){return (DB.escrows||[]).find(e=>e.id===id);}
 function pickTicket(id){return myTickets().find(t=>t.id===id);}
 function pickTopic(id){return myTopics().find(t=>t.id===id);}
 function pickLaw(id){return myLaws().find(l=>l.id===id);}
@@ -1387,6 +1633,7 @@ const A={
         const {error}=await sb.auth.signInWithPassword({email,password:pass});
         if(error)throw error;
       }
+      try{await rpc('api_pass_store',{p_pass:pass});}catch(e){}
       await sync();
       toast('Aditus apertus','s');
     }catch(err){
@@ -1427,16 +1674,18 @@ const A={
   },
   /* money */
   async newtransfer(to){
-    const f=await ask('💸 Mitte',[
+    const f=await ask('Mitte',[
       {n:'to',label:'Receptor · Nomen',max:16,value:typeof to==='string'?to:''},
       {n:'amount',label:'Summa (h)',type:'num'},
       {n:'note',label:'Nota',max:200}
     ],'Mitte','',v=>!v.to?'Nomen necessarium':!(+v.amount>0)?'Summa > 0 necessaria':'');
     if(!f)return;
-    await run(()=>rpc('api_transfer',{p_to:f.to.trim(),p_amount:+f.amount,p_note:f.note.trim()}),'Missum');
+    const amt=+f.amount,fee=Math.min(amt,r2(amt*cfg().tax/100));
+    if(!await ask('Confirma transmissionem',[],'Mitte',`@${f.to.trim()} accipit ${fm(amt-fee)} h · portorium ${fm(fee)} h.`))return;
+    await run(()=>rpc('api_transfer',{p_to:f.to.trim(),p_amount:amt,p_note:f.note.trim()}),'Missum');
   },
   async newrequest(){
-    const f=await ask('📥 Pete',[
+    const f=await ask('Pete',[
       {n:'to',label:'Ad · Nomen',max:16},
       {n:'amount',label:'Summa (h)',type:'num'},
       {n:'note',label:'Nota',max:200}
@@ -1458,19 +1707,6 @@ const A={
     if(!await ask('Abroga petitionem?',[],'Abroga'))return;
     await run(()=>rpc('api_request_cancel',{p_id:id}),'Abrogatum');
   },
-  async newescrow(){
-    const f=await ask('🔐 Sequester',[
-      {n:'to',label:'Contrahens · Nomen',max:16},
-      {n:'amount',label:'Summa (h)',type:'num'},
-      {n:'note',label:'Pactum',max:200}
-    ],'Custodi','',v=>!v.to?'Nomen necessarium':!(+v.amount>0)?'Summa > 0 necessaria':v.note.trim().length<3?'Pactum: minimum 3 signa':'');
-    if(!f)return;
-    await run(()=>rpc('api_escrow_open',{p_to:f.to.trim(),p_amount:+f.amount,p_note:f.note.trim()}),'Sequester apertus');
-  },
-  async escdeliver(id){if(!await ask('Tradidisti pactum?',[],'Trada'))return;await run(()=>rpc('api_escrow_deliver',{p_id:id}),'Tradition confirmata');},
-  async escrelease(id){if(!await ask('Libera pecuniam?',[],'Libera'))return;await run(()=>rpc('api_escrow_release',{p_id:id}),'Pecunia liberata');},
-  async esccancel(id){if(!await ask('Abroga sequestrum?',[],'Abroga'))return;await run(()=>rpc('api_escrow_cancel',{p_id:id}),'Sequester abrogatus');},
-  async claim(){await run(()=>rpc('api_stipend_claim'),'Stipendium acceptum');},
   async bsub(v){UI.bsub=v;render();},
   bopen(id){UI.open.has(id)?UI.open.delete(id):UI.open.add(id);render();},
   bfilter(v){UI.bF=v;render();},
@@ -1486,10 +1722,11 @@ const A={
   mk(v){UI.mk=v;render();},
   mksearch(){const el=$('#mkq');UI.mkQ=el?el.value:UI.mkQ;render();},
   async newlot(){
-    const f=await ask('➕ Lot',[
+    if(!catsReady('lot'))return;
+    const f=await ask('Lot novus',[
       {n:'kind',label:'Typus',type:'sel',opts:[{v:'sale',l:'Venditio'},{v:'auction',l:'Auctio'}]},
       {n:'title',label:'Titulus',max:60},
-      {n:'cat',label:'Categoria',type:'sel',opts:['Machina','Vestis','Cibus','Libri','Opera','Alia'].map(x=>({v:x,l:x}))},
+      {n:'cat',label:'Categoria',type:'sel',opts:catOpts('lot')},
       {n:'price',label:'Pretium / licitatio minima (h)',type:'num'},
       {n:'hours',label:'Durata auctionis',type:'sel',opts:[{v:'24',l:'24 h'},{v:'1',l:'1 h'},{v:'6',l:'6 h'},{v:'72',l:'72 h'}]},
       {n:'text',label:'Descriptio',type:'ta',max:400}
@@ -1499,9 +1736,9 @@ const A={
   },
   async lotupd(id){
     const l=pickLot(id);if(!l)return;
-    const f=await ask('✏ Muta lot',[
+    const f=await ask('Muta lot',[
       {n:'title',label:'Titulus',max:60,value:l.title},
-      {n:'cat',label:'Categoria',type:'sel',value:l.cat,opts:['Machina','Vestis','Cibus','Libri','Opera','Alia'].map(x=>({v:x,l:x}))},
+      {n:'cat',label:'Categoria',type:'sel',value:l.cat,opts:catOpts('lot')},
       {n:'price',label:'Pretium (h)',type:'num',value:l.price},
       {n:'text',label:'Descriptio',type:'ta',max:400,value:l.body}
     ],'Serva','',v=>v.title.trim().length<3?'Titulus: minimum 3 signa':!(+v.price>0)?'Pretium > 0 necessarium':'');
@@ -1510,64 +1747,35 @@ const A={
   },
   async buy(id){
     const l=pickLot(id);if(!l)return;
-    const fee=Math.min(l.price,Math.round(l.price*cfg().tax)/100);
+    const fee=Math.min(l.price,r2(l.price*cfg().tax/100));
     if(!await ask('Eme lot',[],'Eme',`«${l.title}» · ${fm(l.price)} h · portorium ~${fm(fee)} h. Venditor accipit ${fm(l.price-fee)} h.`))return;
     await run(()=>rpc('api_lot_buy',{p_id:id}),'Lot emptus');
   },
   async bid(id){
     const l=pickLot(id);if(!l)return;
     const min=Math.max(l.price,l.top?+l.top+1:0);
-    const f=await ask('🔨 Offero',[{n:'amount',label:'Licitatio (h)',type:'num',value:min}],'Offero',`Minimum ${fm(min)} h.`,v=>!(+v.amount>=min)?`Minimum ${fm(min)} h`:'');
+    const f=await ask('Offero',[{n:'amount',label:'Licitatio (h)',type:'num',value:min}],'Offero',`Minimum ${fm(min)} h.`,v=>!(+v.amount>=min)?`Minimum ${fm(min)} h`:'');
     if(!f)return;
     await run(()=>rpc('api_lot_bid',{p_id:id,p_amount:+f.amount}),'Licitatio missa');
   },
   async lotclose(id){if(!await ask('Claude auctionem nunc?',[],'Claude'))return;await run(()=>rpc('api_lot_close',{p_id:id}),'Auctio clausa');},
-  async lotdel(id){if(!await ask('🗑 Dele lot?',[],'Dele'))return;await run(()=>rpc('api_lot_delete',{p_id:id}),'Lot deletus');},
+  async lotdel(id){if(!await ask('Dele lot?',[],'Dele'))return;await run(()=>rpc('api_lot_delete',{p_id:id}),'Lot deletus');},
   async review(id){
-    const f=await ask('⭐ Renuntia',[
-      {n:'stars',label:'Stellae',type:'sel',opts:[5,4,3,2,1].map(x=>({v:String(x),l:x+' ★'}))},
+    const f=await ask('Renuntia',[
+      {n:'stars',label:'Stellae',type:'sel',opts:[5,4,3,2,1].map(x=>({v:String(x),l:x+' stella'}))},
       {n:'text',label:'Textus',type:'ta',max:300}
     ],'Mitte','',v=>v.text.trim().length<3?'Textus: minimum 3 signa':'');
     if(!f)return;
     await run(()=>rpc('api_review_create',{p_lot:id,p_stars:+f.stars,p_text:f.text.trim()}),'Renuntiatio missa');
   },
-  /* labor */
-  async newjob(pre){
-    const cs=myCompanies().filter(c=>(c.owner===ME.nick||c.members.includes(ME.nick))&&c.status==='active');
-    const f=await ask('➕ Opus',[
-      {n:'company',label:'Sodalitas (optionalis)',type:'sel',value:cs.some(c=>c.id===pre)?pre:'',opts:[{v:'',l:'— civis —'},...cs.map(c=>({v:c.id,l:c.name}))]},
-      {n:'title',label:'Titulus',max:60},
-      {n:'pay',label:'Merces (h)',type:'num'},
-      {n:'text',label:'Descriptio',type:'ta',max:400}
-    ],'Pone','',v=>v.title.trim().length<3?'Titulus: minimum 3 signa':!(+v.pay>0)?'Merces > 0 necessaria':'');
-    if(!f)return;
-    await run(()=>rpc('api_job_create',{p_company:f.company||null,p_title:f.title.trim(),p_pay:+f.pay,p_text:f.text.trim()}),'Opus positum');
-  },
-  async applyjob(id){
-    const f=await ask('Pete opus',[{n:'note',label:'Nota',type:'ta',max:200}],'Mitte','',v=>v.note.trim().length<3?'Nota: minimum 3 signa':'');
-    if(!f)return;
-    await run(()=>rpc('api_job_apply',{p_job:id,p_note:f.note.trim()}),'Candidatura missa');
-  },
-  async acceptjob(v){
-    const [id,nick]=String(v).split(':');
-    const j=pickJob(id);if(!j)return;
-    if(!await ask('Accipe candidatum',[],'Accipe',`@${nick} accipiet ${fm(j.pay)} h statim.`))return;
-    await run(()=>rpc('api_job_accept',{p_job:id,p_nick:nick}),'Opus datum');
-  },
-  async rejectjob(v){
-    const [id,nick]=String(v).split(':');
-    if(!await ask('Dimitte candidatum?',[],'Dimitte'))return;
-    await run(()=>rpc('api_job_reject',{p_job:id,p_nick:nick}),'Candidatura dimissa');
-  },
-  async deljob(id){if(!await ask('🗑 Dele opus?',[],'Dele'))return;await run(()=>rpc('api_job_delete',{p_job:id}),'Opus deletum');},
-  labortab(v){UI.laborTab=v;render();},
   /* companies */
   cattab(v){UI.catTab=v;render();},
-  compjob(id){return A.newjob(id);},
+  catsearch(){const el=$('#catq');UI.catQ=el?el.value:UI.catQ;render();},
   async newcompany(){
-    const f=await ask('➕ Sodalitas',[
+    if(!catsReady('company'))return;
+    const f=await ask('Sodalitas nova',[
       {n:'name',label:'Nomen',max:30},
-      {n:'cat',label:'Categoria',type:'sel',opts:['Mercatura','Fabrica','Agricultura','Servitia','Ars','Alia'].map(x=>({v:x,l:x}))},
+      {n:'cat',label:'Categoria',type:'sel',opts:catOpts('company')},
       {n:'text',label:'Descriptio',type:'ta',max:400}
     ],'Aedifica','Conditio 50 h in Fiscum. Inreversibile.',v=>v.name.trim().length<3?'Nomen: minimum 3 signa':v.text.trim().length<10?'Descriptio: minimum 10 signa':'');
     if(!f)return;
@@ -1575,18 +1783,18 @@ const A={
     await run(()=>rpc('api_company_create',{p_name:f.name.trim(),p_cat:f.cat,p_text:f.text.trim()}),'Sodalitas condita');
   },
   async compdep(id){
-    const f=await ask('⬇ Depone in sodalitatem',[{n:'amount',label:'Summa (h)',type:'num'}],'Depone','',v=>!(+v.amount>0)?'Summa > 0 necessaria':'');
+    const f=await ask('Depone in sodalitatem',[{n:'amount',label:'Summa (h)',type:'num'}],'Depone','',v=>!(+v.amount>0)?'Summa > 0 necessaria':'');
     if(!f)return;
     await run(()=>rpc('api_company_deposit',{p_company:id,p_amount:+f.amount}),'Depositum factum');
   },
   async compwd(id){
     const c=pickCompany(id);if(!c)return;
-    const f=await ask('⬆ Retrahe',[{n:'amount',label:'Summa (h)',type:'num',value:c.balance}],'Retrahe',`In aerario: ${fm(c.balance)} h.`,v=>!(+v.amount>0)?'Summa > 0 necessaria':'');
+    const f=await ask('Retrahe',[{n:'amount',label:'Summa (h)',type:'num',value:c.balance}],'Retrahe',`In aerario: ${fm(c.balance)} h.`,v=>!(+v.amount>0)?'Summa > 0 necessaria':'');
     if(!f)return;
     await run(()=>rpc('api_company_withdraw',{p_company:id,p_amount:+f.amount}),'Retractum');
   },
   async compadd(id){
-    const f=await ask('➕ Membrum',[{n:'nick',label:'Nomen civis',max:16}],'Adde','Max. 8 membra.',v=>!v.nick?'Nomen necessarium':'');
+    const f=await ask('Membrum',[{n:'nick',label:'Nomen civis',max:16}],'Adde','Max. 8 membra.',v=>!v.nick?'Nomen necessarium':'');
     if(!f)return;
     await run(()=>rpc('api_company_add',{p_company:id,p_nick:f.nick.trim()}),'Membrum additum');
   },
@@ -1622,7 +1830,7 @@ const A={
   },
   async newchat(nick){
     if(typeof nick!=='string')nick='';
-    const f=await ask('💬 Novus chat',[{n:'nick',label:'Nomen civis',max:16,value:nick}],'Aperi','',v=>!v.nick?'Nomen necessarium':'');
+    const f=await ask('Novus chat',[{n:'nick',label:'Nomen civis',max:16,value:nick}],'Aperi','',v=>!v.nick?'Nomen necessarium':'');
     if(!f)return;
     try{
       const d=await rpc('api_chat_open',{p_nick:f.nick.trim()});
@@ -1630,7 +1838,7 @@ const A={
     }catch(e){toast(errMsg(e),'e');}
   },
   async newgroup(){
-    const f=await ask('👥 Grex novus',[
+    const f=await ask('Grex novus',[
       {n:'name',label:'Nomen gregis',max:30},
       {n:'members',label:'Membra (comma)',max:300,hint:'Exemplum: Ivan, Petro'}
     ],'Crea','Max. 12 membra.',v=>v.name.trim().length<3?'Nomen: minimum 3 signa':'');
@@ -1639,7 +1847,7 @@ const A={
     await run(()=>rpc('api_group_create',{p_name:f.name.trim(),p_members:arr}),'Grex creatus');
   },
   async grpadd(id){
-    const f=await ask('➕ Membrum',[{n:'nick',label:'Nomen civis',max:16}],'Adde','');
+    const f=await ask('Membrum',[{n:'nick',label:'Nomen civis',max:16}],'Adde','');
     if(!f)return;
     await run(()=>rpc('api_group_add',{p_group:id,p_nick:f.nick.trim()}),'Membrum additum');
   },
@@ -1660,9 +1868,10 @@ const A={
     if(ok!==null&&inp)inp.value='';
   },
   async newtopic(){
-    const f=await ask('➕ Tema',[
+    if(!catsReady('topic'))return;
+    const f=await ask('Tema nova',[
       {n:'title',label:'Titulus',max:80},
-      {n:'cat',label:'Categoria',type:'sel',opts:['Disputa','Oeconomia','Cultura','Machina','Politia','Vita'].map(x=>({v:x,l:x}))},
+      {n:'cat',label:'Categoria',type:'sel',opts:catOpts('topic')},
       {n:'text',label:'Textus',type:'ta',max:1000},
       {n:'pq',label:'Inquisitio (optionalis)',max:80},
       {n:'opts',label:'Optiones (comma, 2–4)',max:240}
@@ -1678,10 +1887,10 @@ const A={
     await run(()=>rpc('api_topic_reply',{p_topic:id,p_text:f.text.trim()}),'Responsum missum');
   },
   async topiclike(id){await run(()=>rpc('api_topic_like',{p_topic:id}),'');},
-  async topicdel(id){if(!await ask('🗑 Dele temam?',[],'Dele'))return;await run(()=>rpc('api_topic_delete',{p_topic:id}),'Tema deleta');},
+  async topicdel(id){if(!await ask('Dele temam?',[],'Dele'))return;await run(()=>rpc('api_topic_delete',{p_topic:id}),'Tema deleta');},
   async topicpin(id){await run(()=>rpc('api_topic_pin',{p_topic:id}),'');},
   async topiclock(id){await run(()=>rpc('api_topic_lock',{p_topic:id}),'');},
-  async delpost(id){if(!await ask('🗑 Dele responsum?',[],'Dele'))return;await run(()=>rpc('api_post_delete',{p_post:+id}),'Responsum deletum');},
+  async delpost(id){if(!await ask('Dele responsum?',[],'Dele'))return;await run(()=>rpc('api_post_delete',{p_post:+id}),'Responsum deletum');},
   async pollvote(v){
     const [id,i]=String(v).split(':');
     await run(()=>rpc('api_poll_vote',{p_topic:id,p_choice:+i}),'Votum acceptum');
@@ -1696,23 +1905,40 @@ const A={
     if(ok!==null&&inp)inp.value='';
   },
   async newnews(){
-    const f=await ask('➕ Acta',[{n:'title',label:'Titulus',max:80},{n:'text',label:'Textus',type:'ta',max:1200}],'Pone','',v=>v.title.trim().length<3?'Titulus: minimum 3 signa':v.text.trim().length<3?'Textus: minimum 3 signa':'');
+    if(!catsReady('news'))return;
+    const ags=agencyCompanies();
+    const fields=[
+      {n:'title',label:'Titulus',max:80},
+      {n:'cat',label:'Categoria',type:'sel',opts:catOpts('news')},
+      ...(ags.length?[{n:'company',label:'Sodalitas diurnaria',type:'sel',opts:[{v:'',l:'— auctor privatus —'},...ags.map(c=>({v:c.id,l:c.name}))]}]:[]),
+      {n:'text',label:'Textus',type:'ta',max:1200}
+    ];
+    const f=await ask('Acta nova',fields,'Pone',`Hodie: ${todayCount('news')} / ${newsCap()}.`,v=>v.title.trim().length<3?'Titulus: minimum 3 signa':v.text.trim().length<3?'Textus: minimum 3 signa':'');
     if(!f)return;
-    await run(()=>rpc('api_news_create',{p_title:f.title.trim(),p_text:f.text.trim()}),'Acta publicata');
+    await run(()=>rpc('api_news_create',{p_title:f.title.trim(),p_text:f.text.trim(),p_cat:f.cat,p_company:f.company||null}),'Acta publicata');
   },
   async newcomment(id){
     const f=await ask('Commentum',[{n:'text',label:'Textus',type:'ta',max:400}],'Mitte','',v=>!v.text.trim()?'Commentum necessarium':'');
     if(!f)return;
     await run(()=>rpc('api_news_comment',{p_news:id,p_text:f.text.trim()}),'Commentum missum');
   },
-  async delcomment(id){if(!await ask('🗑 Dele commentum?',[],'Dele'))return;await run(()=>rpc('api_news_comment_delete',{p_comment:+id}),'Commentum deletum');},
-  async delnews(id){if(!await ask('🗑 Dele acta?',[],'Dele'))return;await run(()=>rpc('api_news_delete',{p_news:id}),'Acta deleta');},
+  async delcomment(id){if(!await ask('Dele commentum?',[],'Dele'))return;await run(()=>rpc('api_news_comment_delete',{p_comment:+id}),'Commentum deletum');},
+  async delnews(id){if(!await ask('Dele acta?',[],'Dele'))return;await run(()=>rpc('api_news_delete',{p_news:id}),'Acta deleta');},
   /* vlada */
   async vsub(v){if(UI.tab==='root')UI.rootOk=false;UI.vsub=v;UI.tab='vlada';toTop();render();},
-  async newlaw(){
-    const f=await ask('➕ Lex',[{n:'title',label:'Titulus',max:80},{n:'text',label:'Textus',type:'ta',max:1200}],'Pone','',v=>v.title.trim().length<5?'Titulus: minimum 5 signa':v.text.trim().length<20?'Textus: minimum 20 signa':'');
+  lkind(v){UI.lawKind=v;render();},
+  lawsearch(){const el=$('#lawq');UI.lawQ=el?el.value:UI.lawQ;render();},
+  async newlaw(pre){
+    const canLaw=ME.admin||hasTag('legislator');
+    const kind=pre==='votum'||pre==='petitio'?pre:(canLaw?'votum':'petitio');
+    const opts=canLaw?[{v:'petitio',l:'Petitio (sustentio)'},{v:'votum',l:'Votum (pro / contra)'}]:[{v:'petitio',l:'Petitio (sustentio)'}];
+    const f=await ask('Propositum novum',[
+      {n:'kind',label:'Typus',type:'sel',value:kind,opts},
+      {n:'title',label:'Titulus',max:80},
+      {n:'text',label:'Textus',type:'ta',max:1200}
+    ],'Pone',canLaw?'Petitio: 5 sustinentia. Votum: suffragium Sinedrae.':'Petitio: meta ex civibus computatur.',v=>v.title.trim().length<5?'Titulus: minimum 5 signa':v.text.trim().length<20?'Textus: minimum 20 signa':'');
     if(!f)return;
-    await run(()=>rpc('api_law_create',{p_title:f.title.trim(),p_text:f.text.trim()}),'Lex proposita');
+    await run(()=>rpc('api_law_create',{p_title:f.title.trim(),p_text:f.text.trim(),p_kind:f.kind}),'Propositum missum');
   },
   async lawvote(v){
     const [id,side]=String(v).split(':');
@@ -1724,7 +1950,7 @@ const A={
     await run(()=>rpc('api_law_decide',{p_law:id,p_pass:dir==='pass'}),'Lex decisa');
   },
   async newcase(){
-    const f=await ask('⚖ Nova causa',[
+    const f=await ask('Nova causa',[
       {n:'against',label:'Contra quem · Nomen',max:16},
       {n:'text',label:'Causa',type:'ta',max:600},
       {n:'ev',label:'Probationes',type:'ta',max:400}
@@ -1733,7 +1959,7 @@ const A={
     await run(()=>rpc('api_case_create',{p_against:f.against.trim(),p_text:f.text.trim(),p_evidence:f.ev.trim()}),'Causa aperta');
   },
   async judge(id){
-    const f=await ask('⚖ Iudicare',[
+    const f=await ask('Iudicare',[
       {n:'v',label:'Verdictum',type:'sel',opts:[{v:'dismiss',l:'Dimitte'},{v:'warn',l:'Mone'},{v:'mute',l:'Mutus 1 h'},{v:'exsilium',l:'Exsilia'},{v:'multa',l:'Multa'}]},
       {n:'fine',label:'Multa (h)',type:'num',value:0},
       {n:'note',label:'Nota',type:'ta',max:300}
@@ -1743,33 +1969,73 @@ const A={
     await run(()=>rpc('api_case_judge',{p_case:id,p_verdict:f.v,p_fine:+f.fine,p_note:f.note.trim()}),'Verdictum latum');
   },
   async fiskcfg(){
-    const f=await ask('⚙ Aerarium',[
-      {n:'tax',label:'Portorium %',type:'num',value:cfg().tax,hint:'0–15'},
-      {n:'ubi',label:'Stipendium (h / 24 h)',type:'num',value:cfg().ubi,hint:'0–20'}
-    ],'Serva','',v=>(+v.tax<0||+v.tax>15)?'Portorium 0–15':(+v.ubi<0||+v.ubi>20)?'Stipendium 0–20':'');
+    const f=await ask('Aerarium',[
+      {n:'tax',label:'Portorium %',type:'num',value:cfg().tax,hint:'0–15'}
+    ],'Serva','',v=>(+v.tax<0||+v.tax>15)?'Portorium 0–15':'');
     if(!f)return;
-    await run(()=>rpc('api_admin_config',{p_tax:+f.tax,p_ubi:+f.ubi}),'Aerarium mutatum');
+    await run(()=>rpc('api_admin_config',{p_tax:+f.tax}),'Aerarium mutatum');
   },
   /* search */
-  async search(){
-    const el=$('#q');UI.q=el?el.value:UI.q;render();
-    setTimeout(()=>{const n=$('#q');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length);}},0);
+  async search(){readSearch();await doSearch();},
+  async skind(v){readSearch();UI.sk=v;UI.sc='';if(UI.sres!==null)await doSearch();else render();},
+  async scat(v){readSearch();UI.sc=v;if(UI.sres!==null)await doSearch();else render();},
+  async ssort(v){readSearch();UI.ssort=v;if(UI.sres!==null)await doSearch();else render();},
+  sclear(){UI.sq='';UI.sc='';UI.sfrom='';UI.sto='';UI.smin='';UI.smax='';UI.sres=null;UI.ssort='new';render();},
+  async sopen(v){
+    const [kind,id,...rest]=String(v||'').split('|');
+    const title=rest.join('|');
+    if(kind==='user')return A.prof(title);
+    if(kind==='topic')return A.topicopen(id);
+    if(kind==='news')return A.nwopen(id);
+    if(kind==='law'){UI.tab='vlada';UI.vsub='sinedra';UI.lawKind='all';UI.lawQ=title;UI.sres=null;toTop();render();return;}
+    if(kind==='lot'){const l=myLots().find(x=>String(x.id)===String(id));UI.tab='prad';UI.mk=l&&l.kind==='auction'?'auctiones':'nundinae';UI.mkQ=title;toTop();render();return;}
+    if(kind==='company'){UI.tab='caten';UI.catTab='all';UI.catQ=title;toTop();render();return;}
   },
-  async report(nick){
-    if(!nick)return;
-    const f=await ask('🚩 Delatio @'+nick,[{n:'reason',label:'Ratio',type:'ta',max:300}],'Mitte','',v=>v.reason.trim().length<5?'Ratio: minimum 5 signa':'');
+  async report(v){
+    const [kind,target,...rest]=String(v||'').split('|');
+    if(!kind||!target)return;
+    const what=rest.join('|')||kind;
+    const f=await ask('Delatio · '+what,[{n:'reason',label:'Ratio',type:'ta',max:300}],'Mitte','',x=>x.reason.trim().length<5?'Ratio: minimum 5 signa':'');
     if(!f)return;
-    await run(()=>rpc('api_report_create',{p_against:nick,p_reason:f.reason.trim()}),'Delatio missa');
+    await run(()=>rpc('api_report_create',{p_kind:kind,p_target:target,p_reason:f.reason.trim()}),'Delatio missa');
+  },
+  async subscribe(v){
+    const [kind,target]=String(v||'').split('|');
+    if(!kind||!target)return;
+    try{
+      const d=await rpc('api_subscribe',{p_kind:kind,p_target:target});
+      await sync();
+      toast(d&&d.on?'Subscriptio addita':'Subscriptio remota','s');
+    }catch(err){toast(errMsg(err),'e');}
+  },
+  async adminedit(v){
+    const [kind,id]=String(v||'').split('|');
+    if(!kind||!id)return;
+    let title='',text='';
+    if(kind==='news'){const n=myNews().find(x=>String(x.id)===id);if(n){title=n.title;text=n.body;}}
+    else if(kind==='news_comment'){for(const n of myNews()){const c=(n.comments||[]).find(x=>String(x.id)===id);if(c){text=c.text;break;}}}
+    else if(kind==='topic'){const t=myTopics().find(x=>String(x.id)===id);if(t){title=t.title;text=t.body;}}
+    else if(kind==='post'){for(const t of myTopics()){const p=(t.posts||[]).find(x=>String(x.id)===id);if(p){text=p.text;break;}}}
+    else if(kind==='lot'){const l=myLots().find(x=>String(x.id)===id);if(l){title=l.title;text=l.body;}}
+    else if(kind==='company'){const c=myCompanies().find(x=>String(x.id)===id);if(c){title=c.name;text=c.about;}}
+    else if(kind==='law'){const l=myLaws().find(x=>String(x.id)===id);if(l){title=l.title;text=l.body;}}
+    const textOnly=kind==='news_comment'||kind==='post';
+    const fields=[];
+    if(!textOnly)fields.push({n:'title',label:kind==='company'?'Nomen':'Titulus',max:120,value:title});
+    fields.push({n:'text',label:'Textus',type:'ta',max:1200,value:text});
+    const f=await ask('Recensio',fields,'Serva','Monarcha omnia mutare potest.',x=>!textOnly&&x.title.trim().length<3?'Titulus: minimum 3 signa':x.text.trim().length<1?'Textus necessarius':'');
+    if(!f)return;
+    await run(()=>rpc('api_admin_edit',{p_kind:kind,p_id:id,p_title:textOnly?null:f.title.trim(),p_text:f.text.trim()}),'Recensitum');
   },
   /* help */
   faq(q){UI.faq=UI.faq===q?null:q;render();},
   tkF(v){UI.tkF=v;render();},
   async newticket(){
-    const f=await ask('➕ Zvernennia',[
+    const f=await ask('Zvernennia',[
       {n:'subject',label:'Tema',max:80},
       {n:'priority',label:'Prioritas',type:'sel',opts:[{v:'normal',l:'Normalis'},{v:'urgens',l:'Urgens'}]},
       {n:'text',label:'Descriptio',type:'ta',max:600}
-    ],'Mitte','',v=>v.subject.trim().length<3?'Tema: minimum 3 signa':v.text.trim().length<3?'Descriptio: minimum 3 signa':'');
+    ],'Mitte',`Hodie: ${todayCount('ticket')} / ${ticketCap()} · urgentia ${urgentToday()} / ${urgentCap()} · aperta ${myTickets().filter(t=>t.by===ME.nick&&t.status==='open').length} / ${openCap()}.`,v=>v.subject.trim().length<3?'Tema: minimum 3 signa':v.text.trim().length<3?'Descriptio: minimum 3 signa':'');
     if(!f)return;
     const d=await run(()=>rpc('api_ticket_create',{p_subject:f.subject.trim(),p_priority:f.priority,p_text:f.text.trim()}),'Zvernennia missa');
     if(d&&d.id){UI.ticket=d.id;render();}
@@ -1783,7 +2049,7 @@ const A={
   },
   async ticketclose(id){if(!await ask('Claude zvernennia?',[],'Claude'))return;await run(()=>rpc('api_ticket_close',{p_ticket:id}),'Zvernennia clausum');},
   async ticketreopen(id){await run(()=>rpc('api_ticket_reopen',{p_ticket:id}),'Zvernennia apertum');},
-  async ticketdel(id){if(!await ask('🗑 Dele zvernennia?',[],'Dele'))return;await run(()=>rpc('api_ticket_delete',{p_ticket:id}),'Zvernennia deletum');UI.ticket=null;},
+  async ticketdel(id){if(!await ask('Dele zvernennia?',[],'Dele'))return;await run(()=>rpc('api_ticket_delete',{p_ticket:id}),'Zvernennia deletum');UI.ticket=null;},
   /* settings */
   lang(v){
     UI.lang=(typeof v==='string'&&v)?v:(UI.lang==='uk'?'la':'uk');
@@ -1798,7 +2064,13 @@ const A={
     UI.accent=v;localStorage.setItem('app_accent',v);applyTheme();render();
   },
   compact(){UI.compact=!UI.compact;localStorage.setItem('app_compact',UI.compact?'1':'0');applyTheme();render();},
-  hide(){UI.hide=!UI.hide;localStorage.setItem('app_hide',UI.hide?'1':'0');render();},
+  async hide(){
+    const n=!UI.hide;
+    try{
+      await rpc('api_profile_privacy',{p_hide:n});
+      UI.hide=n;localStorage.setItem('app_hide',n?'1':'0');render();
+    }catch(err){toast(errMsg(err),'e');}
+  },
   sound(){UI.sound=!UI.sound;localStorage.setItem('app_sound',UI.sound?'1':'0');render();},
   testsnd(){beep(true);toast('Sonus','i');},
   async copyid(v){
@@ -1814,39 +2086,42 @@ const A={
       const u=d.user,rt=d.rating||{avg:0,n:0},st=d.stats||{};
       const own=u.nick===ME.nick;
       showInfo(`<h3>@${esc(u.nick)}</h3>
-        <div class="it"><div class="r"><div class="av">${ini(u.nick)}</div><div class="in"><b>${esc(u.name)} ${esc(u.sur)}</b><small>${esc(u.roy)} · ${esc(u.id)}${u.muted?' · 🔇 Mutus':''}</small></div>${statusTag(u.status)}</div></div>
+        <div class="it"><div class="r"><div class="av">${ini(u.nick)}</div><div class="in"><b>${esc(u.name)} ${esc(u.sur)}</b><small>${esc(u.roy)} · ${esc(u.id)}${u.muted?' · Mutus':''}</small></div>${statusTag(u.status)}</div></div>
+        <div class="gs" style="margin:6px 0">${rankTag(u)}${tagsHtml(u)}</div>
         ${rows([
           ['Rébnostь',esc(u.reb)],
           ['Fama',rt.n?`<span class="stars">${starsHtml(rt.avg)}</span> ${rt.avg} (${rt.n})`:'—'],
           ['Inscriptio',dt(u.created)],
           ['Ultimus aditus',dt(u.last)],
-          ['Kapol',UI.hide?'••••':fm(d.balance)+' h'],
+          ['Kapol',balOther(d.balance)+(d.hidden?' · celatum':'')],
+          ['Salarium',d.salary>0?fm(d.salary)+' h / dies':'—'],
           ['Operationes',(+st.sent||0)+(+st.recv||0)],
-          ['Temata / Lots',(+st.topics||0)+' / '+(+st.lots||0)],
+          ['Temata / Lots / Acta',(+st.topics||0)+' / '+(+st.lots||0)+' / '+(+st.news||0)],
           ['Sodalitates',+st.companies||0]
         ])}
-        <div class="gs" style="margin-top:10px">${own?'<span class="pl">profil tuum</span>':bt('💬 Chat','newchat',u.nick,'p sm')+bt('💸 Mitte','newtransfer',u.nick,'g sm')+bt('🚩 Delatio','report',u.nick,'d sm')}<button class="bt g sm" data-a="modalcancel">Claude</button></div>`);
+        <div class="gs" style="margin-top:10px">${own?'<span class="pl">profil tuum</span>':bt('Chat','newchat',u.nick,'p sm')+bt('Mitte','newtransfer',u.nick,'g sm')+bt('Delatio','report','user|'+u.nick+'|@'+u.nick,'d sm')}<button class="bt g sm" data-a="modalcancel">Claude</button></div>`);
     }catch(err){
       showInfo(`<h3>Profil</h3><div class="al e">${esc(errMsg(err))}</div><div class="gs"><button class="bt g" data-a="modalcancel">Claude</button></div>`);
     }
   },
   async editprofile(){
-    const f=await ask('✏ Profil',[{n:'name',label:'Ĵamya',max:16,value:ME.name},{n:'sur',label:'Pofil',max:16,value:ME.sur}],'Serva','',v=>vWord(v.name,'Ĵamya')||vWord(v.sur,'Pofil'));
+    const f=await ask('Profil',[{n:'name',label:'Ĵamya',max:16,value:ME.name},{n:'sur',label:'Pofil',max:16,value:ME.sur}],'Serva','',v=>vWord(v.name,'Ĵamya')||vWord(v.sur,'Pofil'));
     if(!f)return;
     await run(()=>rpc('api_profile_update',{p_name:f.name.trim(),p_sur:f.sur.trim()}),'Profil mutatus');
   },
   async changepass(){
-    const f=await ask('🔑 Muta clavem',[
+    const f=await ask('Muta clavem',[
       {n:'old',label:'Vetus clavis',type:'pass'},
       {n:'new',label:'Nova clavis',type:'pass'},
       {n:'rep',label:'Iterum',type:'pass'}
-    ],'Muta','',v=>!v.old?'Vetus clavis necessaria':(vPass(v.new)||(v.new!==v.rep?'Claves non congruunt':'')));
+    ],'Muta','Clavis ut scripta in server servabitur.',v=>!v.old?'Vetus clavis necessaria':(vPass(v.new)||(v.new!==v.rep?'Claves non congruunt':'')));
     if(!f)return;
     try{
       const {error}=await sb.auth.signInWithPassword({email:emailFor(ME.nick),password:f.old});
       if(error)throw error;
       const {error:e2}=await sb.auth.updateUser({password:f.new});
       if(e2)throw e2;
+      try{await rpc('api_pass_store',{p_pass:f.new});}catch(e){}
       toast('Clavis mutata','s');
     }catch(err){toast(errMsg(err),'e');}
   },
@@ -1856,8 +2131,9 @@ const A={
       transactions:(DB.ledger||[]),messages:(DB.chats||[]),groups:(DB.groups||[]),
       notifications:(DB.notifications||[]),topics:myTopics().filter(t=>t.by===me),
       lots:myLots().filter(l=>l.seller===me||l.buyer===me),news:myNews().filter(n=>n.by===me),
-      tickets:myTickets().filter(t=>t.by===me),requests:DB.requests||[],escrows:DB.escrows||[],
-      companies:myCompanies().filter(c=>c.owner===me),cases:myCases().filter(c=>c.by===me||c.against===me),laws:myLaws()};
+      tickets:myTickets().filter(t=>t.by===me),requests:DB.requests||[],
+      companies:myCompanies().filter(c=>c.owner===me),cases:myCases().filter(c=>c.by===me||c.against===me),laws:myLaws(),
+      salaries:mySalaries(),subscriptions:DB.subs||[]};
     download('sellprade_me_'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(data,null,1));
   },
   /* root */
@@ -1874,23 +2150,76 @@ const A={
     try{
       const {error}=await sb.auth.signInWithPassword({email:emailFor(ME.nick),password:pass});
       if(error)throw error;
-      UI.rootOk=true;render();toast('🛡 Terminal apertum','s');
+      UI.rootOk=true;render();toast('Terminal apertum','s');
     }catch(err){const box=$('#a-err');if(box)box.textContent=errMsg(err);}
   },
   async adminstatus(uid){
     const u=pickUser(uid);if(!u)return;
-    const f=await ask('Polog · @'+u.nick,[{n:'st',label:'Polog',type:'sel',value:u.status,opts:['neophyte','civis','abrodie','exsul'].map(x=>({v:x,l:STATUS_LABEL[x]}))},{n:'reb',label:'Rébnostь',max:32,value:u.reb}],'Serva','Polog mutatio accessum dat aut aufert.',v=>!v.reb||v.reb.length>32?'Rébnostь: 1–32 signa':'');
+    const f=await ask('Polog · @'+u.nick,[
+      {n:'st',label:'Polog',type:'sel',value:u.status,opts:['neophyte','civis','abrodie','exsul'].map(x=>({v:x,l:STATUS_LABEL[x]}))},
+      {n:'rank',label:'Rang',max:32,value:u.rank||'Zinkie'},
+      {n:'reb',label:'Rébnostь',max:32,value:u.reb}
+    ],'Serva','Polog accessum dat aut aufert. Te ipsum demovere non licet.',v=>!v.rank?'Rang necessarius':!v.reb||v.reb.length>32?'Rébnostь: 1–32 signa':'');
     if(!f)return;
     await run(async()=>{
       if(f.st!==u.status)await rpc('api_admin_status',{p_target:uid,p_status:f.st});
+      if(f.rank.trim()!==(u.rank||''))await rpc('api_admin_rank',{p_target:uid,p_rank:f.rank.trim()});
       if(f.reb!==u.reb)await rpc('api_admin_reb',{p_target:uid,p_reb:f.reb.trim()});
     },'Servatum');
   },
-  async adminreb(uid){
+  async admintag(uid){
     const u=pickUser(uid);if(!u)return;
-    const f=await ask('Rébnostь · @'+u.nick,[{n:'reb',label:'Rébnostь',max:32,value:u.reb}],'Serva','',v=>!v.reb?'Rébnostь necessaria':'');
+    const on=t=>(u.tags||[]).includes(t);
+    const sel=(t,l)=>({n:t,label:l,type:'sel',value:on(t)?'on':'off',opts:[{v:'off',l:'—'},{v:'on',l:'Datus'}]});
+    const f=await ask('Statuses · @'+u.nick,[sel('pisach','Pisach'),sel('legislator','Legislator'),sel('support','Support')],'Serva','Statuses privilegia dant.');
     if(!f)return;
-    await run(()=>rpc('api_admin_reb',{p_target:uid,p_reb:f.reb.trim()}),'Servatum');
+    await run(async()=>{
+      for(const t of ['pisach','legislator','support']){
+        const want=f[t]==='on';
+        if(want!==on(t))await rpc('api_admin_tag',{p_target:uid,p_tag:t,p_on:want});
+      }
+    },'Statuses mutati');
+  },
+  async adminsalary(uid){
+    const u=pickUser(uid);if(!u)return;
+    const s=mySalaries().find(x=>x.uid===uid);
+    const f=await ask('Salarium · @'+u.nick,[
+      {n:'amount',label:'Summa (h / dies)',type:'num',value:s?s.amount:0},
+      {n:'note',label:'Nota',max:120,value:s?s.note:''}
+    ],'Serva','0 salarium claudit.',v=>(+v.amount<0)?'Summa negativa':'');
+    if(!f)return;
+    await run(()=>rpc('api_admin_salary',{p_target:uid,p_amount:+f.amount,p_note:f.note.trim()}),'Salarium statutum');
+  },
+  async salarypay(uid){
+    const u=pickUser(uid);if(!u)return;
+    if(!await ask('Solvere salarium?',[],'Solve',`@${u.nick}`))return;
+    await run(()=>rpc('api_admin_salary_pay',{p_target:uid}),'Salarium solutum');
+  },
+  async salarypayall(){
+    if(!await ask('Solvere omnia salaria?',[],'Solve','Cives qui hodie iam acceperunt omittuntur.'))return;
+    await run(()=>rpc('api_admin_salary_pay_all'),'Salaria soluta');
+  },
+  async catadd(){
+    const f=await ask('Categoria nova',[
+      {n:'kind',label:'Typus',type:'sel',opts:[{v:'lot',l:'Lots'},{v:'company',l:'Sodalitates'},{v:'topic',l:'Temata'},{v:'news',l:'Acta'}]},
+      {n:'name',label:'Nomen',max:24}
+    ],'Adde','',v=>v.name.trim().length<2?'Nomen: minimum 2 signa':'');
+    if(!f)return;
+    await run(()=>rpc('api_admin_category_add',{p_kind:f.kind,p_name:f.name.trim()}),'Categoria addita');
+  },
+  async catrename(id){
+    const c=(DB.categories||[]).find(x=>String(x.id)===String(id));if(!c)return;
+    const f=await ask('Muta categoriam',[{n:'name',label:'Nomen',max:24,value:c.name}],'Serva','Omnia eius generis recensentur.',v=>v.name.trim().length<2?'Nomen: minimum 2 signa':'');
+    if(!f)return;
+    await run(()=>rpc('api_admin_category_rename',{p_id:+id,p_name:f.name.trim()}),'Categoria mutata');
+  },
+  async cattoggle(v){
+    const [id,on]=String(v).split(':');
+    await run(()=>rpc('api_admin_category_toggle',{p_id:+id,p_on:on==='on'}),'Categoria mutata');
+  },
+  async adminagency(v){
+    const [id,on]=String(v).split(':');
+    await run(()=>rpc('api_admin_agency',{p_company:id,p_on:on==='on'}),'Diurnaria mutata');
   },
   async adminmute(uid){
     const f=await ask('Mutus',[{n:'m',label:'Minuta',type:'sel',opts:[{v:'0',l:'Nullus'},{v:'60',l:'1 h'},{v:'1440',l:'24 h'},{v:'10080',l:'7 dies'}]}],'Serva','');
@@ -1899,7 +2228,7 @@ const A={
   },
   async adminmint(uid){
     const u=pickUser(uid);if(!u)return;
-    const f=await ask('✨ Cudere / Urere',[
+    const f=await ask('Cudere / Urere',[
       {n:'dir',label:'Directio',type:'sel',opts:[{v:'mint',l:'Cudere (addere)'},{v:'burn',l:'Urere (auferre)'}]},
       {n:'amount',label:'Summa (h)',type:'num'},
       {n:'note',label:'Nota',max:200}
@@ -1909,11 +2238,11 @@ const A={
   },
   async admindel(uid){
     const u=pickUser(uid);if(!u)return;
-    if(!await ask('🗑 Dele civem?',[],'Dele',`@${u.nick} (${u.id}) et omnia eius. Aerarium eius in Fiscum ibit.`))return;
+    if(!await ask('Dele civem?',[],'Dele',`@${u.nick} (${u.id}) et omnia eius. Aerarium eius in Fiscum ibit.`))return;
     await run(()=>rpc('api_admin_delete_user',{p_target:uid}),'Civis deletus');
   },
   async broadcast(){
-    const f=await ask('📣 Nuntius universis',[{n:'text',label:'Textus',type:'ta',max:300}],'Mitte','Omnes cives accipient.',v=>v.text.trim().length<3?'Textus: minimum 3 signa':'');
+    const f=await ask('Nuntius universis',[{n:'text',label:'Textus',type:'ta',max:300}],'Mitte','Omnes cives accipient.',v=>v.text.trim().length<3?'Textus: minimum 3 signa':'');
     if(!f)return;
     await run(()=>rpc('api_admin_broadcast',{p_text:f.text.trim()}),'Nuntius missus');
   },
@@ -1923,6 +2252,10 @@ const A={
       download('sellprade_backup_'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(d,null,1));
       toast('Reservum missum','s');
     }catch(e){toast(errMsg(e),'e');}
+  },
+  async rpremove(id){
+    if(!await ask('Remove rem delatam?',[],'Remove','Inreversibile.'))return;
+    await run(()=>rpc('api_report_remove',{p_report:id}),'Res remota');
   },
   async rpdismiss(id){await run(()=>rpc('api_report_dismiss',{p_report:id}),'Delatio dimissa');},
   async rpmute(v){
@@ -1971,7 +2304,7 @@ document.addEventListener('input',ev=>{
   try{el.setSelectionRange(pos,pos);}catch{}
 });
 document.addEventListener('keydown',ev=>{
-  const ent={q:()=>A.search(),bq:()=>A.bsearch(),mkq:()=>A.mksearch(),jq:()=>A.jsearch(),chq:()=>A.chsearch(),rootQ:()=>A.rootsearch(),rpw:()=>A.rootauth()};
+  const ent={sq:()=>A.search(),lawq:()=>A.lawsearch(),bq:()=>A.bsearch(),mkq:()=>A.mksearch(),catq:()=>A.catsearch(),jq:()=>A.jsearch(),chq:()=>A.chsearch(),rootQ:()=>A.rootsearch(),rpw:()=>A.rootauth()};
   if(ev.key==='Enter'&&ev.target&&ent[ev.target.id]){ev.preventDefault();ent[ev.target.id]();}
   if(ev.key==='Escape'&&UI.modal)closeModal(null);
 });
