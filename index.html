@@ -23,7 +23,7 @@ main,.aw{max-width:1120px;margin:0 auto;padding:0 12px 70px}
 .card{background:var(--c);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:12px}
 .card h3,.card h2{font-size:.98rem;margin-bottom:11px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;line-height:1.3}
 .card h3 .hp,.card h2 .hp{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.aw{display:flex;min-height:100vh;flex-direction:column;align-items:center}.au{width:100%;max-width:440px;padding:22px;margin:auto 0}.aw>.foot{width:100%;flex:0 0 auto}
+.aw{display:flex;min-height:100vh;min-height:100svh;flex-direction:column;align-items:center}.au{width:100%;max-width:440px;padding:22px;margin:auto 0}.aw>.foot{width:100%;flex:0 0 auto}
 .fl{margin-bottom:11px}.fl label{display:block;font-size:.66rem;color:var(--mu);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:4px}
 input,textarea,select{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--bd);border-radius:12px;color:var(--tx);font:inherit;color-scheme:inherit}
 select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--mu) 50%),linear-gradient(135deg,var(--mu) 50%,transparent 50%);background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:34px;cursor:pointer}
@@ -118,7 +118,8 @@ html[data-compact="1"] .card{padding:11px}html[data-compact="1"] .it{padding:6px
 .shitem .stx{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bnav button{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border:0;background:none;color:var(--mu);font:700 .58rem inherit;font-family:inherit;cursor:pointer;border-radius:10px}
 .bnav button.on{color:var(--tx);background:linear-gradient(135deg,rgba(109,139,255,.18),rgba(139,109,255,.12))}
-.bnav .bi{font-size:1.15rem;line-height:1}
+.bnav .bi{height:20px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;line-height:1}
+.bnav .bi.plus{font-size:1.18rem;line-height:1;letter-spacing:1px;font-weight:900}
 .bnav .bdg{position:absolute;top:2px;right:calc(50% - 22px);background:var(--er);color:#fff;font:800 .55rem sans-serif;padding:1px 5px;border-radius:8px}
 .mut{font-size:.7rem;color:var(--mu)}
 @media(max-width:820px){.cols{grid-template-columns:1fr}.big{font-size:2rem}.grid3{grid-template-columns:1fr 1fr}}
@@ -129,7 +130,9 @@ html[data-compact="1"] .card{padding:11px}html[data-compact="1"] .it{padding:6px
  .br{gap:8px;flex:1;overflow:hidden}
  .lg{width:30px;height:30px;border-radius:9px;font-size:16px}
  .ua{flex-shrink:0}
- .bnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:80;background:color-mix(in srgb,var(--bg) 93%,transparent);backdrop-filter:blur(16px);border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0))}
+ .bnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:80;background:color-mix(in srgb,var(--bg) 96%,var(--c));border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0));box-shadow:0 -10px 26px -24px #000}
+ #app{padding-bottom:calc(74px + env(safe-area-inset-bottom,0))}
+ #app>.foot{margin-bottom:6px}
  #tw{top:auto;bottom:82px;right:10px;left:10px;max-width:none}
  .br small{display:none}.br b{max-width:none;font-size:.81rem}
  .chip{max-width:96px;padding:4px 9px}
@@ -230,7 +233,6 @@ body{
     radial-gradient(1100px 720px at 88% -10%,color-mix(in srgb,var(--p) 13%,transparent),transparent 62%),
     radial-gradient(900px 620px at -12% 14%,color-mix(in srgb,var(--p2) 10%,transparent),transparent 58%),
     linear-gradient(180deg,var(--bg),var(--bg2) 72%,var(--bg));
-  background-attachment:fixed;
 }
 html[data-theme=light] body{
   background:
@@ -325,11 +327,10 @@ html[data-theme=light] .gr div{background:linear-gradient(180deg,color-mix(in sr
 .sh{box-shadow:0 -26px 70px -20px rgba(0,0,0,.55);animation:sheetIn .32s cubic-bezier(.22,.9,.26,1)}
 .t{background:color-mix(in srgb,var(--c) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);animation:toastIn .26s cubic-bezier(.22,.9,.26,1);box-shadow:0 16px 40px -20px rgba(0,0,0,.7)}
 .bnav{
-  background:color-mix(in srgb,var(--bg) 76%,transparent);
-  -webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3);
+  background:color-mix(in srgb,var(--bg) 96%,var(--c));
   box-shadow:0 -14px 34px -26px #000;
 }
-html[data-theme=light] .bnav{background:color-mix(in srgb,var(--c) 86%,transparent)}
+html[data-theme=light] .bnav{background:color-mix(in srgb,var(--c) 92%,var(--bg))}
 .bnav button{transition:color .18s,background .2s,transform .16s,box-shadow .2s}
 .bnav button.on{color:#fff;background:var(--grad);box-shadow:0 8px 18px -12px var(--glow)}
 .bnav button.on .bi{filter:drop-shadow(0 2px 6px rgba(0,0,0,.28))}
@@ -395,6 +396,26 @@ html[data-theme=light] .pp .pph .av{color:#fff}
 @keyframes sheetIn{from{transform:translateY(36px);opacity:.6}to{transform:none;opacity:1}}
 @keyframes toastIn{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
 @keyframes likePop{0%{transform:scale(1)}45%{transform:scale(1.16)}100%{transform:scale(1)}}
+/* pack opening */
+#preveal{position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px;overflow:auto;text-align:center;
+  background:radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--p) 22%,transparent),transparent 62%),color-mix(in srgb,#04060f 88%,var(--bg));animation:fadeIn .22s ease-out}
+.pvh{font-size:.68rem;letter-spacing:2.4px;text-transform:uppercase;color:var(--mu);font-weight:800}
+.pvs{font-size:.8rem;color:var(--mu)}
+.pvgrid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:760px;max-height:64vh;overflow:auto;padding:8px 2px}
+.pvcard{width:172px;max-width:42vw;background:var(--c);border:2px solid var(--rc,#94a3b8);border-radius:15px;overflow:hidden;position:relative;box-shadow:0 0 0 1px color-mix(in srgb,var(--rc,#94a3b8) 35%,transparent),0 14px 34px -18px #000;
+  animation:pvIn .62s cubic-bezier(.2,.9,.25,1.12) both;animation-delay:var(--d,0s)}
+.pvcard .pva{width:100%;aspect-ratio:3/4;background:linear-gradient(160deg,color-mix(in srgb,var(--rc,#94a3b8) 30%,var(--bg)),var(--bg));display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pvcard .pva img{width:100%;height:100%;object-fit:cover}
+.pvcard .pva .fall{font-size:2.6rem;font-weight:900;opacity:.6;color:var(--rc,#94a3b8)}
+.pvcard .pvb{padding:8px 9px 10px}
+.pvcard .pvn{font-weight:800;font-size:.82rem;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pvcard .pvr{margin-top:3px;font-size:.62rem;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--rc,#94a3b8)}
+.pvcard .pvc{font-size:.62rem;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pvcard.hi::after{content:"";position:absolute;inset:-40% -60%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.42) 50%,transparent 58%);transform:translateX(-80%) rotate(4deg);animation:pvShine 2.6s ease-in-out .55s infinite;pointer-events:none}
+.pvgrid.flat .pvcard{animation:none}
+@keyframes pvIn{0%{opacity:0;transform:translateY(26px) rotateY(88deg) scale(.82)}62%{opacity:1;transform:translateY(-5px) rotateY(-7deg) scale(1.04)}100%{opacity:1;transform:none}}
+@keyframes pvShine{0%,55%{transform:translateX(-80%) rotate(4deg)}85%,100%{transform:translateX(80%) rotate(4deg)}}
+@media(max-width:480px){.pvcard{width:calc(50vw - 26px);max-width:none}.pvgrid{max-height:none;overflow:visible}#preveal{justify-content:flex-start;padding-top:22px}}
 main.enter{animation:screenIn .32s cubic-bezier(.22,.8,.24,1) both}
 main.enter .card{animation:cardIn .42s cubic-bezier(.22,.8,.24,1) both}
 main.enter .card:nth-of-type(2){animation-delay:.04s}
@@ -414,7 +435,7 @@ body::before{
   background-size:180px 180px;
 }
 html[data-theme=light] body::before{opacity:.09;mix-blend-mode:multiply}
-#app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100dvh}
+#app{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;min-height:100svh}
 #app>main{flex:1 0 auto;width:100%}
 .card{
   background-image:
@@ -465,9 +486,12 @@ header{background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0 
 .sorow .sname{flex:1;min-width:0;font-size:.78rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sorow .sorbtns{display:flex;gap:4px}
 .sorow .sorbtns .bt{min-width:30px;padding:4px 7px}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 6px}
+.qgrid .fl{margin:0}
+.qgrid select{padding-top:8px;padding-bottom:8px;font-size:.78rem}
 
-/* plus trigger: three dots instead of a badge circle */
-.bnav .bi.plus{font-size:1.45rem;line-height:.62;letter-spacing:1.5px;font-weight:900}
+/* plus trigger: three dots aligned with the rest of the dock */
+.bnav .bi.plus{font-size:1.18rem;line-height:1;letter-spacing:1px;font-weight:900}
 
 /* dynamic Sharpy tags, distinct from Polog */
 .sharp{
@@ -600,7 +624,7 @@ const vPass=s=>!s||s.length<6||s.length>72?'Clavis: 6–72 signa':/\s/.test(s)?'
 const TABS=[
   ['holb','Holb','#8aa4ff'],['cards','Cardky','#e8c37a'],['bets','Teckelié','#34d399'],
   ['seg','Segnalи','#fb7185'],['bank','Sellprade','#34d399'],['prad','Pradи','#fbbf24'],
-  ['chat','Besedy','#22d3ee'],['jur','Viche','#f472b6'],['news','Vesti','#e8c37a'],
+  ['seti','Setи','#c084fc'],['chat','Besedy','#22d3ee'],['jur','Viche','#f472b6'],['news','Vesti','#e8c37a'],
   ['vlada','Vlada','#a3e635'],['quaere','Isk','#94a3b8'],['help','Pomagach','#fb923c'],
   ['ust','Ustroy','#8b98b8'],['root','ROOT','#ff5c7c']
 ];
@@ -634,6 +658,7 @@ const UI={
   pcat:'Omnes', mk:'nundinae', mkQ:'',
   cardTab:'shop', cardQ:'', cardColl:'', cardRar:'', cardLimit:60, packColl:'',
   betTab:'open', betQ:'',
+  csF:'all', csQ:'',
   jcat:'Omnes', jq:'', jsort:'new', th:null,
   nwOpen:null, nwCat:'Omnes', nwQ:'', nwSub:false,
   vsub:'sinedra', lawKind:'all', lawQ:'',
@@ -649,6 +674,7 @@ const UI={
   accent:localStorage.getItem('app_accent')||'royal',
   compact:localStorage.getItem('app_compact')==='1',
   tabOrder:(localStorage.getItem('app_tab_order')||'').split(',').filter(Boolean),
+  quick:(localStorage.getItem('app_quick')||'holb,cards,bank,chat').split(',').filter(Boolean),
   authMode:'login', _unread:0, _lastTab:null, _msgMax:0, _notifMax:0,
   _pollTimer:null, _chatTimer:null, _pollBusy:false, _chatBusy:false, _chatSince:null
 };
@@ -669,6 +695,23 @@ function moveTab(id,dir){
   [o[i],o[j]]=[o[j],o[i]];
   UI.tabOrder=o;
   localStorage.setItem('app_tab_order',o.join(','));
+  render();
+}
+function quickTabs(){
+  const known=TABS.map(t=>t[0]).filter(id=>id!=='root');
+  const q=(UI.quick||[]).filter((id,i,a)=>known.includes(id)&&a.indexOf(id)===i);
+  for(const id of known)if(q.length<4&&!q.includes(id))q.push(id);
+  return q.slice(0,4);
+}
+function setQuick(slot,id){
+  const known=TABS.map(t=>t[0]).filter(x=>x!=='root');
+  if(!known.includes(id))return;
+  const q=quickTabs();
+  const at=q.indexOf(id);
+  if(at>=0&&at!==slot)[q[at],q[slot]]=[q[slot],q[at]];
+  else q[slot]=id;
+  UI.quick=q;
+  localStorage.setItem('app_quick',q.join(','));
   render();
 }
 function applyTheme(){
@@ -703,7 +746,8 @@ const ini=n=>esc(String(n||'?').slice(0,2).toUpperCase());
 const ava=(u,cls='av')=>{
   const n=u&&u.nick;
   const img=u&&u.avatar;
-  return img?`<div class="${cls} avimg"><img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()"></div>`:`<div class="${cls}">${ini(n)}</div>`;
+  const c=String(cls||'av').split(/\s+/).includes('av')?cls:'av '+cls;
+  return img?`<div class="${c} avimg"><img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()"></div>`:`<div class="${c}">${ini(n)}</div>`;
 };
 const dot=c=>`<span class="dot" style="--dot:${c||'var(--p)'}"></span>`;
 const e=(text,color='')=>`<div class="em"><span class="ic">${color?dot(color):''}</span>${esc(text)}</div>`;
@@ -724,7 +768,7 @@ const toTop=()=>window.scrollTo(0,0);
 const nick=n=>`<b>@${esc(n)}</b>`;
 function toast(msg,kind=''){
   const w=$('#tw');if(!w)return;
-  const d=document.createElement('div');d.className='t '+kind;d.textContent=msg;w.appendChild(d);
+  const d=document.createElement('div');d.className='t '+kind;d.textContent=trText(msg);w.appendChild(d);
   setTimeout(()=>d.remove(),4200);
 }
 function errMsg(e){
@@ -808,9 +852,54 @@ const UKD={
 'Nomen':'Імʼя','Ratio':'Причина','Titulus':'Заголовок','Descriptio':'Опис','Categoria':'Категорія','Textus':'Текст','Summa':'Сума','Nota':'Нотатка','Receptor':'Отримувач','Terminus':'Термін','Pactum':'Угода','Optio':'Варіант','Durata':'Тривалість','Tempus':'Час','Stellae':'Зірки','Typus':'Тип','Summa (h)':'Сума (h)',
 'open':'відкрито','live':'триває','sold':'продано','ended':'завершено','held':'утримується','delivered':'передано','done':'виконано','cancelled':'скасовано','paid':'сплачено','declined':'відхилено','dismissed':'закрито','guilty':'винний','vote':'голосування','passed':'ухвалено','rejected':'відхилено','closed':'закрито','active':'активний',
 'Shop':'Крам','Mine':'Мої','Market':'Ринок','Studio':'Студія','Packs':'Паки','Collectiones':'Колекції','Raritas':'Рідкість','Karta':'Картка','Colligere':'Зібрати','Donum':'Подарунок','Avataris':'Аватар','Vendere':'Продати','Bidere':'Аукціон','Carder':'Кардер','Teckel':'Текель','Sharp':'Тег','Stavka':'Ставка','Bank stavok':'Банк ставок','Resolve':'Розрахувати',
-'Collectio':'Колекція','Eme pack':'Купити пак','Pack builder':'Конструктор паків','Stavka nova':'Нова ставка','Limites base':'Базові ліміти','Branding':'Брендинг','Urgentia':'Термінові','Collectio nova':'Нова колекція','Karta nova':'Нова картка','Venditio':'Продаж','Auctio':'Аукціон','Live':'Активні','Finiti':'Завершені','Apertae':'Відкриті','Finitae':'Завершені','Meae':'Мої','Banca':'Банк','Plures':'Більше','Stavky desunt':'Ставок немає','Packs desunt':'Паків немає','Cardky desunt':'Карток немає','Forum vacuum':'Ринок порожній','Catalogus vacius':'Каталог порожній','Nihil inventum':'Нічого не знайдено','Cardas adde':'Додайте картки','Crea pack':'Створити пак','Collectio creata':'Колекцію створено','Teckel tag necessarius':'Потрібен тег Teckel'
+'Collectio':'Колекція','Eme pack':'Купити пак','Pack builder':'Конструктор паків','Stavka nova':'Нова ставка','Limites base':'Базові ліміти','Branding':'Брендинг','Urgentia':'Термінові','Collectio nova':'Нова колекція','Karta nova':'Нова картка','Venditio':'Продаж','Auctio':'Аукціон','Live':'Активні','Finiti':'Завершені','Apertae':'Відкриті','Finitae':'Завершені','Meae':'Мої','Banca':'Банк','Plures':'Більше','Stavky desunt':'Ставок немає','Packs desunt':'Паків немає','Cardky desunt':'Карток немає','Forum vacuum':'Ринок порожній','Catalogus vacius':'Каталог порожній','Nihil inventum':'Нічого не знайдено','Cardas adde':'Додайте картки','Crea pack':'Створити пак','Collectio creata':'Колекцію створено','Teckel tag necessarius':'Потрібен тег Teckel',
+/* setи / contracts */
+'Setи':'Документи','Documentum novum':'Новий документ','Signa':'Підписати','Signa documentum':'Підписати документ','Quorum':'Кворум','Apertus':'Відкритий','Abrogatus':'Скасований','Signature':'Підписи','Fides':'Хеш','Sine termino':'Без терміну','Documenta desunt':'Документів немає','Documenta':'Документи','Decretum':'Декрет','Foedus':'Союз','Testamentum':'Заповіт','Petitio':'Запит',
+/* rarities */
+'Raritates':'Рідкості','Raritas nova':'Нова рідкість','Sort':'Порядок','Activa':'Активна','Color #RRGGBB':'Колір #RRGGBB','ID (a-z, 0-9, _)':'ID (a-z, 0-9, _)','Raritas servata':'Рідкість збережено','Raritas invalida':'Невірна рідкість','Saltem una activa':'Потрібна хоча б одна активна',
+/* missing UI labels */
+'Abrodié':'Абродіе','Accessus clausus':'Доступ закрито','Acta nova':'Нова новина','Aperi terminalem':'Відкрити термінал','Avatar claude':'Прибрати аватар','Cara':'Дорогі','Chat':'Чат','Claude auctio':'Закрити аукціон','Clausa':'Закрито','Cude':'Карбування','Delatio':'Скарга','Exi grege':'Вийти з групи','Exsilia':'Вигнання','Exsules':'Вигнанці','Fiscus':'Скарбниця','Grex':'Група','Improba':'Відхилити','Iékzalьzи':'Паспорт','Legislator':'Легіслатор','Limites':'Ліміти','Lot novus':'Новий лот','Lots':'Лоти','Membrum':'Учасник','Misae':'Мої запити','Mitte h':'Надіслати h','Moderator':'Модератор','Muta clavem':'Змінити пароль','Muta nomen':'Змінити імʼя','Mutus 1 h':'Мут 1 год','Mutus 24 h':'Мут 24 год','Neophyti':'Неофіти','Nova categoria':'Нова категорія','Nova causa':'Нова справа','Nova lex':'Новий закон','Nova petitio':'Новий запит','Omnia':'Усі','Pack novus':'Новий пак','Pete Polog':'Підтвердити статус','Pisach':'Писар','Polog / Rang':'Статус / Ранг','Proba':'Перевірити','Quaere':'Пошук','Recense':'Редагувати','Recense kartam':'Редагувати картку','Remove':'Прибрати','Res publica':'Держава','Retro':'Назад','Scribe Abrodié':'Написати Абродіе','Securitas':'Безпека','Sequi':'Стежити','Sequi desine':'Не стежити','Sharp novus':'Новий тег','Solvere omnia':'Сплатити все','Stavky':'Ставки','Sustine':'Підтримати','Tema novum':'Нова тема','Vetera':'Старі','Vilia':'Дешеві','Vota':'Голоси','Votum':'Голос','Zvernennia novum':'Нове звернення','✓ Omnia lecta':'✓ Усе прочитано',
+'Pack emptus':'Пак куплено','Documentum creatum':'Документ створено','Documentum signatum':'Документ підписано','Documentum abrogatum':'Документ скасовано','Iam signatum':'Уже підписано','Auctor iam signavit':'Автор уже підписав','Tempus contractus finitum':'Термін документа минув','Contractus abrogatus':'Документ скасовано','Integritas documenti violata':'Порушено цілісність документа','Nema prav':'Немає прав',
+'Vlada':'Влада','Cella':'Комірка','Cellae celeres':'Швидка панель',
+'Quantitas':'Кількість','Summa ponderum':'Сума ваг','Aequa':'Зрівняти','Ad 100%':'До 100%','URL imaginis':'URL зображення','Nomen pack':'Назва пака','Quaere cardas…':'Пошук карток…','Quaere catalogum…':'Пошук у каталозі…','Quaere cardky…':'Пошук карток…','Quaere documenta…':'Пошук документів…','Quaere lots…':'Пошук лотів…','Quaere stavky…':'Пошук ставок…','Quaere…':'Пошук…','Receptor · Nomen':'Отримувач · Нік','Pretium / minimum (h)':'Ціна / мінімум (год)','Durata auctionis':'Тривалість аукціону','Terminus (h)':'Термін (год)','Max stavka (h)':'Макс. ставка (год)','Bank (h)':'Банк (год)','Signature ad quorum':'Підписів до кворуму','Nomen, pretium, deinde cardas adde':'Назва, ціна, потім додайте картки','Pondera normalizantur: sufficit proportio. «Aequa» = casus aequales; «Ad 100%» = scala ad summam 100.':'Ваги нормалізуються: достатньо пропорції. «Зрівняти» — рівні шанси; «До 100%» — масштаб до суми 100.',
+'Cellae celeres sunt quattuor sectiones in ima parte telephoni. Ordo sectionum eas non mutat.':'Швидка панель — чотири вкладки внизу на телефоні. Порядок у «Ordo sectionum» її не змінює.',
+'Pack apertus':'Пак відкрито','Omnes ostende':'Показати всі','Bene':'Добре'
 };
 function trCore(t){return UKD[t]!=null?UKD[t]:null;}
+function ukPlural(n,one,few,many){
+  const n2=Math.abs(+n||0)%100,d=n2%10;
+  if(n2>=11&&n2<=14)return many;
+  if(d===1)return one;
+  if(d>=2&&d<=4)return few;
+  return many;
+}
+const UKPAT=[
+  [/^(\d+(?:[.,]\d+)?)\s*h$/i,m=>`${m[1]} год`],
+  [/^(\d+)\s+cardae$/i,m=>`${m[1]} ${ukPlural(m[1],'картка','картки','карток')}`],
+  [/^(\d+)\s+cardky$/i,m=>`${m[1]} ${ukPlural(m[1],'картка','картки','карток')}`],
+  [/^(\d+)\s+unicae$/i,m=>`${m[1]} ${ukPlural(m[1],'унікальна','унікальні','унікальних')}`],
+  [/^(\d+)\s+collectiones$/i,m=>`${m[1]} ${ukPlural(m[1],'колекція','колекції','колекцій')}`],
+  [/^(\d+)\s+packs?$/i,m=>`${m[1]} ${ukPlural(m[1],'пак','паки','паків')}`],
+  [/^(\d+)\s+lots$/i,m=>`${m[1]} ${ukPlural(m[1],'лот','лоти','лотів')}`],
+  [/^(\d+)\s+membra$/i,m=>`${m[1]} ${ukPlural(m[1],'учасник','учасники','учасників')}`],
+  [/^(\d+)\s+signata a te$/i,m=>`${m[1]} підписано вами`],
+  [/^(\d+)\s+quorum$/i,m=>`${m[1]} ${ukPlural(m[1],'кворум','кворуми','кворумів')}`],
+  [/^(\d+)\s+dies$/i,m=>`${m[1]} ${ukPlural(m[1],'день','дні','днів')}`],
+  [/^Cella\s+(\d+)$/i,m=>`Комірка ${m[1]}`]
+];
+function trSplit(t){
+  const parts=t.split(/\s+·\s+/);
+  if(parts.length<2)return null;
+  let hit=false;
+  const out=parts.map(p=>{
+    let q=UKD[p]!=null?UKD[p]:null;
+    if(q==null)for(const [re,fn] of UKPAT){const m=p.match(re);if(m){q=fn(m);break;}}
+    if(q==null)q=p;
+    if(q!==p)hit=true;
+    return q;
+  });
+  return hit?out.join(' · '):null;
+}
 function trText(s){
   if(UI.lang!=='uk'||!s)return s;
   const lead=s.slice(0,s.length-s.trimStart().length),trail=s.slice(s.trimEnd().length);
@@ -820,6 +909,8 @@ function trText(s){
     const m=t.match(/^([^\p{L}\p{N}]+)(.+)$/u);
     if(m){const inner=trCore(m[2].trim());if(inner!=null)rep=m[1]+inner;}
   }
+  if(rep==null)rep=trSplit(t);
+  if(rep==null)for(const [re,fn] of UKPAT){const m=t.match(re);if(m){rep=fn(m);break;}}
   return rep==null?s:lead+rep+trail;
 }
 function trDom(root){
@@ -914,8 +1005,13 @@ function packOdds(p){
   const tot=items.reduce((s,x)=>s+x.weight,0)||1;
   return items.map(x=>({...x,pct:+(x.weight*100/tot).toFixed(2)})).sort((a,b)=>b.weight-a.weight);
 }
-function rarLabel(r){return (RARITY[r]||[r])[0];}
-function rarColor(r){return (RARITY[r]||['','#94a3b8'])[1];}
+function rarList(){
+  const list=(DB&&DB.rarities)||[];
+  return list.length?list:Object.keys(RARITY).map((id,i)=>({id,label:RARITY[id][0],color:RARITY[id][1],sort:(i+1)*10,active:true}));
+}
+function rarLabel(r){const x=rarList().find(y=>y.id===r);return x?x.label:(RARITY[r]||[r])[0];}
+function rarColor(r){const x=rarList().find(y=>y.id===r);return x?x.color:(RARITY[r]||['','#94a3b8'])[1];}
+function rarStyle(r){return `--rc:${rarColor(r)}`;}
 function cardArt(c,cls='cimg'){
   return `<div class="${cls}">${c.img?`<img src="${esc(c.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'fall',textContent:'Ś'}))">`:`<span class="fall">Ś</span>`}</div>`;
 }
@@ -941,6 +1037,25 @@ function showInfo(html){
   let host=document.getElementById('modal');
   if(!host){host=document.createElement('div');host.id='modal';document.body.appendChild(host);}
   host.innerHTML=`<div class="mb"><div class="md"><div class="ft" style="margin:0 0 2px"><button class="bt g sm" data-a="modalcancel">Claude</button></div>${html}</div></div>`;
+  trDom(host);
+}
+function packReveal(cards,spent){
+  const old=document.getElementById('preveal');if(old)old.remove();
+  const hi=r=>{const x=rarList().find(y=>y.id===r);return x?+x.sort>=30:['zolota','bozha','mif'].includes(r);};
+  const host=document.createElement('div');
+  host.id='preveal';
+  host.innerHTML=`<div class="pvh">Pack apertus</div>
+    <div class="pvs">${cards.length} cardae${spent?` · ${fm(spent)} h`:''}</div>
+    <div class="pvgrid" id="pvgrid">${cards.map((c,i)=>{
+      const rc=rarColor(c.rarity);
+      return `<div class="pvcard ${hi(c.rarity)?'hi':''}" style="--rc:${rc};--d:${(i*.14).toFixed(2)}s">
+        <div class="pva">${c.img?`<img src="${esc(c.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'fall',textContent:'Ś'}))">`:`<span class="fall">Ś</span>`}</div>
+        <div class="pvb"><div class="pvn">${esc(c.name)}</div><div class="pvr">${esc(rarLabel(c.rarity))}</div><div class="pvc">${esc(c.collection||'')}</div></div>
+      </div>`;
+    }).join('')}</div>
+    <div class="gs" style="justify-content:center"><button class="bt g" data-a="pvflat">Omnes ostende</button><button class="bt p" data-a="pvclose">Bene</button></div>`;
+  document.body.appendChild(host);
+  if(UI.sound)beep();
   trDom(host);
 }
 function pollingStart(){
@@ -1093,13 +1208,12 @@ function nav(){
 }
 function bottomNav(){
   const u=unread(),cu=unreadChats();
-  const order=tabOrder();
-  const items=[['holb','Holb'],['cards','Cardky'],['bank','Sellprade'],['chat','Besedy']]
-    .sort((x,y)=>order.indexOf(x[0])-order.indexOf(y[0]));
-  const inside=items.some(x=>x[0]===UI.tab);
-  return `<nav class="bnav">`+items.map(([id,l])=>{
+  const ids=quickTabs();
+  const inside=ids.includes(UI.tab);
+  return `<nav class="bnav">`+ids.map(id=>{
+    const t=TABS.find(x=>x[0]===id)||TABS[0];
     const n=id==='seg'?u:id==='chat'?cu:0;
-    return `<button class="${UI.tab===id?'on':''}" data-a="tab" data-v="${id}"><span class="bi">${dot(NAVCOLOR[id])}</span>${l}${n?`<span class="bdg">${n>99?'99+':n}</span>`:''}</button>`;
+    return `<button class="${UI.tab===id?'on':''}" data-a="tab" data-v="${id}"><span class="bi">${dot(NAVCOLOR[id])}</span>${t[1]}${n?`<span class="bdg">${n>99?'99+':n}</span>`:''}</button>`;
   }).join('')+`<button class="${inside?'':'on'}" data-a="sheet"><span class="bi plus">⋯</span>Plus</button></nav>`;
 }
 function sheetHtml(){
@@ -1125,6 +1239,7 @@ function tabContent(){
     case 'seg':return seg();
     case 'bank':return bank();
     case 'prad':return prad();
+    case 'seti':return seti();
     case 'chat':return chat();
     case 'jur':return jur();
     case 'news':return news();
@@ -1337,7 +1452,7 @@ function lotCard(l){
 function cardTile(c,count,val){
   if(!c)return'';
   const attrs=val!=null?` data-a="cardmenu" data-v="${val}" role="button" tabindex="0"`:'';
-  return `<div class="ctile r-${c.rarity}"${attrs}>
+  return `<div class="ctile r-${c.rarity}" style="${rarStyle(c.rarity)}"${attrs}>
     ${count>1?`<span class="cnt">×${count}</span>`:''}
     <span class="rlab">${rarLabel(c.rarity)}</span>
     ${cardArt(c)}
@@ -1401,7 +1516,7 @@ function cardsMine(){
     </div></div>
     <div class="tb"><div class="filters">
       <button class="fchip ${!rar?'on':''}" data-a="cardrar" data-v="">Omnes</button>
-      ${Object.keys(RARITY).map(r=>`<button class="fchip ${rar===r?'on':''}" data-a="cardrar" data-v="${r}" style="--dot:${rarColor(r)}">${rarLabel(r)}</button>`).join('')}
+      ${rarList().filter(r=>r.active||r.id===rar).map(r=>`<button class="fchip ${rar===r.id?'on':''}" data-a="cardrar" data-v="${r.id}" style="--dot:${r.color}">${esc(r.label)}</button>`).join('')}
     </div><span class="mut">${inv.length} unicae · ${inv.reduce((s,x)=>s+(+x.count||0),0)} cardae</span></div>
     <div class="cgrid">${shown.map(x=>cardTile(cMap()[x.card],+x.count||1,x.id)).join('')||e('Cardky desunt — eme pack','#e8c37a')}</div>
     ${inv.length>shown.length?`<div class="gs" style="margin-top:10px">${bt('Plures','cardmore','','g')}</div>`:''}`;
@@ -1433,7 +1548,7 @@ function marketTile(m){
   }
   if(live&&mine)acts+=bt('Abroga','cardcancel',m.id,'d sm');
   if(!mine)acts+=bt('Delatio','report','card|'+m.card+'|'+m.name,'d sm');
-  return `<div class="ctile r-${c.rarity}" style="cursor:default">
+  return `<div class="ctile r-${c.rarity}" style="${rarStyle(c.rarity)};cursor:default">
     <span class="rlab">${isA?'Auctio':'Venditio'}</span>
     ${cardArt(c)}
     <div class="cbody"><div class="cname">${esc(m.name)}</div>
@@ -1453,8 +1568,9 @@ function readPackDraft(){
   const d=packDraft();
   const n=$('#pkName'),p=$('#pkPrice'),q=$('#pkQ');
   if(n)d.name=n.value;if(p)d.price=p.value;if(q)d.q=q.value;
-  document.querySelectorAll('.pkw').forEach(inp=>{
-    const id=inp.dataset.card;if(id)d.items[id]=Math.max(1,Math.min(100,+inp.value||1));
+  document.querySelectorAll('.pkp').forEach(inp=>{
+    const id=inp.dataset.card;
+    if(id)d.items[id]=Math.max(.1,Math.min(100,Math.round((+inp.value||0)*10)/10));
   });
 }
 function cardsStudio(){
@@ -1465,21 +1581,51 @@ function cardsStudio(){
   const sel=Object.keys(d.items).filter(id=>cMap()[id]);
   const pq=(d.q||'').trim().toLowerCase();
   const pick=catalog().filter(c=>!pq||(c.name+' '+collName(c.collection)).toLowerCase().includes(pq)).slice(0,36);
-  const tot=sel.reduce((s,id)=>s+(+d.items[id]||0),0)||1;
+  const sum=sel.reduce((s,id)=>s+(+d.items[id]||0),0);
   return `${C('Collectiones',`<div class="gs" style="margin-bottom:8px">${bt('Collectio nova','cardcollnew','','p')}</div>
       ${colls.map(c=>`<div class="it"><div class="r"><i>${dot('#e8c37a')}</i><div class="in"><b>${esc(c.name)}</b><small>${catalog().filter(x=>String(x.collection)===String(c.id)).length} cardae</small></div></div></div>`).join('')||e('Collectiones desunt','#e8c37a')}`)}
+    ${C('Raritates',`<div class="gs" style="margin-bottom:8px">${bt('Raritas nova','rarnew','','p')}</div>
+      ${rarList().map(r=>`<div class="it"><div class="r" data-a="raredit" data-v="${r.id}" role="button" tabindex="0"><i>${dot(r.color)}</i><div class="in"><b>${esc(r.label)}</b><small>#${esc(r.id)} · sort ${r.sort}</small></div>${r.active?'<span class="pl ok">activa</span>':'<span class="pl">clausa</span>'}</div></div>`).join('')||e('Raritates desunt','#94a3b8')}`)}
     ${C('Karta nova',`<div class="gs" style="margin-bottom:8px">${bt('Karta nova','cardnew','','p')}</div>
       <div class="tb"><input class="srch" id="cardq" maxlength="50" value="${esc(UI.cardQ||'')}" placeholder="Quaere catalogum…"><button class="bt p sm" data-a="cardsearch">Quaere</button></div>
-      <div class="cgrid">${cat.map(c=>`<div class="ctile r-${c.rarity}" data-a="cardedit" data-v="${c.id}" role="button" tabindex="0"><span class="rlab">${rarLabel(c.rarity)}</span>${cardArt(c)}<div class="cbody"><div class="cname">${esc(c.name)}</div><div class="cmeta"><span>${esc(collName(c.collection))}</span><span>${c.active?'on':'off'}</span></div></div></div>`).join('')||e('Catalogus vacius','#94a3b8')}</div>`)}
+      <div class="cgrid">${cat.map(c=>`<div class="ctile r-${c.rarity}" style="${rarStyle(c.rarity)}" data-a="cardedit" data-v="${c.id}" role="button" tabindex="0"><span class="rlab">${rarLabel(c.rarity)}</span>${cardArt(c)}<div class="cbody"><div class="cname">${esc(c.name)}</div><div class="cmeta"><span>${esc(collName(c.collection))}</span><span>${c.active?'on':'off'}</span></div></div></div>`).join('')||e('Catalogus vacius','#94a3b8')}</div>`)}
     ${C('Packs',`<div class="gs" style="margin-bottom:8px">${bt('Pack novus','packfocus','','p')}</div>
       ${packs().map(p=>`<div class="it"><div class="r"><i>${dot(p.active?'#34d399':'#94a3b8')}</i><div class="in"><b>${esc(p.name)}</b><small>${fm(p.price)} h · ${(p.items||[]).length} cardae · ${p.active?'active':'clausus'}</small></div>${bt(p.active?'Claude':'Aperi','packtoggle',p.id+':'+(p.active?'off':'on'),p.active?'d sm':'ok sm')}</div></div>`).join('')||e('Packs desunt','#e8c37a')}`)}
     ${C('Pack builder',`<div class="tb"><input class="srch" id="pkName" maxlength="60" value="${esc(d.name)}" placeholder="Nomen pack"><input class="srch" id="pkPrice" type="number" min="0.01" step="0.01" value="${esc(d.price)}" placeholder="Pretium" style="max-width:110px"></div>
       <div class="tb"><input class="srch" id="pkQ" maxlength="40" value="${esc(d.q)}" placeholder="Quaere cardas…"><button class="bt p sm" data-a="packsearch">Quaere</button></div>
-      <div class="cgrid">${pick.map(c=>{const on=d.items[c.id]!=null;return `<div class="ctile r-${c.rarity}" data-a="packadd" data-v="${c.id}" role="button" tabindex="0" style="cursor:pointer"><span class="rlab">${on?'✓ ':''}${rarLabel(c.rarity)}</span>${cardArt(c)}<div class="cbody"><div class="cname">${esc(c.name)}</div><div class="cmeta"><span>${esc(collName(c.collection))}</span><span>${on?'×'+d.items[c.id]:''}</span></div></div></div>`;}).join('')||e('Nihil inventum','#94a3b8')}</div>
-      <div style="margin-top:10px">${sel.map(id=>{const c=cMap()[id];const w=+d.items[id]||1;return `<div class="oddsrow"><span>${esc(c.name)} <button class="bt d sm" data-a="packdel" data-v="${id}">×</button></span><span><input class="pkw" data-card="${id}" type="number" min="1" max="100" step="1" value="${w}" style="width:70px"> · ${(w*100/tot).toFixed(1)}%</span></div>`;}).join('')||e('Cardas adde','#94a3b8')}</div>
+      <div class="cgrid">${pick.map(c=>{const on=d.items[c.id]!=null;return `<div class="ctile r-${c.rarity}" data-a="packadd" data-v="${c.id}" role="button" tabindex="0" style="cursor:pointer;${rarStyle(c.rarity)}"><span class="rlab">${on?'✓ ':''}${rarLabel(c.rarity)}</span>${cardArt(c)}<div class="cbody"><div class="cname">${esc(c.name)}</div><div class="cmeta"><span>${esc(collName(c.collection))}</span><span>${on?'×'+d.items[c.id]:''}</span></div></div></div>`;}).join('')||e('Nihil inventum','#94a3b8')}</div>
+      <div style="margin-top:10px">${sel.map(id=>{const c=cMap()[id];const w=+d.items[id]||0;return `<div class="oddsrow"><span>${esc(c.name)} <button class="bt d sm" data-a="packdel" data-v="${id}">×</button></span><span><input class="pkp" data-card="${id}" type="number" min="0.1" max="100" step="0.1" value="${w}" style="width:78px"> % <span class="mut">→ ${((w*100)/(sum||1)).toFixed(1)}%</span></span></div>`;}).join('')||e('Cardas adde','#94a3b8')}</div>
+      ${sel.length?`<div class="oddsrow"><span>Summa ponderum</span><b style="${Math.abs(sum-100)>.05?'color:var(--wn)':''}">${sum.toFixed(1)}%</b></div>
+      <div class="gs" style="margin-top:6px"><button class="bt g sm" data-a="packequa">Aequa</button><button class="bt g sm" data-a="packnorm">Ad 100%</button></div>
+      <div class="hint">Pondera normalizantur: sufficit proportio. «Aequa» = casus aequales; «Ad 100%» = scala ad summam 100.</div>`:''}
       <div class="gs" style="margin-top:10px">${bt('Crea pack','packsave','','p')}${bt('Purga','packclear','','d')}</div>`)}`;
 }
 function findInv(id){return myCards().find(x=>String(x.id)===String(id))||null;}
+async function rarForm(r){
+  const isNew=!r;
+  const fields=[
+    ...(isNew?[{n:'id',label:'ID (a-z, 0-9, _)',max:24,ph:'epica'}]:[]),
+    {n:'label',label:'Nomen',max:24,value:isNew?'':r.label},
+    {n:'color',label:'Color #RRGGBB',max:7,value:isNew?'#94a3b8':r.color},
+    {n:'sort',label:'Sort',type:'num',value:isNew?60:r.sort},
+    {n:'active',label:'Activa',type:'sel',value:isNew||r.active?'1':'0',opts:[{v:'1',l:'Sic'},{v:'0',l:'Non'}]}
+  ];
+  const f=await ask(isNew?'Raritas nova':'Raritas · '+r.label,fields,isNew?'Crea':'Serva','',
+    v=>{
+      if(isNew&&!/^[a-z0-9_-]{2,24}$/.test(v.id.trim().toLowerCase()))return'ID: a-z, 0-9, _ (2–24)';
+      if(v.label.trim().length<1)return'Nomen necessarium';
+      if(!/^#[0-9a-fA-F]{6}$/.test(v.color.trim()))return'Color: #RRGGBB';
+      return'';
+    });
+  if(!f)return;
+  await run(()=>rpc('api_rarity_save',{
+    p_id:isNew?f.id.trim().toLowerCase():r.id,
+    p_label:f.label.trim(),
+    p_color:f.color.trim().toLowerCase(),
+    p_sort:Math.round(+f.sort||0),
+    p_active:f.active==='1'
+  }),'Raritas servata');
+}
 function cardMenu(id){
   const inv=findInv(id);if(!inv)return;
   const c=cardById(inv.card);if(!c)return;
@@ -1511,6 +1657,89 @@ function betNewModal(){
     <div id="bnOpts">${betOptRow(0,'',1.8)}${betOptRow(1,'',2.2)}</div>
     <div class="gs"><button class="bt g sm" data-a="betoptadd" type="button">+ Optio</button></div>
     <div class="gs" style="margin-top:10px">${bt('Crea','betoptsave','','p')}<button class="bt g" data-a="modalcancel">Claude</button></div>`);
+}
+
+/* ---------- Setи (contracts) ---------- */
+const CONTRACT_KIND={
+  pactum:['Pactum','#8aa4ff'],decretum:['Decretum','#e8c37a'],
+  foedus:['Foedus','#34d399'],testamentum:['Testamentum','#b07bff'],
+  petitio:['Petitio','#22d3ee']
+};
+const CONTRACT_STATUS={open:['Apertus','wn'],quorum:['Quorum','ok'],cancelled:['Abrogatus','er']};
+const contracts=()=>(DB&&DB.contracts)||[];
+const contractById=id=>contracts().find(c=>String(c.id)===String(id))||null;
+const contractExpired=c=>c.closes&&new Date(c.closes).getTime()<=Date.now();
+function contractSigns(c){return (c.signs||[]).length;}
+function seti(){
+  const q=(UI.csQ||'').trim().toLowerCase();
+  const f=UI.csF||'all';
+  const list=contracts().filter(c=>{
+    if(f==='open'&&c.status!=='open')return false;
+    if(f==='quorum'&&c.status!=='quorum')return false;
+    if(f==='mine'&&!c.mine&&!c.can_cancel)return false;
+    if(q&&!(c.title+' '+(c.body||'')+' '+c.by).toLowerCase().includes(q))return false;
+    return true;
+  });
+  const live=contracts().filter(c=>c.status!=='cancelled').length;
+  const signed=contracts().filter(c=>c.mine).length;
+  return `<div class="banner"><div class="sub">Setи · @${esc(ME.nick)}</div>
+    <div class="amt">${live} <span>Documenta</span></div>
+    <div class="sub">${signed} signata a te · ${contracts().filter(c=>c.status==='quorum').length} quorum</div>
+    <div class="gs" style="margin-top:10px">${bt('Documentum novum','setinew','','p')}</div>
+  </div>
+  <div class="tb"><input class="srch" id="setiq" maxlength="80" value="${esc(UI.csQ||'')}" placeholder="Quaere documenta…"><button class="bt p sm" data-a="setisearch">Quaere</button></div>
+  <div class="subtabs">${[['all','Omnia'],['open','Aperta'],['quorum','Quorum'],['mine','Mea']].map(([id,l])=>`<button class="sbt ${f===id?'on':''}" data-a="setif" data-v="${id}">${l}</button>`).join('')}</div>
+  ${list.map(contractCard).join('')||C('Setи',e('Documenta desunt','#c084fc'))}`;
+}
+function contractCard(c){
+  const k=CONTRACT_KIND[c.kind]||[c.kind,'#8aa4ff'];
+  const st=CONTRACT_STATUS[c.status]||[c.status,''];
+  const n=contractSigns(c);
+  const exp=contractExpired(c);
+  return `<div class="card"><h3><span style="display:flex;gap:8px;align-items:center;min-width:0"><span class="dot" style="--dot:${k[1]}"></span><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.title)}</span></span>
+      <span class="hp"><span class="pl ${st[1]}">${st[0]}</span></span></h3>
+    <div class="mut">${esc(k[0])} · @${esc(c.by||'—')} · ${dt(c.ts)}${c.closes?` · finis ${dt(c.closes)}`:''}</div>
+    <div class="dt">${esc(String(c.body||'').slice(0,240))}${String(c.body||'').length>240?'…':''}</div>
+    <div class="oddsrow" style="margin-top:7px"><span>Signature</span><b>${n} / ${c.min}${c.status==='quorum'?' · quorum':''}</b></div>
+    <div class="gs" style="margin-top:8px">${bt('Aperi','setiview',c.id,'g sm')}${!c.mine&&c.status!=='cancelled'&&!exp?bt('Signa','setisign',c.id,'p sm'):''}</div>
+  </div>`;
+}
+function contractView(c){
+  const k=CONTRACT_KIND[c.kind]||[c.kind,'#8aa4ff'];
+  const st=CONTRACT_STATUS[c.status]||[c.status,''];
+  const exp=contractExpired(c);
+  const signs=(c.signs||[]).map(s=>`<span class="pl">@${esc(s.nick)}</span>`).join(' ')||'—';
+  showInfo(`<h3>${esc(c.title)}</h3>
+    <div class="mut">${esc(k[0])} · @${esc(c.by||'—')} · ${dt(c.ts)} · <span class="pl ${st[1]}">${st[0]}</span></div>
+    ${c.closes?`<div class="mut">Terminus: ${dt(c.closes)}${exp?' · finitus':''}</div>`:''}
+    <div class="dt">${esc(c.body)}</div>
+    <div class="oddsrow" style="margin-top:10px"><span>Signature</span><b>${contractSigns(c)} / ${c.min}</b></div>
+    <div class="mut" style="margin-top:6px">Fides: <b class="mono">${esc((c.hash||'').slice(0,16))}…</b></div>
+    <div class="dt" style="margin-top:8px;background:transparent">${signs}</div>
+    <div class="gs" style="margin-top:10px">
+      ${!c.mine&&c.status!=='cancelled'&&!exp?bt('Signa documentum','setisign',c.id,'p'):''}
+      ${c.can_cancel&&c.status!=='cancelled'?bt('Abroga','seticancel',c.id,'d'):''}
+      <button class="bt g" data-a="modalcancel">Claude</button>
+    </div>`);
+}
+async function contractNew(){
+  const f=await ask('Documentum novum',[
+    {n:'title',label:'Titulus',max:120},
+    {n:'kind',label:'Typus',type:'sel',opts:Object.keys(CONTRACT_KIND).map(k=>({v:k,l:CONTRACT_KIND[k][0]}))},
+    {n:'body',label:'Textus',type:'ta',max:6000},
+    {n:'min',label:'Signature ad quorum',type:'num',value:3},
+    {n:'hours',label:'Terminus',type:'sel',opts:[{v:'24',l:'24 h'},{v:'72',l:'72 h'},{v:'168',l:'7 dies'},{v:'720',l:'30 dies'},{v:'0',l:'Sine termino'}]}
+  ],'Crea','',v=>{
+    if(v.title.trim().length<4)return'Titulus: minimum 4 signa';
+    if(v.body.trim().length<10)return'Textus: minimum 10 signa';
+    if(!(+v.min>=1&&+v.min<=50))return'Quorum: 1–50';
+    return'';
+  });
+  if(!f)return;
+  await run(()=>rpc('api_contract_create',{
+    p_title:f.title.trim(),p_body:f.body.trim(),p_kind:f.kind,
+    p_min:Math.round(+f.min),p_hours:Math.round(+f.hours)
+  }),'Documentum creatum');
 }
 
 /* ---------- Teckelié ---------- */
@@ -1950,6 +2179,14 @@ function ust(){
       </div></div>
       <div class="setrow"><span>Ordo sectionum</span><button class="bt g sm" data-a="taborderreset">Reset</button></div>
       <div class="sorder">${ord.map(([id,l,color],i)=>`<div class="sorow"><span>${dot(color)}</span><span class="sname">${l}</span><span class="sorbtns"><button class="bt g sm" data-a="tabup" data-v="${id}" ${i===0?'disabled':''}>↑</button><button class="bt g sm" data-a="tabdn" data-v="${id}" ${i===ord.length-1?'disabled':''}>↓</button></span></div>`).join('')}</div>
+      <div class="setrow"><span>Cellae celeres</span><span class="mut">4 cellae</span></div>
+      <div class="qgrid">${quickTabs().map((id,i)=>{
+        const cur=TABS.find(t=>t[0]===id);
+        return `<div class="fl"><label>Cella ${i+1}</label><select data-a="quickset" data-v="${i}">${
+          ord.map(([tid,l])=>`<option value="${tid}"${tid===id?' selected':''}>${esc(l)}</option>`).join('')
+        }</select></div>`;
+      }).join('')}</div>
+      <div class="hint">Cellae celeres sunt quattuor sectiones in ima parte telephoni. Ordo sectionum eas non mutat.</div>
       <div class="setrow"><span>Modus compactus</span>${sw(UI.compact,'compact')}</div>
       <div class="setrow"><span>Celare Kapol aliis</span>${sw(UI.hide,'hide')}</div>
       <div class="setrow"><span>Sonus</span><span class="gs" style="align-items:center">${sw(UI.sound,'sound')}<button class="bt g sm" data-a="testsnd">Proba</button></span></div>
@@ -2316,6 +2553,8 @@ const A={
   cardmk(v){UI.cardMk=v;render();},
   packcoll(v){UI.packColl=v;render();},
   cardmenu(id){cardMenu(id);},
+  rarnew(){rarForm(null);},
+  raredit(id){const r=rarList().find(x=>x.id===id);if(r)rarForm(r);},
   async packbuy(id){
     const p=packs().find(x=>String(x.id)===String(id));if(!p)return;
     const f=await ask('Eme pack',[
@@ -2323,8 +2562,15 @@ const A={
     ],'Eme',`«${p.name}» · ${fm(p.price)} h / pack.`,v=>!(+v.count>=1&&+v.count<=10)?'1–10':'');
     if(!f)return;
     if(!await ask('Confirma emptionem',[],'Eme',`${fm(p.price*(+f.count))} h e Kapol.`))return;
-    await run(()=>rpc('api_card_pack_buy',{p_pack:p.id,p_count:+f.count}),'Pack emptus');
+    try{
+      const res=await rpc('api_card_pack_buy',{p_pack:p.id,p_count:+f.count});
+      await sync();
+      if(res&&res.cards&&res.cards.length)packReveal(res.cards,res.total);
+      else toast('Pack emptus','s');
+    }catch(err){toast(errMsg(err),'e');}
   },
+  pvclose(){const el=$('#preveal');if(el)el.remove();if(UI.sound)beep();},
+  pvflat(){const g=$('#pvgrid');if(g)g.classList.add('flat');},
   async cardgift(id){
     const inv=findInv(id);if(!inv)return;
     const c=cardById(inv.card);
@@ -2385,7 +2631,7 @@ const A={
     const f=await ask('Karta nova',[
       {n:'collection',label:'Collectio',type:'sel',opts:collections().map(c=>({v:c.id,l:c.name}))},
       {n:'name',label:'Nomen',max:60},
-      {n:'rarity',label:'Raritas',type:'sel',opts:Object.keys(RARITY).map(k=>({v:k,l:RARITY[k][0]}))},
+      {n:'rarity',label:'Raritas',type:'sel',opts:rarList().filter(r=>r.active).map(r=>({v:r.id,l:r.label}))},
       {n:'about',label:'Descriptio',type:'ta',max:400},
       {n:'img',label:'URL imaginis',max:300}
     ],'Crea','',v=>v.name.trim().length<2?'Nomen: minimum 2 signa':(v.img.trim()&&!/^https?:\/\//i.test(v.img.trim())?'URL: http(s):// necessarium':''));
@@ -2396,7 +2642,7 @@ const A={
     const c=cardById(id);if(!c)return;
     const f=await ask('Recense kartam',[
       {n:'name',label:'Nomen',max:60,value:c.name},
-      {n:'rarity',label:'Raritas',type:'sel',value:c.rarity,opts:Object.keys(RARITY).map(k=>({v:k,l:RARITY[k][0]}))},
+      {n:'rarity',label:'Raritas',type:'sel',value:c.rarity,opts:rarList().filter(r=>r.active||r.id===c.rarity).map(r=>({v:r.id,l:r.label}))},
       {n:'about',label:'Descriptio',type:'ta',max:400,value:c.about||''},
       {n:'img',label:'URL imaginis',max:300,value:c.img||''},
       {n:'active',label:'Activa',type:'sel',value:c.active?'1':'0',opts:[{v:'1',l:'Sic'},{v:'0',l:'Non'}]}
@@ -2412,25 +2658,63 @@ const A={
   packsearch(){readPackDraft();render();},
   packadd(id){
     readPackDraft();const d=packDraft();
-    d.items[id]=Math.max(1,Math.min(100,(+d.items[id]||0)+1));
+    d.items[id]=d.items[id]==null?10:Math.min(100,Math.round(((+d.items[id]||0)+1)*10)/10);
     render();
   },
   packdel(id){
     readPackDraft();const d=packDraft();delete d.items[id];render();
   },
+  packequa(){
+    readPackDraft();const d=packDraft();
+    const ids=Object.keys(d.items).filter(id=>cMap()[id]);
+    if(!ids.length){toast('Cardas adde','e');return;}
+    const w=Math.round((100/ids.length)*10)/10;
+    ids.forEach(id=>{d.items[id]=w;});
+    render();
+  },
+  packnorm(){
+    readPackDraft();const d=packDraft();
+    const ids=Object.keys(d.items).filter(id=>cMap()[id]);
+    const sum=ids.reduce((s,id)=>s+(+d.items[id]||0),0);
+    if(!ids.length||sum<=0){toast('Cardas adde','e');return;}
+    let acc=0;
+    ids.forEach((id,i)=>{
+      const w=i===ids.length-1?Math.round((100-acc)*10)/10:Math.round((+d.items[id]*100/sum)*10)/10;
+      d.items[id]=Math.max(.1,w);acc+=w;
+    });
+    render();
+  },
   packclear(){UI.packDraft=null;render();},
   async packsave(){
     readPackDraft();const d=packDraft();
-    const items=Object.keys(d.items).map(id=>({card:id,weight:+d.items[id]||1}));
+    const items=Object.keys(d.items).map(id=>({card:id,weight:Math.round((+d.items[id]||0)*100)/100}));
     if(d.name.trim().length<2){toast('Nomen: minimum 2 signa','e');return;}
     if(!(+d.price>0)){toast('Pretium > 0 necessarium','e');return;}
     if(!items.length){toast('Cardas adde','e');return;}
+    if(items.some(x=>x.weight<=0)){toast('Pondera > 0 necessaria','e');return;}
     const res=await run(()=>rpc('api_card_pack_create',{p_name:d.name.trim(),p_price:+d.price,p_items:items}),'Pack creatus');
     if(res!==null){UI.packDraft=null;render();}
   },
   async packtoggle(v){
     const [id,on]=String(v).split(':');
     await run(()=>rpc('api_card_pack_toggle',{p_pack:id,p_on:on==='on'}),'Pack mutatus');
+  },
+  /* seti */
+  setif(v){UI.csF=v;render();},
+  setisearch(){const el=$('#setiq');UI.csQ=el?el.value:UI.csQ;render();},
+  setiview(id){const c=contractById(id);if(c)contractView(c);},
+  setinew(){contractNew();},
+  async setisign(id){
+    const c=contractById(id);if(!c)return;
+    if(!await ask('Signa documentum',[],'Signa',`«${c.title}» · fides ${String(c.hash||'').slice(0,12)}…`))return;
+    const res=await run(()=>rpc('api_contract_sign',{p_contract:c.id}),'Documentum signatum');
+    if(res){const n=contractById(id);if(n)contractView(n);}
+  },
+  async seticancel(id){
+    const c=contractById(id);if(!c)return;
+    if(!await ask('Abroga documentum?',[],'Abroga',`«${c.title}» claudetur.`))return;
+    const res=await run(()=>rpc('api_contract_cancel',{p_contract:c.id}),'Documentum abrogatum');
+    if(res)closeModal(null);
   },
   /* teckelie */
   bettab(v){UI.betTab=v;render();},
@@ -3087,11 +3371,18 @@ document.addEventListener('input',ev=>{
   el.value=n;
   try{el.setSelectionRange(pos,pos);}catch{}
 });
+document.addEventListener('change',ev=>{
+  const el=ev.target;
+  if(!el||el.dataset.a!=='quickset')return;
+  ev.preventDefault();
+  setQuick(Number(el.dataset.v)||0,el.value);
+});
 document.addEventListener('keydown',ev=>{
   const ent={
     sq:()=>A.search(),lawq:()=>A.lawsearch(),bq:()=>A.bsearch(),mkq:()=>A.mksearch(),
     jq:()=>A.jsearch(),chq:()=>A.chsearch(),cardq:()=>A.cardsearch(),pkQ:()=>A.packsearch(),
-    betq:()=>A.betsearch(),nwq:()=>A.nwsearch(),rootQ:()=>A.rootsearch(),rpw:()=>A.rootauth()
+    betq:()=>A.betsearch(),nwq:()=>A.nwsearch(),rootQ:()=>A.rootsearch(),rpw:()=>A.rootauth(),
+    setiq:()=>A.setisearch()
   };
   if(ev.key==='Enter'&&ev.target&&ent[ev.target.id]){ev.preventDefault();ent[ev.target.id]();}
   if(ev.key==='Escape'&&UI.modal)closeModal(null);
