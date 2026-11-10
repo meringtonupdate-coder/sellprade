@@ -601,7 +601,13 @@ html[data-motion=reduce] *,html[data-motion=reduce] *::before,html[data-motion=r
 @media print{body.printing-contract{background:#fff!important;color:#111!important}body.printing-contract #app,body.printing-contract #tw,body.printing-contract #preveal,body.printing-contract .no-print,body.printing-contract #modal>.mb>.md>.ft{display:none!important}body.printing-contract #modal,body.printing-contract .mb,body.printing-contract .md{position:static!important;display:block!important;max-height:none!important;overflow:visible!important;background:#fff!important;color:#111!important;border:0!important;box-shadow:none!important;width:100%!important;max-width:none!important}body.printing-contract .contract-paper *{color:#111!important;background:transparent!important;box-shadow:none!important}body.printing-contract .contract-paper details{display:block}body.printing-contract .contract-paper .gs{display:none}}
 </style>
 <style id="cards-v4-style">
-.cards-tile{font:inherit;color:inherit;text-align:left;width:100%;padding:0;display:block;appearance:none}
+.cards-tile{font:inherit;color:inherit;text-align:left;width:100%;padding:0;display:block;appearance:none;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.cards-tile img{-webkit-user-drag:none}
+button,.bt,.fchip,.sbt,.tab,.chip,.bnav button,.it .r[data-a],summary{touch-action:manipulation}
+.it .r[data-a]{-webkit-user-select:none;user-select:none}
+.coll-go{margin-left:auto;color:var(--mu);font:900 1.05rem/1 inherit;padding-left:8px}
+.coll-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.coll-head h3{margin:0;flex:1;min-width:120px}
 .cards-tile:focus-visible,.cards-studio button:focus-visible,#preveal button:focus-visible{outline:3px solid var(--ac,#8aa4ff);outline-offset:3px}
 .fx-plain{box-shadow:none}
 .fx-glow{box-shadow:0 0 18px -5px var(--rc,#94a3b8),inset 0 0 12px -7px var(--rc,#94a3b8)}
@@ -1011,7 +1017,7 @@ const LIMIT_LABEL={
 const UI={
   tab:'holb', bsub:'ledger', bF:'all', bQ:'', open:new Set(),
   pcat:'Omnes', mk:'nundinae', mkQ:'',
-  cardTab:'shop', cardQ:'', cardColl:'', cardRar:'', cardLimit:60, packColl:'',
+  cardTab:'shop', cardQ:'', cardColl:'', cardRar:'', cardLimit:60, packColl:'', studioColl:null,
   betTab:'open', betQ:'',
   csF:'all', csQ:'',
   jcat:'Omnes', jq:'', jsort:'new', th:null,
@@ -1217,6 +1223,7 @@ const UKD={
 'Quantitas':'Кількість','Summa ponderum':'Сума ваг','Aequa':'Зрівняти','Ad 100%':'До 100%','URL imaginis':'URL зображення','Nomen pack':'Назва пака','Quaere cardas…':'Пошук карток…','Quaere catalogum…':'Пошук у каталозі…','Quaere cardky…':'Пошук карток…','Quaere documenta…':'Пошук документів…','Quaere lots…':'Пошук лотів…','Quaere stavky…':'Пошук ставок…','Quaere…':'Пошук…','Receptor · Nomen':'Отримувач · Нік','Pretium / minimum (h)':'Ціна / мінімум (год)','Durata auctionis':'Тривалість аукціону','Terminus (h)':'Термін (год)','Max stavka (h)':'Макс. ставка (год)','Bank (h)':'Банк (год)','Signature ad quorum':'Підписів до кворуму','Nomen, pretium, deinde cardas adde':'Назва, ціна, потім додайте картки','Pondera normalizantur: sufficit proportio. «Aequa» = casus aequales; «Ad 100%» = scala ad summam 100.':'Ваги нормалізуються: достатньо пропорції. «Зрівняти» — рівні шанси; «До 100%» — масштаб до суми 100.',
 'Cellae celeres sunt quattuor sectiones in ima parte telephoni. Ordo sectionum eas non mutat.':'Швидка панель — чотири вкладки внизу на телефоні. Порядок у «Ordo sectionum» її не змінює.',
 'Pack apertus':'Пак відкрито','Omnes ostende':'Показати всі','Bene':'Добре','in foro':'у продажу',
+'Dele raritatem?':'Видалити рідкість?','Dele collectionem?':'Видалити колекцію?','Dele kartam?':'Видалити картку?','Dele pack?':'Видалити пак?','Recense collection':'Редагувати колекцію','Cardae':'Картки','Raritas deleta':'Рідкість видалено','Collectio servata':'Колекцію збережено','Collectio deleta':'Колекцію видалено','Karta deleta':'Картку видалено','Pack deletus':'Пак видалено','Schema renovanda: schema-part5.sql necessaria.':'Оновіть схему: потрібен schema-part5.sql.','Collectio non vacua':'Колекція не порожня','Raritas in usu':'Рідкість використовується','Karta in usu':'Картка використовується','Karta in packis':'Картка є в паках','Karta in foro':'Картка на ринку',
 'Quaere homines…':'Пошук людей…','Scribe primum nuntium':'Напишіть перше повідомлення','Chat privatus':'Приватний чат','nuntii live':'повідомлення в реальному часі'
 };
 function trCore(t){return UKD[t]!=null?UKD[t]:null;}
@@ -1347,6 +1354,7 @@ const packs=()=>cardData().packs||[];
 const cardMarket=()=>cardData().market||[];
 const myCards=()=>cardData().mine||[];
 const cardById=id=>catalog().find(c=>c.id===id)||null;
+const canPurge=()=>Number(DB&&DB.api_version)>=5;
 const collName=id=>{const c=collections().find(x=>x.id===id);return c?c.name:'—';};
 let _cMap=null,_cMapAt=0;
 function cMap(){
@@ -1578,7 +1586,7 @@ async function rpcRaw(name,args){
   if(!/^api_[a-z0-9_]+$/.test(name))throw new Error('API invalida');
   const {data,error}=await sb.rpc(name,args||{});
   if(error){
-    if(error.code==='PGRST202')error.message=trText('Schema renovanda: schema-part4.sql necessaria.');
+    if(error.code==='PGRST202')error.message=trText('Schema renovanda: schema-part5.sql necessaria.');
     throw error;
   }
   return data;
@@ -1712,7 +1720,7 @@ function shellNetworkBanner(){
   if(host.innerHTML!==html)host.innerHTML=html;
 }
 function shellViewKey(){
-  const fields={bank:['bsub'],prad:['mk','pcat'],cards:['cardTab','cardColl','cardRar','packColl'],bets:['betTab'],seti:['csF'],chat:['csub','chat','grp'],jur:['th','jcat'],news:['nwOpen','nwCat'],vlada:['vsub','lawKind'],help:['ticket','tkF','faq'],root:['rootOk','rootTab','rootP'],seg:['segNew']}[UI.tab]||[];
+  const fields={bank:['bsub'],prad:['mk','pcat'],cards:['cardTab','cardColl','cardRar','packColl','studioColl'],bets:['betTab'],seti:['csF'],chat:['csub','chat','grp'],jur:['th','jcat'],news:['nwOpen','nwCat'],vlada:['vsub','lawKind'],help:['ticket','tkF','faq'],root:['rootOk','rootTab','rootP'],seg:['segNew']}[UI.tab]||[];
   return JSON.stringify([ME.uid,UI.tab,...fields.map(k=>UI[k]??null)]);
 }
 function shellFields(root){
@@ -2130,16 +2138,16 @@ function lotCard(l){
 /* ---------- Cardky ---------- */
 function cardTile(c,count,val,action='cardmenu'){
   if(!c)return'';
-  const interactive=val!=null,el=interactive?'button':'div';
-  const attrs=interactive?` type="button" data-a="${esc(action)}" data-v="${esc(val)}"`:'';
-  return `<${el} class="ctile cards-tile fx-${rarEffect(c.rarity)}" style="${rarStyle(c.rarity)}"${attrs}>
+  const interactive=val!=null;
+  const attrs=interactive?` role="button" tabindex="0" data-a="${esc(action)}" data-v="${esc(val)}"`:'';
+  return `<div class="ctile cards-tile fx-${rarEffect(c.rarity)}" style="${rarStyle(c.rarity)}${interactive?';cursor:pointer':''}"${attrs}>
     ${count>1?`<span class="cnt">×${count}</span>`:''}
     <span class="rlab" data-no-tr="true">${esc(rarLabel(c.rarity))}</span>
     ${cardArt(c)}
     <div class="cbody"><div class="cname" data-no-tr="true">${esc(c.name)}</div>
       <div class="cmeta" data-no-tr="true"><span>${esc(collName(c.collection))}</span><span>${esc(c.rarity?rarLabel(c.rarity):'')}</span></div>
     </div>
-  </${el}>`;
+  </div>`;
 }
 function cards(){
   const sub=UI.cardTab||'shop';
@@ -2284,7 +2292,23 @@ document.addEventListener('change',event=>{
 document.addEventListener('keydown',event=>{
   if(event.key==='Enter'&&event.target.matches('#pkQ')){event.preventDefault();A.packsearch();document.getElementById('pkQ')?.focus();}
 });
+function cardsCollectionView(c){
+  const cards=catalog().filter(x=>String(x.collection)===String(c.id));
+  return `<div class="cards-studio${UI.reduceMotion?' cards-no-motion':''}">
+    <div class="card">
+      <div class="coll-head">${bt('Retro','collback','','g sm')}<h3 data-no-tr="true">${esc(c.name)}</h3></div>
+      ${c.about?`<p class="mut" data-no-tr="true">${esc(c.about)}</p>`:''}
+      <p class="mut">${cards.length} cardae</p>
+      <div class="gs" style="margin-top:8px">${bt('Karta nova','cardnew',c.id,'p')}${canPurge()?bt('Recense','colledit',c.id)+bt('Dele','colldel',c.id,'d'):''}</div>
+    </div>
+    <div class="card"><h3>Cardae</h3>
+      <div class="cgrid">${cards.map(x=>`<div>${cardTile(x,0,x.id,'cardedit')}${canPurge()?`<div class="gs" style="margin-top:5px">${bt('Dele','carderase',x.id,'d sm')}</div>`:''}</div>`).join('')||e('Cardky desunt','#e8c37a')}</div>
+    </div>
+  </div>`;
+}
 function cardsStudio(){
+  const opened=collections().find(c=>String(c.id)===String(UI.studioColl));
+  if(opened)return cardsCollectionView(opened);
   const d=packDraft(),colls=collections(),rarities=rarList();
   const q=(UI.cardQ||'').trim().toLowerCase();
   const cat=catalog().filter(c=>!q||(c.name+' '+(c.about||'')+' '+collName(c.collection)).toLowerCase().includes(q)).slice(0,UI.cardLimit||60);
@@ -2297,11 +2321,11 @@ function cardsStudio(){
     return `<div class="pk-selected ${bad?'pk-inactive':''}"><div><span data-no-tr="true">${esc(c?c.name:id)}</span>${bad?'<small class="cards-warning">Cardae inactivae: remove ante servare</small>':''}</div><label><span class="sr-only">Pondus</span><input class="pkp" aria-label="Pondus" data-card="${esc(id)}" type="number" min="0" step="any" value="${esc(d.items[id])}"></label><b data-pk-odds="${esc(id)}">${oddsText(o?o.pct:0)}</b>${bt('Remove','packdel',id,'d sm')}</div>`;
   }).join('');
   return `<div class="cards-studio${UI.reduceMotion?' cards-no-motion':''}">${C('Collectiones',`<div class="gs" style="margin-bottom:8px">${bt('Collectio nova','cardcollnew','','p')}</div>
-    ${colls.map(c=>`<div class="it"><div class="r"><i>${dot('#e8c37a')}</i><div class="in"><b data-no-tr="true">${esc(c.name)}</b><small>${catalog().filter(x=>String(x.collection)===String(c.id)).length} cardae</small></div></div></div>`).join('')||e('Collectiones desunt','#e8c37a')}`)}
+    ${colls.map(c=>`<div class="it"><div class="r" data-a="collopen" data-v="${esc(c.id)}"><i>${dot('#e8c37a')}</i><div class="in"><b data-no-tr="true">${esc(c.name)}</b><small>${catalog().filter(x=>String(x.collection)===String(c.id)).length} cardae</small></div><span class="coll-go" aria-hidden="true">›</span></div></div>`).join('')||e('Collectiones desunt','#e8c37a')}`)}
     ${C('Raritates',`<div class="gs">${bt('Raritas nova','rarnew','','p')}</div><p class="hint">Ordo et effectus independentes.</p>
-      ${rarities.map((r,i)=>`<div class="rar-row"><span class="rar-swatch fx-${rarEffect(r.id)}" style="${rarStyle(r.id)}" aria-hidden="true">Ś</span><div class="in"><b data-no-tr="true">${esc(r.label)}</b><small><span>${r.active?'Activa':'Clausa'}</span> · <span>${esc(rarEffect(r.id))}</span></small></div><div class="gs"><button type="button" class="bt g sm" data-a="rarmove" data-v="${esc(r.id)}|-1" aria-label="Sursum" ${i===0?'disabled':''}>↑</button><button type="button" class="bt g sm" data-a="rarmove" data-v="${esc(r.id)}|1" aria-label="Deorsum" ${i===rarities.length-1?'disabled':''}>↓</button>${bt('Recense','raredit',r.id)}</div></div>`).join('')||e('Raritates desunt','#94a3b8')}`)}
-    ${C('Catalogus',`<div class="gs">${bt('Karta nova','cardnew','','p')}</div><div class="tb"><input class="srch" id="cardq" aria-label="Quaere catalogum…" maxlength="50" value="${esc(UI.cardQ||'')}" placeholder="Quaere catalogum…">${bt('Quaere','cardsearch','','p sm')}</div><div class="cgrid">${cat.map(c=>`<div>${cardTile(c,0,c.id,'cardedit')}${c.active===false?'<span class="mut">Clausa</span>':''}</div>`).join('')||e('Catalogus vacius','#94a3b8')}</div>${cat.length===(UI.cardLimit||60)?bt('Plures','cardmore'):''}`)}
-    ${C('Packs',`<div class="gs">${bt('Pack novus','packnew','','p')}</div>${packs().map(p=>`<div class="it"><div class="r"><div class="in"><b data-no-tr="true">${esc(p.name)}</b><small>${fm(p.price)} h · ${(p.items||[]).length} cardae · ${p.active?'Activa':'Clausa'}</small></div><div class="gs">${bt('Recense','packedit',p.id)}${bt(p.active?'Claude':'Aperi','packtoggle',p.id+':'+(p.active?'off':'on'),p.active?'d sm':'ok sm')}</div></div></div>`).join('')||e('Packs desunt','#e8c37a')}`)}
+      ${rarities.map((r,i)=>`<div class="rar-row"><span class="rar-swatch fx-${rarEffect(r.id)}" style="${rarStyle(r.id)}" aria-hidden="true">Ś</span><div class="in"><b data-no-tr="true">${esc(r.label)}</b><small><span>${r.active?'Activa':'Clausa'}</span> · <span>${esc(rarEffect(r.id))}</span></small></div><div class="gs"><button type="button" class="bt g sm" data-a="rarmove" data-v="${esc(r.id)}|-1" aria-label="Sursum" ${i===0?'disabled':''}>↑</button><button type="button" class="bt g sm" data-a="rarmove" data-v="${esc(r.id)}|1" aria-label="Deorsum" ${i===rarities.length-1?'disabled':''}>↓</button>${bt('Recense','raredit',r.id)}${bt(r.active?'Claude':'Aperi','rartoggle',r.id+':'+(r.active?'off':'on'),r.active?'d sm':'ok sm')}${canPurge()?bt('Dele','rardel',r.id,'d sm'):''}</div></div>`).join('')||e('Raritates desunt','#94a3b8')}`)}
+    ${C('Catalogus',`<div class="gs">${bt('Karta nova','cardnew','','p')}</div><div class="tb"><input class="srch" id="cardq" aria-label="Quaere catalogum…" maxlength="50" value="${esc(UI.cardQ||'')}" placeholder="Quaere catalogum…">${bt('Quaere','cardsearch','','p sm')}</div><div class="cgrid">${cat.map(c=>`<div>${cardTile(c,0,c.id,'cardedit')}<div class="gs" style="margin-top:5px">${c.active===false?'<span class="mut">Clausa</span>':''}${canPurge()?bt('Dele','carderase',c.id,'d sm'):''}</div></div>`).join('')||e('Catalogus vacius','#94a3b8')}</div>${cat.length===(UI.cardLimit||60)?bt('Plures','cardmore'):''}`)}
+    ${C('Packs',`<div class="gs">${bt('Pack novus','packnew','','p')}</div>${packs().map(p=>`<div class="it"><div class="r"><div class="in"><b data-no-tr="true">${esc(p.name)}</b><small>${fm(p.price)} h · ${(p.items||[]).length} cardae · ${p.active?'Activa':'Clausa'}</small></div><div class="gs">${bt('Recense','packedit',p.id)}${bt(p.active?'Claude':'Aperi','packtoggle',p.id+':'+(p.active?'off':'on'),p.active?'d sm':'ok sm')}${canPurge()?bt('Dele','packerase',p.id,'d sm'):''}</div></div></div>`).join('')||e('Packs desunt','#e8c37a')}`)}
     <section id="pack-editor">${C(d.id?'Recense pack':'Pack builder',`<div class="pk-fields"><label>Nomen pack<input class="srch" id="pkName" data-no-tr="true" maxlength="60" value="${esc(d.name)}"></label><label>Pretium (h)<input class="srch" id="pkPrice" type="number" min="0.01" step="0.01" value="${esc(d.price)}"></label></div>
       <p class="hint">Una karta per emptionem; 1–10 emptiones independentes. Repetitiones possibiles.</p>
       <div class="pk-layout"><div><h4>Cardae activae</h4><div class="tb"><input class="srch" id="pkQ" aria-label="Quaere cardas…" maxlength="60" value="${esc(d.q)}" placeholder="Quaere cardas…">${bt('Quaere','packsearch','','p sm')}</div>
@@ -3318,6 +3342,8 @@ const A={
   },
   /* cardky */
   cardsub(v){UI.cardTab=v;UI.cardLimit=60;render();},
+  collopen(id){if(!collections().some(c=>String(c.id)===String(id)))return;UI.cardTab='studio';UI.studioColl=id;render();},
+  collback(){UI.studioColl=null;render();},
   cardsearch(){const el=$('#cardq');UI.cardQ=el?el.value:UI.cardQ;UI.cardLimit=60;render();},
   cardcoll(v){UI.cardColl=v;UI.cardLimit=60;render();},
   cardrar(v){UI.cardRar=v;UI.cardLimit=60;render();},
@@ -3330,6 +3356,44 @@ const A={
   async rarmove(v){
     const [id,dir]=String(v).split('|');if(![-1,1].includes(+dir))return;
     await run(()=>rpc('api_rarity_move',{p_id:id,p_dir:+dir}),'Raritas servata');
+  },
+  async rartoggle(v){
+    const [id,on]=String(v).split(':'),r=rarList().find(x=>x.id===id);if(!r)return;
+    await run(()=>rpc('api_rarity_save_v2',{p_id:r.id,p_label:r.label,p_color:r.color,p_effect:r.effect,p_active:on==='on'}),'Raritas servata');
+  },
+  async rardel(id){
+    if(!canPurge())return toast('Schema renovanda: schema-part5.sql necessaria.','e');
+    const r=rarList().find(x=>x.id===id);if(!r)return;
+    if(!await ask('Dele raritatem?',[],'Dele',`«${r.label}». Raritas deletur solum si nulla karta eam habet.`))return;
+    await run(()=>rpc('api_rarity_delete',{p_id:id}),'Raritas deleta');
+  },
+  async colledit(id){
+    const c=collections().find(x=>String(x.id)===String(id));if(!c)return;
+    const f=await cardsAsk('Recense collection',[
+      {n:'name',label:'Nomen',max:40,value:c.name},
+      {n:'about',label:'Descriptio',type:'ta',max:300,value:c.about||''}
+    ],'Serva','',v=>v.name.trim().length<2?'Nomen: minimum 2 signa':'');
+    if(!f)return;
+    await run(()=>rpc('api_card_collection_save',{p_id:c.id,p_name:f.name.trim(),p_about:f.about.trim()}),'Collectio servata');
+  },
+  async colldel(id){
+    if(!canPurge())return toast('Schema renovanda: schema-part5.sql necessaria.','e');
+    const c=collections().find(x=>String(x.id)===String(id));if(!c)return;
+    if(!await ask('Dele collectionem?',[],'Dele',`«${c.name}». Collectio deletur solum si vacua est.`))return;
+    const res=await run(()=>rpc('api_card_collection_delete',{p_id:c.id}),'Collectio deleta');
+    if(res){UI.studioColl=null;render();}
+  },
+  async carderase(id){
+    if(!canPurge())return toast('Schema renovanda: schema-part5.sql necessaria.','e');
+    const c=cardById(id);if(!c)return;
+    if(!await ask('Dele kartam?',[],'Dele',`«${c.name}». Karta deletur solum si nemo eam possidet, non est in foro et non est in packo.`))return;
+    await run(()=>rpc('api_card_delete',{p_card:c.id}),'Karta deleta');
+  },
+  async packerase(id){
+    if(!canPurge())return toast('Schema renovanda: schema-part5.sql necessaria.','e');
+    const p=packs().find(x=>String(x.id)===String(id));if(!p)return;
+    if(!await ask('Dele pack?',[],'Dele',`«${p.name}». Pondera packi delentur.`))return;
+    await run(()=>rpc('api_card_pack_delete',{p_pack:p.id}),'Pack deletus');
   },
   async packbuy(id){
     if(UI.packBuying)return;
@@ -3411,11 +3475,12 @@ const A={
     if(!f)return;
     await run(()=>rpc('api_card_collection_create',{p_name:f.name.trim(),p_about:f.about.trim()}),'Collectio creata');
   },
-  async cardnew(){
+  async cardnew(col){
     if(!collections().length){toast('Collectionem crea prius','e');return;}
     if(!rarList().some(r=>r.active)){toast('Raritatem crea prius','e');return;}
+    const preselect=col&&collections().some(c=>String(c.id)===String(col))?col:null;
     const f=await cardsAsk('Karta nova',[
-      {n:'collection',label:'Collectio',type:'sel',opts:collections().map(c=>({v:c.id,l:c.name}))},
+      {n:'collection',label:'Collectio',type:'sel',value:preselect,opts:collections().map(c=>({v:c.id,l:c.name}))},
       {n:'name',label:'Nomen',max:60},
       {n:'rarity',label:'Raritas',type:'sel',opts:rarList().filter(r=>r.active).map(r=>({v:r.id,l:r.label}))},
       {n:'about',label:'Descriptio',type:'ta',max:400},
