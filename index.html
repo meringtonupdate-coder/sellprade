@@ -609,6 +609,10 @@ button,.bt,.fchip,.sbt,.tab,.chip,.bnav button,.it .r[data-a],summary{touch-acti
 .coll-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 .coll-head h3{margin:0;flex:1;min-width:120px}
 .cards-tile:focus-visible,.cards-studio button:focus-visible,#preveal button:focus-visible{outline:3px solid var(--ac,#8aa4ff);outline-offset:3px}
+.card-art{width:min(100%,240px);margin:12px auto}
+.card-art .cimg{width:100%;aspect-ratio:3/4;display:grid;place-items:center;overflow:hidden;border-radius:14px;border:1px solid color-mix(in srgb,var(--rc,#94a3b8) 45%,var(--bd));background:radial-gradient(80% 70% at 50% 18%,color-mix(in srgb,var(--rc,#94a3b8) 32%,#0a0f1d),#0a0f1d 70%)}
+.card-art .cimg img{width:100%;height:100%;object-fit:cover;display:block}
+.card-art .cimg .fall{font:900 2.1rem/1 Georgia,serif;color:color-mix(in srgb,var(--rc,#94a3b8) 70%,#fff);opacity:.85}
 .fx-plain{box-shadow:none}
 .fx-glow{box-shadow:0 0 18px -5px var(--rc,#94a3b8),inset 0 0 12px -7px var(--rc,#94a3b8)}
 .fx-flare{box-shadow:0 0 22px -6px var(--rc,#94a3b8);position:relative;isolation:isolate}
@@ -1018,6 +1022,7 @@ const UI={
   tab:'holb', bsub:'ledger', bF:'all', bQ:'', open:new Set(),
   pcat:'Omnes', mk:'nundinae', mkQ:'',
   cardTab:'shop', cardQ:'', cardColl:'', cardRar:'', cardLimit:60, packColl:'', studioColl:null,
+  revExtra:null, revMore:false,
   betTab:'open', betQ:'',
   csF:'all', csQ:'',
   jcat:'Omnes', jq:'', jsort:'new', th:null,
@@ -1146,7 +1151,10 @@ function errMsg(e){
     'Mutus: scriptura interdicta':uk?'Мут: писати заборонено':'Muted',
     'Pomagach zvernennia ne pyshe':uk?'Pomagach не пише звернення':'Pomagach does not file tickets',
     'Carder necessarius':uk?'Потрібен тег Carder':'Carder tag required',
-    'Teckel necessarius':uk?'Потрібен тег Teckel':'Teckel tag required'
+    'Teckel necessarius':uk?'Потрібен тег Teckel':'Teckel tag required',
+    'Aerarium insufficiens':uk?'Недостатньо коштів у скарбниці':'Insufficient treasury',
+    'Nullae copiae':uk?'Немає копій для відкликання':'No copies to revoke',
+    'Compensatio invalida':uk?'Невірна компенсація':'Invalid compensation'
   };
   for(const k in map)if(m.startsWith(k))return m.replace(k,map[k]);
   return m;
@@ -1224,6 +1232,8 @@ const UKD={
 'Cellae celeres sunt quattuor sectiones in ima parte telephoni. Ordo sectionum eas non mutat.':'Швидка панель — чотири вкладки внизу на телефоні. Порядок у «Ordo sectionum» її не змінює.',
 'Pack apertus':'Пак відкрито','Omnes ostende':'Показати всі','Bene':'Добре','in foro':'у продажу',
 'Dele raritatem?':'Видалити рідкість?','Dele collectionem?':'Видалити колекцію?','Dele kartam?':'Видалити картку?','Dele pack?':'Видалити пак?','Recense collection':'Редагувати колекцію','Cardae':'Картки','Raritas deleta':'Рідкість видалено','Collectio servata':'Колекцію збережено','Collectio deleta':'Колекцію видалено','Karta deleta':'Картку видалено','Pack deletus':'Пак видалено','Schema renovanda: schema-part5.sql necessaria.':'Оновіть схему: потрібен schema-part5.sql.','Collectio non vacua':'Колекція не порожня','Raritas in usu':'Рідкість використовується','Karta in usu':'Картка використовується','Karta in packis':'Картка є в паках','Karta in foro':'Картка на ринку',
+/* card revocation */
+'Revoca':'Відкликати','Revocare kartam?':'Відкликати картку?','Compensatio pro copia (h)':'Компенсація за копію (h)','0 — manualis postea':'0 — вручну пізніше','Karta revocata':'Картку відкликано','Revocationes':'Відкликання','Revocationes desunt':'Відкликань немає','Manualis':'Вручну','Soluta':'Сплачено','Revocatio cardis':'Відкликання картки','Copiae revocatae':'Відкликано копій','Compensatio totalis':'Загальна компенсація','Compensatio 0–1000000':'Компенсація 0–1000000','Omnes copiae revocabuntur, etiam in foro; auctiones refundentur; karta claudetur.':'Усі копії буде відкликано, навіть на ринку; ставки аукціонів повернуто; картку закрито.','Compensatio ex aerario iam soluta.':'Компенсацію зі скарбниці вже сплачено.','Compensatio manualis: solve possessoribus postea.':'Компенсація вручну: сплатіть власникам пізніше.','Una linea per copiam revocatam. Compensatio manualis solvi potest postea.':'Один рядок на кожну відкликану копію. Ручну компенсацію можна сплатити пізніше.','pack':'Пак','gift':'Подарунок','auction':'Аукціон','market':'Ринок','return':'Повернення',
 'Quaere homines…':'Пошук людей…','Scribe primum nuntium':'Напишіть перше повідомлення','Chat privatus':'Приватний чат','nuntii live':'повідомлення в реальному часі'
 };
 function trCore(t){return UKD[t]!=null?UKD[t]:null;}
@@ -1355,6 +1365,36 @@ const cardMarket=()=>cardData().market||[];
 const myCards=()=>cardData().mine||[];
 const cardById=id=>catalog().find(c=>c.id===id)||null;
 const canPurge=()=>Number(DB&&DB.api_version)>=5;
+const canRevoke=()=>canPurge()&&!!(ME&&ME.admin);
+const revocations=()=>{
+  const seen=new Set(),out=[];
+  [...((DB&&DB.card_revocations)||[]),...(UI.revExtra||[])].forEach(r=>{
+    const k=String(r.id);if(!seen.has(k)){seen.add(k);out.push(r);}
+  });
+  return out.sort((a,b)=>Number(b.id)-Number(a.id));
+};
+const revSourceLabel=s=>{
+  const v=String(s||'');
+  if(v==='market:sale')return 'Venditio';
+  if(v==='market:auction')return 'Auctio';
+  if(v==='market')return 'Forum';
+  return v||'—';
+};
+function revRows(){
+  const list=revocations();
+  return `<p class="hint">Una linea per copiam revocatam. Compensatio manualis solvi potest postea.</p>
+    ${list.map(r=>`<div class="it"><div class="r"><div class="in"><b data-no-tr="true">${esc(r.card_name)}</b><small><span data-no-tr="true">@${esc(r.owner_nick||'—')}</span> · <span>${esc(revSourceLabel(r.source))}</span> · ${esc(dt(r.ts))}</small></div><div class="in" style="text-align:right;flex:0 0 auto"><b>${fm(r.compensation)} h</b><small>${r.comp_status==='paid'?tag('Soluta','ok'):tag('Manualis','wn')}</small></div></div>${r.note?`<div class="mut" data-no-tr="true">${esc(r.note)}</div>`:''}</div>`).join('')||e('Revocationes desunt','#94a3b8')}
+    ${(list.length>=200||UI.revMore)?bt('Plures','revmore'):''}`;
+}
+function showRevocationResult(res){
+  const rows=((res&&res.rows)||[]).map(r=>`<div class="it"><div class="r"><div class="in"><b data-no-tr="true">${esc(r.owner_nick||'—')}</b><small>${esc(revSourceLabel(r.source))} · ${esc(dt(r.ts))}</small></div><div class="in" style="text-align:right;flex:0 0 auto"><b>${fm(r.compensation)} h</b><small>${r.comp_status==='paid'?tag('Soluta','ok'):tag('Manualis','wn')}</small></div></div></div>`).join('');
+  showInfo(`<h3>Revocatio cardis</h3>
+    <div class="rw"><span>Copiae revocatae</span><b>${+res.revoked||0}</b></div>
+    <div class="rw"><span>Compensatio totalis</span><b>${fm(res.compensation_total)} h</b></div>
+    <div class="rw"><span>Status</span><b>${res.comp_status==='paid'?tag('Soluta','ok'):tag('Manualis','wn')}</b></div>
+    <p class="hint">${res.comp_status==='paid'?'Compensatio ex aerario iam soluta.':'Compensatio manualis: solve possessoribus postea.'}</p>
+    ${rows||e('Revocationes desunt','#94a3b8')}`);
+}
 const collName=id=>{const c=collections().find(x=>x.id===id);return c?c.name:'—';};
 let _cMap=null,_cMapAt=0;
 function cMap(){
@@ -2299,10 +2339,10 @@ function cardsCollectionView(c){
       <div class="coll-head">${bt('Retro','collback','','g sm')}<h3 data-no-tr="true">${esc(c.name)}</h3></div>
       ${c.about?`<p class="mut" data-no-tr="true">${esc(c.about)}</p>`:''}
       <p class="mut">${cards.length} cardae</p>
-      <div class="gs" style="margin-top:8px">${bt('Karta nova','cardnew',c.id,'p')}${canPurge()?bt('Recense','colledit',c.id)+bt('Dele','colldel',c.id,'d'):''}</div>
+      <div class="gs" style="margin-top:8px">${bt('Karta nova','cardnew',c.id,'p')}${canPurge()?bt('Recense','colledit',c.id)+bt('Dele','colldel',c.id,'d'):''}${canRevoke()?bt('Revoca','cardrevoke',c.id,'d'):''}</div>
     </div>
     <div class="card"><h3>Cardae</h3>
-      <div class="cgrid">${cards.map(x=>`<div>${cardTile(x,0,x.id,'cardedit')}${canPurge()?`<div class="gs" style="margin-top:5px">${bt('Dele','carderase',x.id,'d sm')}</div>`:''}</div>`).join('')||e('Cardky desunt','#e8c37a')}</div>
+      <div class="cgrid">${cards.map(x=>`<div>${cardTile(x,0,x.id,'cardedit')}${canPurge()?`<div class="gs" style="margin-top:5px">${bt('Dele','carderase',x.id,'d sm')}${canRevoke()?bt('Revoca','cardrevoke',x.id,'d sm'):''}</div>`:''}</div>`).join('')||e('Cardky desunt','#e8c37a')}</div>
     </div>
   </div>`;
 }
@@ -2324,14 +2364,14 @@ function cardsStudio(){
     ${colls.map(c=>`<div class="it"><div class="r" data-a="collopen" data-v="${esc(c.id)}"><i>${dot('#e8c37a')}</i><div class="in"><b data-no-tr="true">${esc(c.name)}</b><small>${catalog().filter(x=>String(x.collection)===String(c.id)).length} cardae</small></div><span class="coll-go" aria-hidden="true">›</span></div></div>`).join('')||e('Collectiones desunt','#e8c37a')}`)}
     ${C('Raritates',`<div class="gs">${bt('Raritas nova','rarnew','','p')}</div><p class="hint">Ordo et effectus independentes.</p>
       ${rarities.map((r,i)=>`<div class="rar-row"><span class="rar-swatch fx-${rarEffect(r.id)}" style="${rarStyle(r.id)}" aria-hidden="true">Ś</span><div class="in"><b data-no-tr="true">${esc(r.label)}</b><small><span>${r.active?'Activa':'Clausa'}</span> · <span>${esc(rarEffect(r.id))}</span></small></div><div class="gs"><button type="button" class="bt g sm" data-a="rarmove" data-v="${esc(r.id)}|-1" aria-label="Sursum" ${i===0?'disabled':''}>↑</button><button type="button" class="bt g sm" data-a="rarmove" data-v="${esc(r.id)}|1" aria-label="Deorsum" ${i===rarities.length-1?'disabled':''}>↓</button>${bt('Recense','raredit',r.id)}${bt(r.active?'Claude':'Aperi','rartoggle',r.id+':'+(r.active?'off':'on'),r.active?'d sm':'ok sm')}${canPurge()?bt('Dele','rardel',r.id,'d sm'):''}</div></div>`).join('')||e('Raritates desunt','#94a3b8')}`)}
-    ${C('Catalogus',`<div class="gs">${bt('Karta nova','cardnew','','p')}</div><div class="tb"><input class="srch" id="cardq" aria-label="Quaere catalogum…" maxlength="50" value="${esc(UI.cardQ||'')}" placeholder="Quaere catalogum…">${bt('Quaere','cardsearch','','p sm')}</div><div class="cgrid">${cat.map(c=>`<div>${cardTile(c,0,c.id,'cardedit')}<div class="gs" style="margin-top:5px">${c.active===false?'<span class="mut">Clausa</span>':''}${canPurge()?bt('Dele','carderase',c.id,'d sm'):''}</div></div>`).join('')||e('Catalogus vacius','#94a3b8')}</div>${cat.length===(UI.cardLimit||60)?bt('Plures','cardmore'):''}`)}
+    ${C('Catalogus',`<div class="gs">${bt('Karta nova','cardnew','','p')}</div><div class="tb"><input class="srch" id="cardq" aria-label="Quaere catalogum…" maxlength="50" value="${esc(UI.cardQ||'')}" placeholder="Quaere catalogum…">${bt('Quaere','cardsearch','','p sm')}</div><div class="cgrid">${cat.map(c=>`<div>${cardTile(c,0,c.id,'cardedit')}<div class="gs" style="margin-top:5px">${c.active===false?'<span class="mut">Clausa</span>':''}${canPurge()?bt('Dele','carderase',c.id,'d sm'):''}${canRevoke()?bt('Revoca','cardrevoke',c.id,'d sm'):''}</div></div>`).join('')||e('Catalogus vacius','#94a3b8')}</div>${cat.length===(UI.cardLimit||60)?bt('Plures','cardmore'):''}`)}
     ${C('Packs',`<div class="gs">${bt('Pack novus','packnew','','p')}</div>${packs().map(p=>`<div class="it"><div class="r"><div class="in"><b data-no-tr="true">${esc(p.name)}</b><small>${fm(p.price)} h · ${(p.items||[]).length} cardae · ${p.active?'Activa':'Clausa'}</small></div><div class="gs">${bt('Recense','packedit',p.id)}${bt(p.active?'Claude':'Aperi','packtoggle',p.id+':'+(p.active?'off':'on'),p.active?'d sm':'ok sm')}${canPurge()?bt('Dele','packerase',p.id,'d sm'):''}</div></div></div>`).join('')||e('Packs desunt','#e8c37a')}`)}
     <section id="pack-editor">${C(d.id?'Recense pack':'Pack builder',`<div class="pk-fields"><label>Nomen pack<input class="srch" id="pkName" data-no-tr="true" maxlength="60" value="${esc(d.name)}"></label><label>Pretium (h)<input class="srch" id="pkPrice" type="number" min="0.01" step="0.01" value="${esc(d.price)}"></label></div>
       <p class="hint">Una karta per emptionem; 1–10 emptiones independentes. Repetitiones possibiles.</p>
       <div class="pk-layout"><div><h4>Cardae activae</h4><div class="tb"><input class="srch" id="pkQ" aria-label="Quaere cardas…" maxlength="60" value="${esc(d.q)}" placeholder="Quaere cardas…">${bt('Quaere','packsearch','','p sm')}</div>
       <div class="pk-fields"><label>Collectio<select id="pkColl"><option value="">Omnes</option>${colls.map(c=>`<option data-no-tr="true" value="${esc(c.id)}" ${String(c.id)===d.coll?'selected':''}>${esc(c.name)}</option>`).join('')}</select></label><label>Raritas<select id="pkRar"><option value="">Omnes</option>${rarities.map(r=>`<option data-no-tr="true" value="${esc(r.id)}" ${r.id===d.rar?'selected':''}>${esc(r.label)}</option>`).join('')}</select></label></div>
       <p class="mut">${pick.length} / ${found.length}</p>${[...grouped].map(([coll,list])=>`<h4 data-no-tr="true">${esc(collName(coll))}</h4><div class="pk-picker">${list.map(c=>`<div class="pk-pick${d.items[c.id]!=null?' selected':''}">${cardTile(c,0,c.id,'packadd')}${d.items[c.id]!=null?'<span class="pl ok">Selecta</span>':''}</div>`).join('')}</div>`).join('')||e('Nihil inventum','#94a3b8')}${found.length>pick.length?bt('Plures','packmore'):''}</div>
-      <aside class="pk-selection"><h4>Cardae selectae · ${sel.length} / 100</h4><p class="hint">Pondus → probabilitas</p><div class="pk-selected-list">${selected||e('Cardas adde','#94a3b8')}</div>${sel.length>100?'<p class="cards-warning">Maximum 100 cardae</p>':''}<div class="gs">${bt('Aequa','packequa')}${bt('Ad 100%','packnorm')}</div><p class="hint">Probabilitates = pondus / summa ponderum cardarum activarum. Summa 100%; valores visi rotundati.</p><p class="hint">Aequa: pondera 1. Ad 100%: scala tantum, sine minimo artificioso.</p><div id="pk-error" class="cards-warning" role="status">${esc(packDraftError(d))}</div><div class="gs">${bt('Praevisa pack','packpreview','','p')}${bt('Purga','packclear','','d')}</div></aside></div>`)}</section></div>`;
+      <aside class="pk-selection"><h4>Cardae selectae · ${sel.length} / 100</h4><p class="hint">Pondus → probabilitas</p><div class="pk-selected-list">${selected||e('Cardas adde','#94a3b8')}</div>${sel.length>100?'<p class="cards-warning">Maximum 100 cardae</p>':''}<div class="gs">${bt('Aequa','packequa')}${bt('Ad 100%','packnorm')}</div><p class="hint">Probabilitates = pondus / summa ponderum cardarum activarum. Summa 100%; valores visi rotundati.</p><p class="hint">Aequa: pondera 1. Ad 100%: scala tantum, sine minimo artificioso.</p><div id="pk-error" class="cards-warning" role="status">${esc(packDraftError(d))}</div><div class="gs">${bt('Praevisa pack','packpreview','','p')}${bt('Purga','packclear','','d')}</div></aside></div>`)}</section>${canRevoke()?C('Revocationes',revRows()):''}</div>`;
 }
 function findInv(id){return myCards().find(x=>String(x.id)===String(id))||null;}
 function cardsAsk(title,fields=[],submit='Confirma',note='',validate=null){
@@ -2380,7 +2420,7 @@ function cardMenu(id){
   showInfo(`<h3 data-no-tr="true">${esc(c.name)}</h3>
     <div class="mut" data-no-tr="true">${esc(collName(c.collection))} · <span style="color:${rarColor(c.rarity)}">${esc(rarLabel(c.rarity))}</span> · ×${inv.count}</div>
     <div class="dt" data-no-tr="true">${esc(c.about||'—')}</div>
-    ${cardArt(c)}
+    <div class="card-art" style="${rarStyle(c.rarity)}">${cardArt(c)}</div>
     <div class="gs">
       ${bt('Donum','cardgift',inv.id,'p sm')}${bt('Vendere','cardsell',inv.id,'g sm')}
       ${bt(isAv?'Avatar claude':'Avataris','cardavatar',c.id,isAv?'d sm':'g sm')}
@@ -3394,6 +3434,29 @@ const A={
     const p=packs().find(x=>String(x.id)===String(id));if(!p)return;
     if(!await ask('Dele pack?',[],'Dele',`«${p.name}». Pondera packi delentur.`))return;
     await run(()=>rpc('api_card_pack_delete',{p_pack:p.id}),'Pack deletus');
+  },
+  async cardrevoke(id){
+    if(!canRevoke())return toast('Schema renovanda: schema-part5.sql necessaria.','e');
+    const c=cardById(id);if(!c)return;
+    const f=await ask('Revocare kartam?',[
+      {n:'comp',label:'Compensatio pro copia (h)',type:'num',value:0,hint:'0 — manualis postea'},
+      {n:'note',label:'Ratio',max:160}
+    ],'Revoca',`«${c.name}». `+trText('Omnes copiae revocabuntur, etiam in foro; auctiones refundentur; karta claudetur.'),
+    v=>{const n=+v.comp;return !(Number.isFinite(n)&&n>=0&&n<=1000000)?'Compensatio 0–1000000':'';});
+    if(!f)return;
+    const res=await run(()=>rpc('api_card_revoke',{p_card:c.id,p_compensation:+f.comp,p_note:(f.note||'').trim()}),'Karta revocata');
+    if(res)showRevocationResult(res);
+  },
+  async revmore(){
+    if(!canRevoke())return;
+    const list=revocations(),last=list[list.length-1];if(!last)return;
+    try{
+      const page=await rpc('api_card_revocation_list',{p_before:last.id,p_limit:100});
+      const seen=new Set(list.map(r=>String(r.id)));
+      UI.revExtra=[...(UI.revExtra||[]),...page.filter(r=>!seen.has(String(r.id)))];
+      UI.revMore=page.length===100;
+      render();
+    }catch(err){toast(errMsg(err),'e');}
   },
   async packbuy(id){
     if(UI.packBuying)return;
