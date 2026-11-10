@@ -181,13 +181,13 @@ html[data-compact="1"] .card{padding:11px}html[data-compact="1"] .it{padding:6px
    PREMIUM LAYER — refined palette, five accent families, depth & motion
    ========================================================================== */
 :root{
-  --bg:#070a13;--bg2:#0a0f1d;--c:#0f1627;--c2:#141d33;--c3:#1a2440;
-  --bd:rgba(255,255,255,.075);--bd2:rgba(255,255,255,.145);
-  --tx:#eef2ff;--mu:#8d98b8;
+  --bg:#0a0e17;--bg2:#0e1421;--c:rgba(20,28,43,.74);--c2:rgba(28,38,57,.66);--c3:rgba(38,51,74,.58);
+  --bd:rgba(255,255,255,.085);--bd2:rgba(255,255,255,.15);
+  --tx:#eef2fb;--mu:#97a3bf;
   --ok:#34d399;--er:#fb7185;--wn:#fbbf24;--gd:#e8c37a;
-  --r:18px;
-  --sh1:inset 0 1px 0 rgba(255,255,255,.05),0 14px 34px -26px rgba(0,0,0,.9);
-  --sh2:0 32px 80px -32px rgba(0,0,0,.92);
+  --r:14px;--r-sm:10px;
+  --sh1:inset 0 1px 0 rgba(255,255,255,.06),0 22px 44px -36px rgba(0,0,0,.9);
+  --sh2:0 30px 80px -34px rgba(0,0,0,.85);
   --p:#8aa4ff;--p2:#b07bff;--glow:rgba(138,164,255,.36);
   --grad:linear-gradient(135deg,var(--p),var(--p2));
   color-scheme:dark;
@@ -197,34 +197,30 @@ html[data-accent=sunset]{--p:#f7b955;--p2:#fb7a5c;--glow:rgba(247,185,85,.32)}
 html[data-accent=rose]{--p:#fb7d99;--p2:#c084fc;--glow:rgba(251,125,153,.32)}
 html[data-accent=ocean]{--p:#46c7f5;--p2:#8b9dff;--glow:rgba(70,199,245,.32)}
 html[data-theme=light]{
-  --bg:#eef1fb;--bg2:#e7ebf8;--c:#f9faff;--c2:#f1f3fc;--c3:#e8ebf8;
-  --bd:rgba(50,60,110,.12);--bd2:rgba(50,60,110,.2);
-  --tx:#1a2036;--mu:#5d6786;
+  --bg:#e9eef8;--bg2:#e2e8f4;--c:rgba(255,255,255,.82);--c2:rgba(247,250,255,.72);--c3:rgba(235,240,250,.68);
+  --bd:rgba(34,46,82,.13);--bd2:rgba(34,46,82,.21);
+  --tx:#1a2036;--mu:#586487;
   --gd:#a97b24;
-  --sh1:inset 0 1px 0 rgba(255,255,255,.95),0 16px 36px -28px rgba(50,60,120,.35);
-  --sh2:0 34px 80px -34px rgba(50,60,120,.3);
-  --p:#829bff;--p2:#b18cff;--glow:rgba(130,155,255,.28);--pt:#4c63c8;
+  --sh1:inset 0 1px 0 rgba(255,255,255,.95),0 18px 36px -28px rgba(35,48,95,.4);
+  --sh2:0 30px 70px -34px rgba(35,48,95,.38);
+  --p:#6f86fb;--p2:#9b78fb;--glow:rgba(111,134,251,.3);--pt:#4056b8;
   color-scheme:light;
 }
-html[data-theme=light][data-accent=emerald]{--p:#4fd6a8;--p2:#4cc9e0;--glow:rgba(79,214,168,.28);--pt:#178a63;--bg:#e9f8f2;--bg2:#e0f4ec;--c:#f6fdf9;--c2:#e9f7f0;--c3:#def2e9;--bd:rgba(20,90,70,.13);--bd2:rgba(20,90,70,.22);--tx:#102a22;--mu:#4f7268}
-html[data-theme=light][data-accent=sunset]{--p:#f8bc6a;--p2:#ff9b7a;--glow:rgba(248,188,106,.3);--pt:#a35f14;--bg:#fff4e7;--bg2:#ffedda;--c:#fffaf4;--c2:#fff2e3;--c3:#ffe9d3;--bd:rgba(120,70,20,.13);--bd2:rgba(120,70,20,.22);--tx:#33200f;--mu:#7c6046}
-html[data-theme=light][data-accent=rose]{--p:#f59ab5;--p2:#d2a6f5;--glow:rgba(245,154,181,.28);--pt:#b53f68;--bg:#fff0f5;--bg2:#ffe9f1;--c:#fff8fb;--c2:#fff0f6;--c3:#ffe6ef;--bd:rgba(120,40,70,.12);--bd2:rgba(120,40,70,.2);--tx:#33131f;--mu:#7d5766}
-html[data-theme=light][data-accent=ocean]{--p:#62c8ee;--p2:#9aa8ff;--glow:rgba(98,200,238,.28);--pt:#1a7fa8;--bg:#eaf7fd;--bg2:#e1f3fb;--c:#f6fcff;--c2:#eaf6fc;--c3:#def1fa;--bd:rgba(20,70,100,.12);--bd2:rgba(20,70,100,.2);--tx:#0f2633;--mu:#4d6d80}
-html[data-theme=wine]{
-  --bg:#15060e;--bg2:#1d0914;--c:#260d1a;--c2:#301121;--c3:#3b162a;
-  --bd:rgba(255,190,215,.14);--bd2:rgba(255,190,215,.24);
-  --tx:#f9ebf1;--mu:#c69caf;
-  --ok:#5fd6a5;--er:#ff7b8f;--wn:#f5b35c;--gd:#e8c37a;
-  --sh1:inset 0 1px 0 rgba(255,255,255,.05),0 14px 34px -26px rgba(0,0,0,.9);
-  --sh2:0 32px 80px -32px rgba(0,0,0,.92);
-  --p:#d4789a;--p2:#c79a5e;--glow:rgba(212,120,154,.32);
+html[data-theme=light][data-accent=emerald]{--p:#2fb88c;--p2:#2fb0cf;--glow:rgba(47,184,140,.28);--pt:#0f7a57;--bg:#e4f4ed;--bg2:#dbeee6;--c:rgba(250,255,252,.82);--c2:rgba(238,250,245,.72);--c3:rgba(222,243,234,.68);--bd:rgba(18,80,62,.14);--bd2:rgba(18,80,62,.22);--tx:#102a22;--mu:#4a6c62}
+html[data-theme=light][data-accent=sunset]{--p:#e0983f;--p2:#ea7d58;--glow:rgba(224,152,63,.3);--pt:#96530c;--bg:#fdf0e0;--bg2:#f9e6d0;--c:rgba(255,252,247,.84);--c2:rgba(255,245,234,.74);--c3:rgba(255,235,214,.7);--bd:rgba(120,70,20,.14);--bd2:rgba(120,70,20,.22);--tx:#33200f;--mu:#74593f}
+html[data-theme=light][data-accent=rose]{--p:#e56f95;--p2:#b97fe3;--glow:rgba(229,111,149,.3);--pt:#a83360;--bg:#fdebf2;--bg2:#fae2ec;--c:rgba(255,251,253,.84);--c2:rgba(255,241,247,.74);--c3:rgba(255,229,240,.7);--bd:rgba(120,40,70,.13);--bd2:rgba(120,40,70,.21);--tx:#33131f;--mu:#75505f}
+html[data-theme=light][data-accent=ocean]{--p:#35aede;--p2:#7287f5;--glow:rgba(53,174,222,.3);--pt:#0f6f96;--bg:#e4f4fb;--bg2:#daedf7;--c:rgba(250,254,255,.84);--c2:rgba(233,246,252,.74);--c3:rgba(217,239,249,.7);--bd:rgba(20,70,100,.13);--bd2:rgba(20,70,100,.21);--tx:#0f2633;--mu:#456579}
+html[data-theme=brown]{
+  --bg:#171009;--bg2:#1c140d;--c:rgba(48,34,23,.76);--c2:rgba(60,43,29,.68);--c3:rgba(76,55,37,.62);
+  --bd:rgba(255,224,188,.10);--bd2:rgba(255,224,188,.18);
+  --tx:#f6ecdd;--mu:#c2ac91;
+  --ok:#9bca9e;--er:#e79178;--wn:#e6b26c;--gd:#e6c188;
+  --sh1:inset 0 1px 0 rgba(255,236,210,.06),0 22px 44px -36px rgba(0,0,0,.9);
+  --sh2:0 30px 80px -34px rgba(0,0,0,.85);
+  --p:#c98f57;--p2:#a2683c;--pt:#e2b07a;--glow:rgba(201,143,87,.32);
+  --onacc:#1c1208;
   color-scheme:dark;
 }
-html[data-theme=wine][data-accent=royal]{--p:#c98aa6;--p2:#a97ac9;--glow:rgba(201,138,166,.3)}
-html[data-theme=wine][data-accent=emerald]{--p:#8fbfa5;--p2:#c9a86a;--glow:rgba(143,191,165,.28)}
-html[data-theme=wine][data-accent=sunset]{--p:#e0a06a;--p2:#c96a8a;--glow:rgba(224,160,106,.28)}
-html[data-theme=wine][data-accent=rose]{--p:#d4789a;--p2:#c79a5e;--glow:rgba(212,120,154,.32)}
-html[data-theme=wine][data-accent=ocean]{--p:#8fa9c9;--p2:#b57a94;--glow:rgba(143,169,201,.28)}
 
 body{
   font:15px/1.55 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;
@@ -568,12 +564,255 @@ html[data-theme=light] .sharp{color:color-mix(in srgb,var(--sc,#c8a24a) 52%,var(
 .betbank b{color:var(--tx)}
 
 @media(max-width:760px){
-  .foot{margin:16px 4px 4px;font-size:.6rem;letter-spacing:.35px}
-  #app>.foot{margin-bottom:calc(74px + env(safe-area-inset-bottom,0))}
+  .foot{max-width:100%;margin:16px auto 4px;padding-left:16px;padding-right:16px;font-size:.6rem;letter-spacing:.35px}
+  #app>.foot{width:auto;margin-bottom:calc(74px + env(safe-area-inset-bottom,0))}
   .cgrid{grid-template-columns:repeat(auto-fill,minmax(124px,1fr));gap:8px}
   .ctile .cname{font-size:.74rem}
   .bnav .bi.plus{font-size:1.3rem}
 }
+/* ---------- shell accessibility / mobile ---------- */
+:root{--shell-vh:100dvh;--shell-vtop:0px;--shell-keyboard:0px}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--pt,var(--p));outline-offset:3px}
+#shell-main:focus{outline:none}
+#shell-header .chip{color:var(--tx);font-family:inherit}
+#shell-nav{max-width:1120px;margin:12px auto}
+.av{position:relative;overflow:hidden}.avfallback{display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.av.avimg>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shell-network{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;padding:7px 12px;background:var(--c2);color:var(--tx);border-bottom:1px solid var(--wn);font-size:.8rem}
+.chat-new{display:block;margin:6px auto;position:relative;z-index:1}
+#shell-main #cm{scroll-behavior:auto;overflow-anchor:none}
+.quick-preview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0 12px}
+.quick-preview>span{display:flex;align-items:center;justify-content:center;gap:5px;min-height:44px;padding:6px 3px;border:1px solid var(--bd);border-radius:10px;font-size:.68rem;overflow-wrap:anywhere}
+#shell-main .sw{height:44px;border-radius:22px}.sw::after{top:12px}
+#shell-main .acc{min-width:44px;min-height:44px}
+#shell-sheet .sh,#modal .md{overscroll-behavior:contain}
+#shell-sheet .sh{max-height:calc(var(--shell-vh) - 20px)}
+#modal .mb{top:var(--shell-vtop);bottom:auto;height:var(--shell-vh)}
+#modal .md{max-height:calc(var(--shell-vh) - 24px)}
+html[data-motion=reduce] *,html[data-motion=reduce] *::before,html[data-motion=reduce] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){html:not([data-motion=full]) *,html:not([data-motion=full]) *::before,html:not([data-motion=full]) *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(prefers-contrast:more){#shell-header,#shell-nav,#shell-bottom,.shell-network,.quick-preview>span{border-color:var(--tx)}#shell-nav .tab,#shell-bottom button,.shitem,.shell-network{color:var(--tx)}.tab.lk{opacity:.85}}
+@media(max-width:760px),(pointer:coarse){
+  .bt,.tab,.sbt,.fchip,.segbtn,.like,.mact,.chip,.shitem,.bnav button,.faqb>button{min-height:44px;min-width:44px}
+  .it .r[data-a],.pollopt[data-a],summary{min-height:44px}
+}
+@media(max-width:760px){
+  #shell-main input,#shell-main textarea,#shell-main select{scroll-margin-bottom:100px}
+  #shell-main #cm{min-height:120px;height:clamp(120px,calc(var(--shell-vh) - 240px),50vh)}
+  #shell-bottom{bottom:var(--shell-keyboard)}
+  html[data-keyboard=open] #shell-bottom{display:none}
+  html[data-keyboard=open] #app{padding-bottom:12px}
+  #shell-sheet{top:var(--shell-vtop);bottom:auto;height:var(--shell-vh)}
+  #shell-header .br{min-width:44px}#shell-header .chip{max-width:100px}
+  #tw{bottom:calc(82px + var(--shell-keyboard))}
+}
+</style>
+<style id="documents-v4-style">
+.contract-editor textarea{min-height:220px;resize:vertical}.contract-paper p{margin:8px 0}.contract-paper h3{overflow-wrap:anywhere}.contract-paper details{margin:12px 0}.contract-paper summary{cursor:pointer;padding:10px 0}.mono{overflow-wrap:anywhere}.mbd{white-space:pre-line}button[aria-busy="true"]{opacity:.65;cursor:progress}
+@media print{body.printing-contract{background:#fff!important;color:#111!important}body.printing-contract #app,body.printing-contract #tw,body.printing-contract #preveal,body.printing-contract .no-print,body.printing-contract #modal>.mb>.md>.ft{display:none!important}body.printing-contract #modal,body.printing-contract .mb,body.printing-contract .md{position:static!important;display:block!important;max-height:none!important;overflow:visible!important;background:#fff!important;color:#111!important;border:0!important;box-shadow:none!important;width:100%!important;max-width:none!important}body.printing-contract .contract-paper *{color:#111!important;background:transparent!important;box-shadow:none!important}body.printing-contract .contract-paper details{display:block}body.printing-contract .contract-paper .gs{display:none}}
+</style>
+<style id="cards-v4-style">
+.cards-tile{font:inherit;color:inherit;text-align:left;width:100%;padding:0;display:block;appearance:none}
+.cards-tile:focus-visible,.cards-studio button:focus-visible,#preveal button:focus-visible{outline:3px solid var(--ac,#8aa4ff);outline-offset:3px}
+.fx-plain{box-shadow:none}
+.fx-glow{box-shadow:0 0 18px -5px var(--rc,#94a3b8),inset 0 0 12px -7px var(--rc,#94a3b8)}
+.fx-flare{box-shadow:0 0 22px -6px var(--rc,#94a3b8);position:relative;isolation:isolate}
+.fx-flare::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 25%,color-mix(in srgb,var(--rc,#94a3b8) 40%,transparent) 45%,#ffffff45 50%,transparent 70%);background-size:300% 100%;animation:cardsFlare 4s ease-in-out infinite;pointer-events:none;z-index:1;border-radius:inherit}
+@keyframes cardsFlare{0%,20%{background-position:100% 0;opacity:0}45%{opacity:.7}75%,100%{background-position:0 0;opacity:0}}
+@keyframes cardsAppear{from{opacity:0;transform:translateY(12px) rotateY(12deg)}to{opacity:1;transform:none}}
+#preveal.cards-v4-reveal{justify-content:flex-start;padding:clamp(18px,4vh,48px) 18px;gap:10px}
+#preveal.cards-v4-reveal .pvgrid{max-height:none;overflow:visible;flex-wrap:wrap;flex-shrink:0}
+#preveal.cards-v4-reveal .pvcard{animation:cardsAppear .36s ease-out both;max-width:min(210px,42vw)}
+#preveal.cards-v4-reveal .pvn{white-space:normal;overflow-wrap:anywhere}
+#preveal .pvh,#preveal p{margin:0}
+#preveal .hint{max-width:640px}
+.rar-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd,#ffffff18);flex-wrap:wrap}
+.rar-row .in{flex:1;min-width:100px}.rar-row small{display:block;color:var(--mu)}
+.rar-swatch{display:grid;place-items:center;width:40px;height:48px;border:1px solid var(--rc);border-radius:9px;color:var(--rc);overflow:hidden}
+.rar-previews{display:flex;gap:18px;margin:14px 0}.rar-previews>div{flex:1;min-width:0}
+.rar-sample{display:flex;flex-direction:column;gap:14px;align-items:center;padding:18px 12px;border:2px solid var(--rc);border-radius:12px;overflow:hidden;color:var(--rc);margin-top:8px}
+.rar-sample>span{font-size:32px}.rar-sample b{overflow-wrap:anywhere;max-width:100%}
+.pk-fields{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.pk-fields label{display:flex;flex:1;min-width:120px;flex-direction:column;gap:5px;font-size:.8rem}.pk-fields input,.pk-fields select{width:100%;min-width:0}
+.pk-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;margin-top:18px}.pk-layout>div,.pk-selection{min-width:0}
+.pk-picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(95px,1fr));gap:10px}.pk-picker .cname{font-size:.76rem}.pk-pick{position:relative;border:2px solid transparent;border-radius:14px}.pk-pick.selected{border-color:var(--ac,#8aa4ff)}.pk-pick>.pl{position:absolute;bottom:4px;right:4px;pointer-events:none}.pk-pick .cmeta{padding-bottom:16px}
+.pk-selection{border:1px solid var(--bd,#ffffff18);border-radius:14px;padding:12px;align-self:start;position:sticky;top:12px}.pk-selected-list{max-height:520px;overflow:auto;overscroll-behavior:contain}.pk-selected{display:grid;grid-template-columns:minmax(0,1fr) 80px 90px auto;gap:7px;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd,#ffffff18);font-size:.74rem}.pk-selected>div{overflow-wrap:anywhere}.pk-selected input{width:100%;padding:7px}.pk-selected b{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.cards-warning{display:block;color:var(--wn,#e8c37a);font-size:.75rem;margin:8px 0}.pk-inactive{opacity:.85}.pk-inactive input{border-color:var(--wn,#e8c37a)}
+#pack-editor{scroll-margin-top:24px}#pack-editor .hint{font-size:.74rem;line-height:1.5}.cards-studio h4{margin:12px 0}.cards-studio .gs{flex-wrap:wrap}
+.cards-no-motion,.cards-no-motion *,.cards-no-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(max-width:760px){.pk-layout{grid-template-columns:1fr}.pk-selection{position:static}.pk-selected{grid-template-columns:minmax(0,1fr) 68px 80px auto}.pk-fields{flex-wrap:wrap}.rar-row .gs{gap:4px}}
+@media(prefers-reduced-motion:reduce){.fx-flare::after,#preveal.cards-v4-reveal,#preveal.cards-v4-reveal .pvcard{animation:none!important}.cards-tile{transition:none!important}}
+</style>
+<style id="glass-v9">
+/* ==========================================================================
+   V9 — glassmorphism with grain, softer edges, sharper corners, Bura theme
+   ========================================================================== */
+:root{
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+  --glass:blur(18px) saturate(138%);
+  --glass-strong:blur(26px) saturate(145%);
+}
+html[data-theme=light]{--ok:#1a8a63;--er:#c9445f;--wn:#a96a10;--gd:#9a6d1d}
+body{
+  background:
+    radial-gradient(1000px 680px at 88% -10%,color-mix(in srgb,var(--p) 12%,transparent),transparent 62%),
+    radial-gradient(820px 560px at -10% 12%,color-mix(in srgb,var(--p2) 9%,transparent),transparent 58%),
+    linear-gradient(180deg,var(--bg),var(--bg2) 70%,var(--bg));
+}
+body::before{opacity:.15;mix-blend-mode:soft-light;background-size:160px 160px}
+html[data-theme=light] body::before{opacity:.085;mix-blend-mode:multiply}
+header{
+  background:color-mix(in srgb,var(--bg) 60%,transparent);
+  -webkit-backdrop-filter:var(--glass);backdrop-filter:var(--glass);
+  border-bottom:1px solid color-mix(in srgb,var(--tx) 8%,transparent);
+  box-shadow:0 16px 34px -32px rgba(0,0,0,.75),inset 0 -1px 0 rgba(255,255,255,.03);
+}
+html[data-theme=light] header{background:color-mix(in srgb,var(--c) 68%,transparent);border-bottom-color:var(--bd);box-shadow:0 16px 34px -32px rgba(35,48,95,.35)}
+.chip{background:color-mix(in srgb,var(--c) 72%,transparent);border-color:var(--bd);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 6px 14px -12px rgba(0,0,0,.5)}
+.card{
+  background-color:color-mix(in srgb,var(--c) 68%,transparent);
+  background-image:var(--grain),linear-gradient(157deg,rgba(255,255,255,.055),rgba(255,255,255,.014) 34%,transparent 68%),linear-gradient(180deg,transparent,color-mix(in srgb,var(--bg) 16%,transparent));
+  background-size:160px 160px,auto,auto;
+  background-blend-mode:soft-light,normal,normal;
+  border:1px solid var(--bd);border-radius:var(--r);
+  box-shadow:var(--sh1);
+  -webkit-backdrop-filter:var(--glass);backdrop-filter:var(--glass);
+}
+html[data-theme=light] .card{
+  background-color:color-mix(in srgb,var(--c) 84%,transparent);
+  background-image:var(--grain),linear-gradient(157deg,rgba(255,255,255,.42),rgba(255,255,255,.1) 36%,transparent 70%),linear-gradient(180deg,transparent,color-mix(in srgb,var(--bg) 20%,transparent));
+  background-blend-mode:soft-light,normal,normal;
+}
+.it{
+  background-color:color-mix(in srgb,var(--c2) 52%,transparent);
+  background-image:linear-gradient(180deg,rgba(255,255,255,.026),transparent 46%);
+  border:1px solid color-mix(in srgb,var(--bd) 92%,transparent);
+  border-radius:var(--r-sm);box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+html[data-theme=light] .it{background-color:rgba(255,255,255,.48);background-image:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+input,textarea,select{
+  background:color-mix(in srgb,var(--bg) 46%,transparent);
+  border-color:var(--bd);border-radius:var(--r-sm);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.14);
+}
+html[data-theme=light] input,html[data-theme=light] textarea,html[data-theme=light] select{background:rgba(255,255,255,.62);box-shadow:inset 0 1px 2px rgba(30,40,80,.06)}
+input:focus,textarea:focus,select:focus{border-color:color-mix(in srgb,var(--p) 70%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 16%,transparent)}
+.bt{border-radius:9px;background:color-mix(in srgb,var(--c3) 38%,transparent);border-color:var(--bd)}
+.bt:not(.p):not(.d):not(.ok){box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.bt.p{border-radius:9px}
+.bt.sm{border-radius:8px}
+.al{border-radius:var(--r-sm)}
+.tabs{border-radius:12px;background:color-mix(in srgb,var(--c) 58%,transparent);border-color:var(--bd);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.tab{border-radius:8px}
+.sbt{border-radius:9px;background:color-mix(in srgb,var(--c) 56%,transparent)}
+.fchip{border-radius:9px;background:color-mix(in srgb,var(--c2) 52%,transparent)}
+.seg{border-radius:10px}
+.segbtn{border-radius:7px}
+.like{border-radius:999px}
+.cm{border-radius:var(--r-sm);background:color-mix(in srgb,var(--bg) 60%,var(--c))}
+.ms.s{border-radius:13px 13px 4px 13px}
+.ms.o{border-radius:13px 13px 13px 4px;background:color-mix(in srgb,var(--c2) 74%,transparent);border-color:var(--bd)}
+.dt{border-radius:9px}
+.quote{border-radius:0 10px 10px 0}
+.md{border-radius:16px;background-color:color-mix(in srgb,var(--c) 88%,transparent);background-image:var(--grain);background-size:150px 150px;background-blend-mode:soft-light;-webkit-backdrop-filter:var(--glass-strong);backdrop-filter:var(--glass-strong);border-color:var(--bd2)}
+html[data-theme=light] .md{background-color:rgba(252,253,255,.9);background-blend-mode:multiply}
+.sh{border-radius:16px 16px 0 0;background-color:color-mix(in srgb,var(--c) 90%,transparent);background-image:var(--grain);background-size:150px 150px;background-blend-mode:soft-light;-webkit-backdrop-filter:var(--glass-strong);backdrop-filter:var(--glass-strong)}
+html[data-theme=light] .sh{background-color:rgba(252,253,255,.92);background-blend-mode:multiply}
+.t{border-radius:11px;background-color:color-mix(in srgb,var(--c) 86%,transparent);-webkit-backdrop-filter:var(--glass);backdrop-filter:var(--glass)}
+.bnav{background:color-mix(in srgb,var(--bg) 68%,transparent);border-top-color:var(--bd);-webkit-backdrop-filter:var(--glass);backdrop-filter:var(--glass);box-shadow:0 -18px 34px -30px rgba(0,0,0,.8)}
+html[data-theme=light] .bnav{background:color-mix(in srgb,var(--c) 76%,transparent);box-shadow:0 -18px 34px -30px rgba(35,48,95,.35)}
+.bnav button{border-radius:9px}
+.shitem{background:color-mix(in srgb,var(--c2) 46%,transparent);border-radius:10px}
+.gr div{border-radius:var(--r-sm);background:linear-gradient(180deg,color-mix(in srgb,var(--c) 70%,transparent),color-mix(in srgb,var(--c) 58%,transparent));border-color:var(--bd);min-width:0}
+.gr input,.gr select{min-width:0}
+html[data-theme=light] .gr div{background:linear-gradient(180deg,rgba(255,255,255,.66),rgba(255,255,255,.4))}
+.foot{border:0;position:relative;padding:12px 14px;color:color-mix(in srgb,var(--mu) 92%,transparent)}
+.foot::before,.foot::after{content:'';position:absolute;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--bd2),transparent);pointer-events:none}
+.foot::before{top:0}.foot::after{bottom:0}
+.sorow{border-radius:9px;background:color-mix(in srgb,var(--c2) 42%,transparent)}
+.kbd{border-radius:5px}
+
+/* account / bank / collection banner: soft glass, no harsh light→dark jump */
+.pp,.banner,.bc{
+  border-radius:16px;
+  border:1px solid color-mix(in srgb,var(--p) 24%,var(--bd));
+  background-color:color-mix(in srgb,var(--p) 15%,var(--c));
+  background-image:var(--grain),
+    linear-gradient(150deg,color-mix(in srgb,var(--p) 42%,transparent),transparent 48%),
+    linear-gradient(320deg,color-mix(in srgb,var(--p2) 36%,transparent),transparent 62%);
+  background-size:160px 160px,auto,auto;
+  background-blend-mode:soft-light,normal,normal;
+  box-shadow:0 24px 50px -34px color-mix(in srgb,var(--p) 55%,transparent),inset 0 1px 0 rgba(255,255,255,.16);
+  -webkit-backdrop-filter:var(--glass);backdrop-filter:var(--glass);
+  color:#fff;
+}
+.pp::after,.banner::after{opacity:.3;background:linear-gradient(115deg,transparent 0 40%,rgba(255,255,255,.06) 48%,transparent 56% 100%)}
+.pp .pl{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.22)}
+.pp .bt:not(.p),.banner .bt:not(.p),.bc .bt:not(.p){background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.2);color:#fff}
+html[data-theme=light] .pp,html[data-theme=light] .banner,html[data-theme=light] .bc{
+  border-color:color-mix(in srgb,var(--p) 32%,var(--bd));
+  background-color:color-mix(in srgb,var(--p) 16%,rgba(255,255,255,.72));
+  background-image:var(--grain),
+    linear-gradient(150deg,color-mix(in srgb,var(--p) 32%,#fff),transparent 54%),
+    linear-gradient(320deg,color-mix(in srgb,var(--p2) 24%,#fff),transparent 64%);
+  background-blend-mode:multiply,normal,normal;
+  box-shadow:0 22px 44px -34px color-mix(in srgb,var(--p) 42%,transparent),inset 0 1px 0 rgba(255,255,255,.75);
+  color:var(--tx);
+}
+html[data-theme=light] .pp .nm,html[data-theme=light] .pp .pfoot b,html[data-theme=light] .banner .amt,html[data-theme=light] .bc .big{color:var(--tx)}
+html[data-theme=light] .pp .sub,html[data-theme=light] .pp .pfoot,html[data-theme=light] .banner .sub{color:var(--mu)}
+html[data-theme=light] .pp .pfoot{border-top-color:var(--bd)}
+html[data-theme=light] .pp::before{color:rgba(30,40,80,.05)}
+html[data-theme=light] .pp .pph .av{background:color-mix(in srgb,var(--p) 16%,#fff);border-color:color-mix(in srgb,var(--p) 24%,var(--bd));color:var(--tx)}
+html[data-theme=light] .pp .pl{background:color-mix(in srgb,var(--p) 10%,rgba(255,255,255,.6));border-color:color-mix(in srgb,var(--p) 26%,transparent);color:color-mix(in srgb,var(--p) 38%,var(--tx))}
+html[data-theme=light] .pp .bt:not(.p),html[data-theme=light] .banner .bt:not(.p),html[data-theme=light] .bc .bt:not(.p){background:rgba(255,255,255,.55);border-color:var(--bd2);color:var(--tx)}
+
+/* switches: 44px hit area without stretching the visual track */
+.sw{
+  width:46px;height:26px;border-radius:13px;position:relative;overflow:visible;flex-shrink:0;
+  border:1px solid color-mix(in srgb,var(--tx) 14%,transparent);
+  background:color-mix(in srgb,var(--tx) 10%,transparent);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.22);
+}
+.sw::before{content:'';position:absolute;inset:-9px -5px;border-radius:99px}
+.sw::after{top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.sw.on{background:var(--grad);border-color:color-mix(in srgb,var(--p) 55%,transparent);box-shadow:inset 0 1px 2px rgba(0,0,0,.16)}
+.sw.on::after{transform:translateX(20px)}
+#shell-main .sw{height:26px;border-radius:13px;min-width:0;min-height:0}
+#shell-main .sw::after{top:3px}
+.sw:focus-visible{outline:2px solid color-mix(in srgb,var(--p) 72%,transparent);outline-offset:4px}
+#shell-main .acc{min-width:0;min-height:0;width:28px;height:28px}
+.acc::before{content:'';position:absolute;inset:-8px;border-radius:50%}
+
+/* collection tiles */
+.ctile{
+  border-radius:12px;border:1px solid color-mix(in srgb,var(--rc) 32%,var(--bd));
+  background:linear-gradient(180deg,color-mix(in srgb,var(--rc) 9%,var(--c)),color-mix(in srgb,var(--c) 88%,transparent) 64%);
+  box-shadow:0 18px 34px -32px var(--rc),inset 0 1px 0 rgba(255,255,255,.06);
+  -webkit-backdrop-filter:blur(12px) saturate(128%);backdrop-filter:blur(12px) saturate(128%);
+}
+.ctile::after{background:linear-gradient(125deg,rgba(255,255,255,.10),transparent 38%,transparent 72%,rgba(255,255,255,.035))}
+.ctile.fx-glow{box-shadow:0 0 18px -9px var(--rc),inset 0 0 12px -9px var(--rc),inset 0 1px 0 rgba(255,255,255,.06)}
+.ctile.fx-flare{box-shadow:0 0 22px -10px var(--rc),inset 0 1px 0 rgba(255,255,255,.06)}
+html[data-theme=light] .ctile{background:linear-gradient(180deg,color-mix(in srgb,var(--rc) 7%,#fff),rgba(255,255,255,.82) 68%);box-shadow:0 16px 30px -28px color-mix(in srgb,var(--rc) 42%,transparent),inset 0 1px 0 rgba(255,255,255,.85)}
+html[data-theme=light] .ctile::after{background:linear-gradient(125deg,rgba(255,255,255,.5),transparent 42%)}
+html[data-theme=light] .ctile .cimg{background:radial-gradient(80% 70% at 50% 18%,color-mix(in srgb,var(--rc) 22%,#fff),#f3f5fb 74%)}
+html[data-theme=light] .ctile .cimg .fall{color:color-mix(in srgb,var(--rc) 62%,#1a2036)}
+html[data-theme=light] .ctile .cnt{background:rgba(255,255,255,.82);color:color-mix(in srgb,var(--rc) 52%,#1a2036);border-color:color-mix(in srgb,var(--rc) 42%,transparent)}
+html[data-theme=light] .ctile .rlab{background:rgba(255,255,255,.76);color:color-mix(in srgb,var(--rc) 50%,#1a2036);border-color:color-mix(in srgb,var(--rc) 38%,transparent)}
+.pvcard{border-radius:13px;border-width:1px;background-color:color-mix(in srgb,var(--c) 84%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+html[data-theme=light] #preveal{color:#eef2fb}
+html[data-theme=light] #preveal .pvh,html[data-theme=light] #preveal .pvs{color:#aab6d4}
+html[data-theme=light] #preveal .pvcard{background-color:rgba(24,31,48,.9);color:#eef2fb}
+.rar-swatch,.rar-sample{border-radius:10px}
+
+/* mobile: keep hit areas, stop the visual inflation */
+@media(max-width:760px){
+  .chip{min-height:0;padding:5px 10px}
+  .fchip,.sbt,.segbtn,.tab{min-height:38px}
+  .bnav button{min-height:0;min-width:0}
+  .gr div{border-radius:10px}
+}
+@media(prefers-reduced-motion:reduce){.fx-flare::after{animation:none!important}}
 </style>
 </head>
 <body>
@@ -670,7 +909,7 @@ const UI={
   hide:localStorage.getItem('app_hide')==='1',
   sound:localStorage.getItem('app_sound')==='1',
   lang:localStorage.getItem('app_lang')||'la',
-  theme:localStorage.getItem('app_theme')||'dark',
+  theme:(()=>{const t=localStorage.getItem('app_theme');return ['dark','light','brown'].includes(t)?t:t==='wine'?'brown':'dark';})(),
   accent:localStorage.getItem('app_accent')||'royal',
   compact:localStorage.getItem('app_compact')==='1',
   tabOrder:(localStorage.getItem('app_tab_order')||'').split(',').filter(Boolean),
@@ -680,7 +919,7 @@ const UI={
 };
 function tabOrder(){
   const known=TABS.map(t=>t[0]).filter(id=>id!=='root');
-  const saved=(UI.tabOrder||[]).filter(id=>known.includes(id));
+  const saved=[...new Set((UI.tabOrder||[]).filter(id=>known.includes(id)))];
   return [...saved,...known.filter(id=>!saved.includes(id))];
 }
 function tabsOrdered(){
@@ -705,7 +944,7 @@ function quickTabs(){
 }
 function setQuick(slot,id){
   const known=TABS.map(t=>t[0]).filter(x=>x!=='root');
-  if(!known.includes(id))return;
+  if(!Number.isInteger(slot)||slot<0||slot>3||!known.includes(id))return;
   const q=quickTabs();
   const at=q.indexOf(id);
   if(at>=0&&at!==slot)[q[at],q[slot]]=[q[slot],q[at]];
@@ -717,12 +956,12 @@ function setQuick(slot,id){
 function applyTheme(){
   const h=document.documentElement;
   h.dataset.theme=UI.theme;
-  h.dataset.accent=UI.accent;
+  h.dataset.accent=UI.theme==='brown'?'none':UI.accent;
   h.dataset.compact=UI.compact?'1':'0';
   const meta=document.querySelector('meta[name="theme-color"]');
   if(meta){
     const bg=getComputedStyle(h).getPropertyValue('--bg').trim();
-    meta.content=bg||(UI.theme==='light'?'#eef1fb':UI.theme==='wine'?'#15060e':'#070a13');
+    meta.content=bg||(UI.theme==='light'?'#eef1fb':UI.theme==='brown'?'#171009':'#070a13');
   }
 }
 applyTheme();
@@ -747,7 +986,7 @@ const ava=(u,cls='av')=>{
   const n=u&&u.nick;
   const img=u&&u.avatar;
   const c=String(cls||'av').split(/\s+/).includes('av')?cls:'av '+cls;
-  return img?`<div class="${c} avimg"><img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()"></div>`:`<div class="${c}">${ini(n)}</div>`;
+  return `<div class="${esc(c)}${img?' avimg':''}" data-no-tr><span class="avfallback">${ini(n)}</span>${img?`<img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">`:''}</div>`;
 };
 const dot=c=>`<span class="dot" style="--dot:${c||'var(--p)'}"></span>`;
 const e=(text,color='')=>`<div class="em"><span class="ic">${color?dot(color):''}</span>${esc(text)}</div>`;
@@ -839,7 +1078,7 @@ const UKD={
 'Republa Appentanskié':'Республіка Апентанська','Respublica Nationalie':'Республіка Національна','Cives':'Громадяни','Ludie':'Люди','Aerarium':'Скарбниця','Portorium':'Мито','Polog':'Статус','Rang':'Ранг','Rébnostь':'Робота','Balans':'Баланс','Salarium':'Зарплата','Salaria':'Зарплати','Novissimi motti':'Останні операції','Actiones celeres':'Швидкі дії','Status civitatis':'Стан держави',
 'Inscriptio':'Реєстрація','Aditus':'Вхід','Nomen · Klиchka':'Імʼя · Нікнейм','Clavis':'Пароль','Ĵamya':'Імʼя','Pofil':'Прізвище','Intra':'Увійти','Crea Iékzalьzи':'Створити Iékzalьzи','Habes Nomen?':'Вже маєте імʼя?','Nomen novum?':'Нове імʼя?',
 'Profil':'Профіль','Fama':'Репутація','Operationes':'Операції','Ultimus aditus':'Останній вхід','Muta':'Змінити','Archivum meum':'Мій архів','Lexicon':'Словник','Data':'Дані','Modus':'Режим','Versio':'Версія','Thema':'Тема','Lingua':'Мова','Modus compactus':'Компактний режим','Limites hodierni':'Денні ліміти','Exitus':'Вихід','Serva':'Зберегти','Claude':'Закрити','Dele':'Видалити','Confirma':'Підтвердити','Mitte':'Надіслати','Crea':'Створити','Pone':'Опублікувати',
-'Interfacies':'Інтерфейс','Color':'Колір','Celare Kapol aliis':'Приховати Kapol від інших','Sonus':'Звук','Ordo sectionum':'Порядок вкладок','Burgundia':'Бордова','Reset':'Скинути','Hodie':'Сьогодні','Status accessus':'Статуси доступу','Sharpy':'Теги','Subscriptiones':'Підписки','Categoriae':'Категорії','Instrumenta':'Інструменти',
+'Interfacies':'Інтерфейс','Color':'Колір','Celare Kapol aliis':'Приховати Kapol від інших','Sonus':'Звук','Ordo sectionum':'Порядок вкладок','Bura':'Бура','Tenebrae':'Темна','Lux':'Світла','Fixus in Bura':'Фіксований у Бурій','Reset':'Скинути','Hodie':'Сьогодні','Status accessus':'Статуси доступу','Sharpy':'Теги','Subscriptiones':'Підписки','Categoriae':'Категорії','Instrumenta':'Інструменти',
 'Omnia lecta':'Усе прочитано','Purga':'Очистити','Nihil novi':'Нічого нового','Omnes':'Усі','Nova':'Нові',
 'Motti':'Операції','Petitiones':'Запити','Pete':'Запросити','Depone':'Покласти','Introitus':'Надходження','Cusio':'Карбування','Mitto':'Переказ','Solve':'Сплатити','Nega':'Відхилити','Abroga':'Скасувати','Historia':'Історія','Termini':'Терміни',
 'Nundinae':'Торги','Auctiones':'Аукціони','Mea':'Мої','Eme':'Купити','Offero':'Поставити','Renuntia':'Відгук','Lot':'Лот','Pretium':'Ціна','Venditor':'Продавець','Finis':'Кінець','Top':'Топ','Rating':'Рейтинг','Status':'Статус',
@@ -863,7 +1102,8 @@ const UKD={
 'Vlada':'Влада','Cella':'Комірка','Cellae celeres':'Швидка панель',
 'Quantitas':'Кількість','Summa ponderum':'Сума ваг','Aequa':'Зрівняти','Ad 100%':'До 100%','URL imaginis':'URL зображення','Nomen pack':'Назва пака','Quaere cardas…':'Пошук карток…','Quaere catalogum…':'Пошук у каталозі…','Quaere cardky…':'Пошук карток…','Quaere documenta…':'Пошук документів…','Quaere lots…':'Пошук лотів…','Quaere stavky…':'Пошук ставок…','Quaere…':'Пошук…','Receptor · Nomen':'Отримувач · Нік','Pretium / minimum (h)':'Ціна / мінімум (год)','Durata auctionis':'Тривалість аукціону','Terminus (h)':'Термін (год)','Max stavka (h)':'Макс. ставка (год)','Bank (h)':'Банк (год)','Signature ad quorum':'Підписів до кворуму','Nomen, pretium, deinde cardas adde':'Назва, ціна, потім додайте картки','Pondera normalizantur: sufficit proportio. «Aequa» = casus aequales; «Ad 100%» = scala ad summam 100.':'Ваги нормалізуються: достатньо пропорції. «Зрівняти» — рівні шанси; «До 100%» — масштаб до суми 100.',
 'Cellae celeres sunt quattuor sectiones in ima parte telephoni. Ordo sectionum eas non mutat.':'Швидка панель — чотири вкладки внизу на телефоні. Порядок у «Ordo sectionum» її не змінює.',
-'Pack apertus':'Пак відкрито','Omnes ostende':'Показати всі','Bene':'Добре'
+'Pack apertus':'Пак відкрито','Omnes ostende':'Показати всі','Bene':'Добре','in foro':'у продажу',
+'Quaere homines…':'Пошук людей…','Scribe primum nuntium':'Напишіть перше повідомлення','Chat privatus':'Приватний чат','nuntii live':'повідомлення в реальному часі'
 };
 function trCore(t){return UKD[t]!=null?UKD[t]:null;}
 function ukPlural(n,one,few,many){
@@ -874,11 +1114,11 @@ function ukPlural(n,one,few,many){
   return many;
 }
 const UKPAT=[
-  [/^(\d+(?:[.,]\d+)?)\s*h$/i,m=>`${m[1]} год`],
   [/^(\d+)\s+cardae$/i,m=>`${m[1]} ${ukPlural(m[1],'картка','картки','карток')}`],
   [/^(\d+)\s+cardky$/i,m=>`${m[1]} ${ukPlural(m[1],'картка','картки','карток')}`],
   [/^(\d+)\s+unicae$/i,m=>`${m[1]} ${ukPlural(m[1],'унікальна','унікальні','унікальних')}`],
   [/^(\d+)\s+collectiones$/i,m=>`${m[1]} ${ukPlural(m[1],'колекція','колекції','колекцій')}`],
+  [/^(\d+)\s+in foro$/i,m=>`${m[1]} у продажу`],
   [/^(\d+)\s+packs?$/i,m=>`${m[1]} ${ukPlural(m[1],'пак','паки','паків')}`],
   [/^(\d+)\s+lots$/i,m=>`${m[1]} ${ukPlural(m[1],'лот','лоти','лотів')}`],
   [/^(\d+)\s+membra$/i,m=>`${m[1]} ${ukPlural(m[1],'учасник','учасники','учасників')}`],
@@ -915,10 +1155,12 @@ function trText(s){
 }
 function trDom(root){
   if(UI.lang!=='uk'||!root)return;
+  const skip='[data-no-tr],input,textarea,pre,code,script,style,[contenteditable]';
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const ns=[];
-  while(w.nextNode())ns.push(w.currentNode);
+  while(w.nextNode())if(!w.currentNode.parentElement?.closest(skip))ns.push(w.currentNode);
   ns.forEach(n=>{const v=trText(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v;});
   root.querySelectorAll('[placeholder],[title],[aria-label]').forEach(el=>{
+    if(el.closest('[data-no-tr],pre,code,[contenteditable]'))return;
     ['placeholder','title','aria-label'].forEach(a=>{const s=el.getAttribute(a);if(s){const v=trText(s);if(v!==s)el.setAttribute(a,v);}});
   });
 }
@@ -1000,20 +1242,25 @@ function cMap(){
 function myCardTotal(){return myCards().reduce((s,x)=>s+(+x.count||0),0);}
 function myCardUnique(){return myCards().length;}
 function packOdds(p){
-  const m=cMap();
-  const items=(p.items||[]).map(i=>({card:m[i.card]||null,weight:+i.weight||0})).filter(x=>x.card);
-  const tot=items.reduce((s,x)=>s+x.weight,0)||1;
-  return items.map(x=>({...x,pct:+(x.weight*100/tot).toFixed(2)})).sort((a,b)=>b.weight-a.weight);
+  const m=Object.fromEntries(catalog().map(c=>[c.id,c]));
+  const items=(p.items||[]).map(i=>({card:m[i.card]||null,weight:Number(i.weight)})).filter(x=>x.card&&x.card.active!==false&&Number.isFinite(x.weight)&&x.weight>0);
+  const scale=Math.max(0,...items.map(x=>x.weight));
+  const total=items.reduce((s,x)=>s+x.weight/scale,0);
+  return items.map(x=>({...x,pct:(x.weight/scale)/total*100})).sort((a,b)=>b.weight-a.weight);
 }
+function oddsText(n){return n>0&&n<.000001?n.toExponential(3)+'%':Number(n.toFixed(6))+'%';}
 function rarList(){
-  const list=(DB&&DB.rarities)||[];
-  return list.length?list:Object.keys(RARITY).map((id,i)=>({id,label:RARITY[id][0],color:RARITY[id][1],sort:(i+1)*10,active:true}));
+  if(DB&&Array.isArray(DB.rarities))return DB.rarities;
+  return [];
 }
-function rarLabel(r){const x=rarList().find(y=>y.id===r);return x?x.label:(RARITY[r]||[r])[0];}
-function rarColor(r){const x=rarList().find(y=>y.id===r);return x?x.color:(RARITY[r]||['','#94a3b8'])[1];}
+function rarLabel(r){const x=rarList().find(y=>y.id===r);return x?String(x.label):String(r||'—');}
+function cardColor(color){return /^#[0-9a-f]{6}$/i.test(String(color))?color:'#94a3b8';}
+function rarColor(r){const x=rarList().find(y=>y.id===r);return cardColor(x&&x.color);}
+function rarEffect(r){const x=rarList().find(y=>y.id===r);return x&&['plain','glow','flare'].includes(x.effect)?x.effect:'plain';}
 function rarStyle(r){return `--rc:${rarColor(r)}`;}
 function cardArt(c,cls='cimg'){
-  return `<div class="${cls}">${c.img?`<img src="${esc(c.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'fall',textContent:'Ś'}))">`:`<span class="fall">Ś</span>`}</div>`;
+  const img=/^https?:\/\//i.test(c.img||'')?c.img:'';
+  return `<div class="${esc(cls)}">${img?`<img src="${esc(img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'fall',textContent:'Ś'}))">`:`<span class="fall" aria-hidden="true">Ś</span>`}</div>`;
 }
 
 /* ---------- bets ---------- */
@@ -1039,60 +1286,85 @@ function showInfo(html){
   host.innerHTML=`<div class="mb"><div class="md"><div class="ft" style="margin:0 0 2px"><button class="bt g sm" data-a="modalcancel">Claude</button></div>${html}</div></div>`;
   trDom(host);
 }
-function packReveal(cards,spent){
+function packReveal(cards,spent,receipt){
   const old=document.getElementById('preveal');if(old)old.remove();
-  const hi=r=>{const x=rarList().find(y=>y.id===r);return x?+x.sort>=30:['zolota','bozha','mif'].includes(r);};
-  const host=document.createElement('div');
-  host.id='preveal';
-  host.innerHTML=`<div class="pvh">Pack apertus</div>
-    <div class="pvs">${cards.length} cardae${spent?` · ${fm(spent)} h`:''}</div>
-    <div class="pvgrid" id="pvgrid">${cards.map((c,i)=>{
-      const rc=rarColor(c.rarity);
-      return `<div class="pvcard ${hi(c.rarity)?'hi':''}" style="--rc:${rc};--d:${(i*.14).toFixed(2)}s">
-        <div class="pva">${c.img?`<img src="${esc(c.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'fall',textContent:'Ś'}))">`:`<span class="fall">Ś</span>`}</div>
-        <div class="pvb"><div class="pvn">${esc(c.name)}</div><div class="pvr">${esc(rarLabel(c.rarity))}</div><div class="pvc">${esc(c.collection||'')}</div></div>
-      </div>`;
-    }).join('')}</div>
-    <div class="gs" style="justify-content:center"><button class="bt g" data-a="pvflat">Omnes ostende</button><button class="bt p" data-a="pvclose">Bene</button></div>`;
-  document.body.appendChild(host);
-  if(UI.sound)beep();
-  trDom(host);
+  const focus=UI.packBuyFocus||document.activeElement;
+  UI.packBuyFocus=null;
+  const host=document.createElement('div');host.id='preveal';
+  host.className='cards-v4-reveal'+(UI.reduceMotion?' cards-no-motion':'');
+  host.setAttribute('role','dialog');host.setAttribute('aria-modal','true');host.setAttribute('aria-labelledby','pv-title');
+  const data=Array.isArray(cards)?cards:[];
+  UI.packRevealState={cards:data,spent,receipt,index:0,focus};
+  host.innerHTML=`<h2 class="pvh" id="pv-title">Pack apertus</h2>
+    <div class="pvs">${data.length} cardae${spent!=null?` · ${fm(spent)} h`:''}</div>
+    <p class="hint">Una karta per emptionem; repetitiones possibiles.</p>
+    <p id="pv-progress" role="status" aria-live="polite"></p>
+    <div class="pvgrid flat" id="pvgrid"></div>
+    <div class="gs" style="justify-content:center"><button type="button" class="bt p" data-a="pvnext">Proxima karta</button><button type="button" class="bt g" data-a="pvflat">Omnes ostende</button>${receipt?'<button type="button" class="bt g" data-a="pvreceipt">Receptum</button>':''}<button type="button" class="bt g" data-a="pvclose">Claude</button></div>`;
+  host.addEventListener('keydown',ev=>{
+    if(ev.key==='Escape'){ev.preventDefault();ev.stopPropagation();A.pvclose();}
+    if(ev.key==='Tab'){
+      const buttons=[...host.querySelectorAll('button:not([disabled])')];
+      const first=buttons[0],last=buttons[buttons.length-1];
+      if(ev.shiftKey&&document.activeElement===first){ev.preventDefault();last.focus();}
+      else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus();}
+    }
+  });
+  document.body.appendChild(host);packRevealNext(false);
+  if(UI.sound)beep();trDom(host);
+  host.querySelector('[data-a="pvnext"]:not([disabled]),[data-a="pvclose"]')?.focus();
+}
+function packRevealNext(all){
+  const state=UI.packRevealState,host=document.getElementById('preveal');if(!state||!host)return;
+  const end=all?state.cards.length:Math.min(state.index+1,state.cards.length);
+  const grid=host.querySelector('#pvgrid');
+  while(state.index<end){
+    const c=state.cards[state.index++];
+    grid.insertAdjacentHTML('beforeend',`<div class="pvcard fx-${rarEffect(c.rarity)}" style="${rarStyle(c.rarity)}">${cardArt(c,'pva')}<div class="pvb"><div class="pvn" data-no-tr="true">${esc(c.name||'')}</div><div class="pvr" data-no-tr="true">${esc(rarLabel(c.rarity))}</div><div class="pvc" data-no-tr="true">${esc(collections().some(x=>String(x.id)===String(c.collection))?collName(c.collection):c.collection||'')}</div>${typeof c.is_new==='boolean'?`<span class="pl ${c.is_new?'ok':''}">${c.is_new?'Nova karta':'Duplicata'}</span>`:''}</div></div>`);
+  }
+  host.querySelector('#pv-progress').textContent=state.index+' / '+state.cards.length;
+  const next=host.querySelector('[data-a="pvnext"]'),skip=host.querySelector('[data-a="pvflat"]');
+  next.disabled=skip.disabled=state.index===state.cards.length;
+  if(next.disabled&&(document.activeElement===next||document.activeElement===skip))host.querySelector('[data-a="pvclose"]').focus();
+  trDom(grid);
 }
 function pollingStart(){
   if(UI._pollTimer)return;
   UI._pollTimer=setInterval(pollPulse,6000);
   UI._chatTimer=setInterval(pollChat,2300);
 }
+function shellCanPoll(){return ME&&navigator.onLine!==false&&document.visibilityState!=='hidden'&&Date.now()>=SHELL.retryAt;}
 async function pollPulse(){
-  if(!ME||UI._pollBusy||document.visibilityState==='hidden')return;
-  UI._pollBusy=true;
+  if(!shellCanPoll()||UI._pollBusy)return;
+  const token=shellToken();UI._pollBusy=true;
   try{
-    const d=await rpc('api_pulse');
+    const d=await rpc('api_pulse');if(!shellCurrent(token))return;
+    const recovering=!!SHELL.network; shellNetwork();
     const n=+d.notif||0,m=+d.msg||0;
-    if(!UI._notifMax&&!UI._msgMax){UI._notifMax=n;UI._msgMax=m;return;}
-    if(n>UI._notifMax||m>UI._msgMax){
-      UI._notifMax=n;UI._msgMax=m;
-      if(+d.notif_unread>0||+d.msg_unread>0)beep();
-      await sync();
+    if(!UI._pulseReady||n>UI._notifMax||m>UI._msgMax||recovering){
+      await sync({background:true});if(!shellCurrent(token))return;
+      UI._pulseReady=true;UI._notifMax=n;UI._msgMax=m;
     }
-  }catch(e){}
-  finally{UI._pollBusy=false;}
+  }catch(error){if(shellCurrent(token))shellNetwork(error);}
+  finally{if(shellCurrent(token))UI._pollBusy=false;}
 }
 function chatAfter(c){
   const arr=(c&&c.messages)||[];
   return arr.length?Math.max(...arr.map(m=>+m.id||0)):0;
 }
 function bubble(m,self,isGrp){
-  const rep=m.reply?`<div class="rep"><b>@${esc(m.reply.by)}</b> ${esc(String(m.reply.text||'').slice(0,90))}</div>`:'';
+  const rep=m.reply?`<div class="rep" data-no-tr><b>@${esc(m.reply.by)}</b> ${esc(String(m.reply.text||'').slice(0,90))}</div>`:'';
   const del=!!m.deleted;
-  const tail=`${isGrp?'@'+esc(m.from)+' · '+dt(m.ts):dt(m.ts)+(self?(m.read?' ✓✓':' ✓'):'')}${m.edited?' · mutatus':''}`;
-  return `<div class="ms ${self?'s':'o'} ${del?'del':''}" data-mid="${m.id}">${rep}<span class="mtx">${del?'Nuntius deletus':esc(m.text)}</span><small class="meta"><span>${tail}</span><button type="button" class="mact" data-a="msgmenu" data-v="${m.id}" title="Actus">⋯</button></small></div>`;
+  const tail=`${isGrp?'<span data-no-tr>@'+esc(m.from)+'</span> · '+dt(m.ts):dt(m.ts)+(self?(m.read?' ✓✓':' ✓'):'')}${m.edited?' · '+trText('mutatus'):''}`;
+  return `<div class="ms ${self?'s':'o'} ${del?'del':''}" data-mid="${esc(m.id)}">${rep}<span class="mtx"${del?'':' data-no-tr'}>${del?trText('Nuntius deletus'):esc(m.text)}</span><small class="meta"><span>${tail}</span><button type="button" class="mact" data-a="msgmenu" data-v="${esc(m.id)}" title="${esc(trText('Actus'))}" aria-label="${esc(trText('Actus'))}">⋯</button></small></div>`;
 }
 function appendBubbles(html){
-  const box=$('.cm');if(!box)return;
+  const box=$('#shell-main #cm');if(!box)return;
+  const bottom=box.scrollHeight-box.clientHeight-box.scrollTop<64,top=box.scrollTop;
   const empty=box.querySelector('.em');if(empty)empty.remove();
-  box.insertAdjacentHTML('beforeend',html);
-  box.scrollTop=box.scrollHeight;
+  const before=box.children.length;box.insertAdjacentHTML('beforeend',html);
+  if(bottom){box.scrollTop=box.scrollHeight;SHELL.newMessages=0;shellChatNotice();}
+  else {box.scrollTop=top;shellChatNotice(box.children.length-before);}
 }
 function applyEdits(c,edits,isGrp){
   let any=false;
@@ -1106,94 +1378,387 @@ function applyEdits(c,edits,isGrp){
   return any;
 }
 async function pollChat(){
-  if(!ME||UI._chatBusy||UI.tab!=='chat'||document.visibilityState==='hidden')return;
-  if(!UI.chat&&!UI.grp)return;
+  if(!shellCanPoll()||UI.tab!=='chat')return;
+  shellChatChanged();if(UI._chatBusy||!SHELL.chatKey)return;
+  const token=shellToken(),epoch=SHELL.chatEpoch,key=SHELL.chatKey,isGrp=!!UI.grp,id=UI.grp||UI.chat;
+  const current=()=>shellCurrent(token)&&epoch===SHELL.chatEpoch&&key===shellChatKey();
   UI._chatBusy=true;
   try{
-    const isGrp=!!UI.grp;
-    const c=isGrp?myGroups().find(x=>x.id===UI.grp):myChats().find(x=>x.id===UI.chat);
-    if(!c)return;
-    const after=chatAfter(c);
-    const d=isGrp
-      ?await rpc('api_group_poll',{p_group:UI.grp,p_after:after,p_since:UI._chatSince})
-      :await rpc('api_chat_poll',{p_chat:UI.chat,p_after:after,p_since:UI._chatSince});
-    UI._chatSince=new Date().toISOString();
-    const msgs=(d&&d.messages)||[];
-    if(msgs.length){
-      const known=new Set((c.messages||[]).map(m=>+m.id));
-      const fresh=msgs.filter(m=>!known.has(+m.id)).sort((a,b)=>(+a.id)-(+b.id));
-      if(fresh.length){
-        c.messages=(c.messages||[]).concat(fresh);
-        if(!isGrp)fresh.forEach(m=>{if(m.from!==ME.nick)m.read=true;});
-        appendBubbles(fresh.map(m=>bubble(m,m.from===ME.nick,isGrp)).join(''));
-        beep();
-      }
+    const c=(isGrp?myGroups():myChats()).find(x=>String(x.id)===String(id));if(!c)return;
+    const since=new Date().toISOString(),after=chatAfter(c);
+    const d=isGrp?await rpc('api_group_poll',{p_group:id,p_after:after,p_since:UI._chatSince}):await rpc('api_chat_poll',{p_chat:id,p_after:after,p_since:UI._chatSince});
+    if(!current())return;
+    const live=(isGrp?myGroups():myChats()).find(x=>String(x.id)===String(id));if(!live)return;
+    UI._chatSince=since;shellNetwork();
+    const known=new Set((live.messages||[]).map(m=>String(m.id)));
+    const fresh=((d&&d.messages)||[]).filter(m=>!known.has(String(m.id))).sort((a,b)=>(+a.id)-(+b.id));
+    if(fresh.length){
+      live.messages=(live.messages||[]).concat(fresh);
+      const drawn=new Set([...document.querySelectorAll('#cm .ms')].map(el=>el.dataset.mid));
+      appendBubbles(fresh.filter(m=>!drawn.has(String(m.id))).map(m=>bubble(m,m.from===ME.nick,isGrp)).join(''));
+      if(fresh.some(m=>m.from!==ME.nick))beep();
     }
-    applyEdits(c,(d&&d.edits)||[],isGrp);
-  }catch(e){}
-  finally{UI._chatBusy=false;}
+    applyEdits(live,(d&&d.edits)||[],isGrp);
+  }catch(error){if(current())shellNetwork(error);}
+  finally{if(current())UI._chatBusy=false;}
 }
 
 /* ---------- auth / sync ---------- */
 async function boot(){
-  try{
-    const {data}=await sb.auth.getSession();
-    if(data&&data.session){
-      try{await sync();}catch(err){await sb.auth.signOut();renderAuth(errMsg(err));}
-    }else renderAuth();
-  }catch(err){renderAuth(errMsg(err));}
-}
-async function sync(){
-  const {data,error}=await sb.rpc('api_sync');
-  if(error){
-    if(/Exsul/.test(error.message)){DB=null;ME=null;renderBlocked();return;}
-    if(/Aditus necessarius|Profil non inventus/.test(error.message)){
-      DB=null;ME=null;await sb.auth.signOut();renderAuth(errMsg(error));return;
+  const epoch=SHELL.epoch;
+  try{await sync({background:!!ME});}
+  catch(error){
+    if(epoch!==SHELL.epoch)return;
+    shellNetwork(error);
+    if(!ME){
+      const panel=document.createElement('div');panel.className='aw';
+      panel.innerHTML=`<div class="au"><div class="card"><h3>Connexio interrupta</h3><p>Sessio servata. Iterum conare.</p><div class="gs"><button type="button" class="bt p" data-a="retry">Iterum conare</button><button type="button" class="bt g" data-a="logout">Exitus</button></div></div></div>`;
+      $('#app').replaceChildren(panel);trDom(panel);
     }
+  }
+}
+async function sync(options={}){
+  let request=++SHELL.sync,epoch=SHELL.epoch;
+  try{
+    const sessionResult=await sb.auth.getSession();
+    if(request!==SHELL.sync||epoch!==SHELL.epoch)return;
+    if(sessionResult.error)throw sessionResult.error;
+    const uid=sessionResult.data?.session?.user?.id;
+    if(!uid){shellReset();renderAuth();return;}
+    if(SHELL.account&&SHELL.account!==uid){shellReset();epoch=SHELL.epoch;request=++SHELL.sync;}
+    SHELL.account=uid;
+    const {data,error}=await sb.rpc('api_sync');
+    if(request!==SHELL.sync||epoch!==SHELL.epoch||uid!==SHELL.account)return;
+    if(error){
+      if(/Exsul/.test(error.message)){shellReset();renderBlocked();return;}
+      throw error;
+    }
+    if(!data?.me||String(data.me.uid)!==String(uid))throw new Error('Sessio non congruit');
+    DB=data;ME=data.me;UI.hide=!!ME.hide_bal;
+    if(UI.tab==='root'&&!ME.admin)UI.tab='holb';
+    shellNetwork();pollingStart();
+    const nu=unread()+unreadChats();if(UI._unread&&nu>UI._unread)beep();UI._unread=nu;
+    render({background:!!options.background});
+  }catch(error){
+    if(request!==SHELL.sync||epoch!==SHELL.epoch)return;
+    shellNetwork(error);throw error;
+  }
+}
+const MONEY_ACTIONS=new Set(['api_transfer','api_request_pay','api_lot_buy','api_lot_bid','api_card_market_buy','api_card_market_bid','api_card_pack_buy','api_bet_stake','api_admin_mint']);
+const OP_LABELS={api_transfer:'Transmissio',api_request_pay:'Solutio',api_lot_buy:'Emptio',api_lot_bid:'Licitatio',api_card_market_buy:'Karta empta',api_card_market_bid:'Licitatio',api_card_pack_buy:'Pack emptus',api_bet_stake:'Stavka',api_admin_mint:'Cudere / Urere'};
+function cancelled(){return Object.assign(new Error('Actio omissa'),{cancelled:true});}
+function operationStorage(uid){return 'app_pending_ops:'+uid;}
+function pendingOperations(uid){
+  try{return JSON.parse(sessionStorage.getItem(operationStorage(uid))||'[]');}catch{return [];}
+}
+function savePendingOperation(uid,op,remove=false){
+  const list=pendingOperations(uid).filter(x=>x.key!==op.key);
+  if(!remove)list.push(op);
+  sessionStorage.setItem(operationStorage(uid),JSON.stringify(list));
+}
+function sameOperation(a,b){
+  const keys=Object.keys(a).sort();
+  return keys.length===Object.keys(b).length&&keys.every(k=>JSON.stringify(a[k])===JSON.stringify(b[k]));
+}
+async function rpcRaw(name,args){
+  if(!/^api_[a-z0-9_]+$/.test(name))throw new Error('API invalida');
+  const {data,error}=await sb.rpc(name,args||{});
+  if(error){
+    if(error.code==='PGRST202')error.message=trText('Schema renovanda: schema-part4.sql necessaria.');
     throw error;
   }
-  DB=data;ME=data.me;
-  UI.hide=!!ME.hide_bal;
-  if(UI.tab==='root'&&!ME.admin)UI.tab='holb';
-  pollingStart();
-  const nu=unread()+unreadChats();
-  if(UI._unread&&nu>UI._unread)beep();
-  UI._unread=nu;
-  render();
-}
-async function rpc(name,args){
-  const {data,error}=await sb.rpc(name,args||{});
-  if(error)throw error;
   return data;
 }
+async function rpc(name,args){
+  return MONEY_ACTIONS.has(name)?financialOperation(name,args||{}):rpcRaw(name,args);
+}
+async function financialOperation(action,args){
+  const uid=ME&&ME.uid;
+  if(!uid)throw new Error('Aditus necessarius');
+  let pending=pendingOperations(uid).find(x=>x.action===action&&sameOperation(x.args,args));
+  if(pending){
+    const result=await resumeOperation(pending);
+    if(action!=='api_card_pack_buy')showReceipt(result);
+    return result;
+  }
+  const quote=await rpcRaw('api_operation_quote',{p_action:action,p_args:args});
+  if(!ME||ME.uid!==uid)throw cancelled();
+  const note=[trText('Receptor')+': '+String(quote.recipient||'—'),trText('Ex Kapol')+': '+fm(quote.amount)+' h',trText('Portorium inclusum')+': '+fm(quote.fee)+' h',trText('Receptum')+': '+fm(quote.net)+' h'].join('\n');
+  if(!await ask('Confirma operationem',[],'Confirma',note))throw cancelled();
+  if(!ME||ME.uid!==uid)throw cancelled();
+  pending={key:crypto.randomUUID(),action,args,quote,ts:new Date().toISOString()};
+  savePendingOperation(uid,pending);
+  return executeOperation(uid,pending);
+}
+async function executeOperation(uid,op){
+  try{
+    const result=await rpcRaw('api_operation_execute',{p_key:op.key,p_action:op.action,p_args:op.args,p_quote:op.quote});
+    savePendingOperation(uid,op,true);
+    if(!ME||ME.uid!==uid)throw cancelled();
+    UI.lastOperation=result;
+    if(op.action!=='api_card_pack_buy')showReceipt(result);
+    return result;
+  }catch(err){
+    if(err.cancelled)throw err;
+    if(err.code&&/^[0-9A-Z]{5}$/.test(err.code))savePendingOperation(uid,op,true);
+    else err=Object.assign(new Error(trText('Exitus incertus. Aperi operationes; noli iterum emere.')+' '+op.key),{uncertain:true});
+    throw err;
+  }
+}
+async function resumeOperation(op){
+  const uid=ME&&ME.uid;
+  if(!uid)throw cancelled();
+  const result=await rpcRaw('api_operation_get',{p_key:op.key});
+  if(!ME||ME.uid!==uid)throw cancelled();
+  if(result){savePendingOperation(uid,op,true);return result;}
+  if(!await ask('Repete eandem operationem?',[],'Repete','Clavis eadem: altera solutio non fiet.'))throw cancelled();
+  if(!ME||ME.uid!==uid)throw cancelled();
+  return executeOperation(uid,op);
+}
+function receiptHtml(result){
+  const r=result&&result.receipt;
+  if(!r)return `<div class="al">${trText('Receptum non inventum')}</div>`;
+  return `<h3>${trText('Receptum operationis')}</h3><span class="pl ok">${trText('Perfecta')}</span>
+    <div class="dt" data-no-tr>${esc(OP_LABELS[r.action]?trText(OP_LABELS[r.action]):r.action||'')} · ${esc(dt(r.ts))}</div>
+    ${rows([[trText('Receptor'),`<span data-no-tr>${esc(r.recipient||'—')}</span>`],[trText('Ex Kapol'),fm(r.amount)+' h'],[trText('Portorium inclusum'),fm(r.fee)+' h'],[trText('Receptum'),fm(r.net)+' h']])}
+    <div class="dt mono" data-no-tr style="overflow-wrap:anywhere">${esc(r.id)}</div>
+    <div class="gs">${bt('Copia numerum','copyid',r.id,'g')}${result.cards?bt('Specta cardas','opReplay',r.id,'p'):''}${bt('Operationes','opHistory','','g')}</div>`;
+}
+function showReceipt(result){showInfo(receiptHtml(result));}
+async function loadOperationHistory(more=false){
+  const uid=ME&&ME.uid;if(!uid)return;
+  const previous=more&&UI.operations||[];
+  const before=previous.length?previous[previous.length-1].ts:null;
+  const items=await rpcRaw('api_operation_history',{p_before:before,p_limit:20});
+  if(!ME||ME.uid!==uid)return;
+  UI.operations=[...previous,...items.filter(x=>!previous.some(p=>p.id===x.id))];
+  UI.operationsMore=items.length===20;
+  showOperationHistory();
+}
+function showOperationHistory(){
+  const pending=pendingOperations(ME.uid);
+  showInfo(`<h3>Operationes</h3><div class="hint">Portorium iam in summa inclusum est.</div>
+    ${pending.map(o=>`<div class="card"><b>${esc(trText(OP_LABELS[o.action]||'Operatio'))}</b><div class="mut">Exitus incertus</div><div class="dt mono" data-no-tr>${esc(o.key)}</div>${bt('Verifica exitum','opRetry',o.key,'p')}</div>`).join('')}
+    ${(UI.operations||[]).map(o=>`<div class="it"><div class="r"><div class="in"><b>${esc(trText(OP_LABELS[o.action]||'Operatio'))}</b><small data-no-tr>${esc(dt(o.ts))} · ${fm(o.result?.receipt?.amount)} h</small></div>${bt('Aperi','opView',o.id,'g sm')}</div></div>`).join('')||e('Operationes desunt','#94a3b8')}
+    ${UI.operationsMore?bt('Plures','opMore','','g'):''}`);
+}
 async function run(fn,ok){
-  try{const r=await fn();await sync();if(ok)toast(ok,'s');return r;}
-  catch(err){toast(errMsg(err),'e');return null;}
+  let result;
+  try{result=await fn();}
+  catch(err){if(!err.cancelled)toast(errMsg(err),'e');return null;}
+  try{await sync();}catch{toast('Actio perfecta; renovatio differetur.','i');}
+  if(ok)toast(ok,'s');
+  return result;
 }
-function authErrBox(msg){const el=$('#a-err');if(el)el.textContent=msg||'';}
+function authErrBox(msg){const el=$('#a-err');if(el)el.textContent=trText(msg||'');}
 
-/* ---------- top-level render ---------- */
-function render(){
+/* ---------- stable shell / private view state ---------- */
+const SHELL_DEFAULTS={...UI};
+const SHELL={account:null,epoch:0,sync:0,chatEpoch:0,chatKey:'',view:null,forms:new Map(),markup:new Map(),pending:false,failures:0,retryAt:0,network:'',sending:new Set(),dialog:null,opener:null};
+function shellToken(){return {uid:SHELL.account||ME?.uid,epoch:SHELL.epoch};}
+function shellCurrent(t){return !!t.uid&&t.uid===SHELL.account&&t.epoch===SHELL.epoch;}
+function shellChatKey(){return ME&&UI.tab==='chat'&&(UI.grp||UI.chat)?`${ME.uid}:${UI.grp?'group':'dm'}:${UI.grp||UI.chat}`:'';}
+function shellChatChanged(){
+  const key=shellChatKey();
+  if(key!==SHELL.chatKey){SHELL.chatKey=key;SHELL.chatEpoch++;UI._chatSince=null;UI._chatBusy=false;SHELL.newMessages=0;}
+}
+function shellDraftKey(key){return 'app_chat_draft:'+key;}
+function shellDraftRead(key){try{return key?localStorage.getItem(shellDraftKey(key))||'':'';}catch{return '';}}
+function shellDraftSave(key,value){
+  if(!key)return;
+  try{if(value)localStorage.setItem(shellDraftKey(key),value.slice(0,500));else localStorage.removeItem(shellDraftKey(key));}catch{}
+}
+function shellReset(){
+  const uid=SHELL.account||ME?.uid;
+  SHELL.epoch++;SHELL.sync++;SHELL.chatEpoch++;
+  clearInterval(UI._pollTimer);clearInterval(UI._chatTimer);
+  if(uid)try{for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i);if(k?.startsWith('app_chat_draft:'+uid+':'))localStorage.removeItem(k);}}catch{}
+  closeModal(null);document.getElementById('preveal')?.remove();
+  const prefs={};for(const k of ['lang','theme','accent','compact','sound','tabOrder','quick'])prefs[k]=UI[k];
+  for(const k of Object.keys(UI))delete UI[k];
+  Object.assign(UI,SHELL_DEFAULTS,prefs,{open:new Set(),hide:false});
+  ME=null;DB=null;SHELL.account=null;SHELL.view=null;SHELL.chatKey='';SHELL.pending=false;
+  SHELL.forms.clear();SHELL.markup.clear();SHELL.sending.clear();SHELL.newMessages=0;
+  SHELL.failures=0;SHELL.retryAt=0;SHELL.network='';
+  document.querySelectorAll('input[type="password"]').forEach(el=>{el.value='';});
+  $('#app')?.replaceChildren();$('#tw')?.replaceChildren();
+  shellNetworkBanner();shellDialogs();
+}
+function shellNetwork(error){
+  if(error){SHELL.failures=Math.min(SHELL.failures+1,6);SHELL.retryAt=Date.now()+Math.min(60000,2000*2**SHELL.failures);SHELL.network='Connexio interrupta';}
+  else {SHELL.failures=0;SHELL.retryAt=0;SHELL.network='';}
+  shellNetworkBanner();
+}
+function shellNetworkBanner(){
+  const message=navigator.onLine===false?'Sine rete':SHELL.network;
+  let host=document.getElementById('shell-network');
+  if(!host){host=document.createElement('div');host.id='shell-network';host.className='shell-network';host.setAttribute('role','status');host.setAttribute('aria-live','polite');document.body.prepend(host);}
+  host.hidden=!message;
+  const html=message?`<span>${esc(trText(message))}</span><button type="button" class="bt g sm" data-a="retry">${esc(trText('Iterum conare'))}</button>`:'';
+  if(host.innerHTML!==html)host.innerHTML=html;
+}
+function shellViewKey(){
+  const fields={bank:['bsub'],prad:['mk','pcat'],cards:['cardTab','cardColl','cardRar','packColl'],bets:['betTab'],seti:['csF'],chat:['csub','chat','grp'],jur:['th','jcat'],news:['nwOpen','nwCat'],vlada:['vsub','lawKind'],help:['ticket','tkF','faq'],root:['rootOk','rootTab','rootP'],seg:['segNew']}[UI.tab]||[];
+  return JSON.stringify([ME.uid,UI.tab,...fields.map(k=>UI[k]??null)]);
+}
+function shellFields(root){
+  return [...root.querySelectorAll('input,textarea,select')].filter(el=>!el.matches('[type="password"],[type="file"],[type="hidden"],[data-a="quickset"],[autocomplete*="password"]')&&!/pass|clavis/i.test(el.name+' '+el.id)).map((el,i)=>[el.id||el.name||`${el.tagName}:${el.type}:${el.dataset.k||i}`,el]);
+}
+function shellCapture(){
+  const root=$('#shell-main');if(!root||!SHELL.view)return;
+  const fields=new Map();
+  shellFields(root).forEach(([key,el])=>{if(el.id!=='ci')fields.set(key,{value:el.value,checked:el.checked,type:el.type});});
+  const scroll=[...root.querySelectorAll('.cm,.subtabs,.ts')].map(el=>({top:el.scrollTop,left:el.scrollLeft,bottom:el.scrollHeight-el.clientHeight-el.scrollTop<64}));
+  SHELL.forms.delete(SHELL.view);SHELL.forms.set(SHELL.view,{fields,scroll,x:window.scrollX,y:window.scrollY,details:[...root.querySelectorAll('details')].map(el=>el.open)});
+  while(SHELL.forms.size>30)SHELL.forms.delete(SHELL.forms.keys().next().value);
+  if(SHELL.chatKey&&SHELL.view===shellViewKey()){const ci=$('#ci');if(ci)shellDraftSave(SHELL.chatKey,ci.value);}
+}
+function shellEditing(root){
+  const active=document.activeElement,sel=window.getSelection();
+  return (root.contains(active)&&active.matches('input,textarea,select,[contenteditable="true"]'))||!!(sel&&!sel.isCollapsed&&root.contains(sel.anchorNode));
+}
+function shellRegion(selector,html){
+  const node=$(selector);if(!node)return;
+  const signature=UI.lang+'|'+html;if(SHELL.markup.get(selector)===signature)return;
+  const t=document.createElement('template');t.innerHTML=html;trDom(t.content);
+  const fresh=t.content.firstElementChild;
+  for(const attr of fresh.attributes)node.setAttribute(attr.name,attr.value);
+  const x=node.scrollLeft;node.replaceChildren(...fresh.childNodes);node.scrollLeft=x;
+  SHELL.markup.set(selector,signature);
+}
+function shellChatNotice(count=0){
+  const box=$('#shell-main #cm');if(!box)return;
+  SHELL.newMessages=(SHELL.newMessages||0)+count;
+  let button=$('#chat-new');
+  if(!button){button=document.createElement('button');button.id='chat-new';button.className='bt g chat-new';button.type='button';button.dataset.a='chatlatest';box.after(button);}
+  button.hidden=!SHELL.newMessages;
+  button.textContent=trText('Nuntii novi')+(SHELL.newMessages?' · '+SHELL.newMessages:'');
+}
+function shellChatPrivacy(root){
+  if(UI.tab!=='chat')return;
+  root.querySelectorAll('.in,.grow,.repbar .grow,.card h3>span:not(.hp),.tb .tiny').forEach(el=>el.setAttribute('data-no-tr',''));
+  if(UI.grp)root.querySelectorAll('.quote,.card h3').forEach(el=>el.setAttribute('data-no-tr',''));
+  const ci=root.querySelector('#ci');if(ci){ci.setAttribute('aria-label',trText('Nuntius'));ci.autocomplete='off';}
+}
+async function shellOpenChat(id,isGrp){
+  if(!ME)return;
+  const chat=(isGrp?myGroups():myChats()).find(x=>String(x.id)===String(id));if(!chat)return;
+  shellCapture();SHELL.route=(SHELL.route||0)+1;
+  UI.tab='chat';UI.chat=isGrp?null:chat.id;UI.grp=isGrp?chat.id:null;UI.reply=null;UI.sheet=false;
+  shellChatChanged();render();
+  const token=shellToken(),epoch=SHELL.chatEpoch;
+  try{
+    await rpc(isGrp?'api_group_read':'api_chat_read',isGrp?{p_group:chat.id}:{p_chat:chat.id});
+    if(shellCurrent(token)&&epoch===SHELL.chatEpoch)await sync({background:true});
+  }catch(error){if(shellCurrent(token)&&epoch===SHELL.chatEpoch)shellNetwork(error);}
+}
+async function shellSend(isGrp){
+  const input=$('#ci'),raw=input?.value||'',text=raw.trim(),key=shellChatKey();
+  if(!ME||!text||!key||SHELL.sending.has(key)||isGrp!==!!UI.grp)return;
+  const token=shellToken(),id=UI.grp||UI.chat,reply=UI.reply?+UI.reply.id:null;
+  shellDraftSave(key,raw);SHELL.sending.add(key);
+  try{
+    await rpc(isGrp?'api_group_send':'api_chat_send',isGrp?{p_group:id,p_text:text,p_reply:reply}:{p_chat:id,p_text:text,p_reply:reply});
+    if(!shellCurrent(token))return;
+    if(shellDraftRead(key)===raw)shellDraftSave(key,'');
+    if(key===shellChatKey()){
+      const live=$('#ci');if(live?.value===raw)live.value='';
+      if((UI.reply?+UI.reply.id:null)===reply)UI.reply=null;
+    }
+    await sync({background:true});
+    if(shellCurrent(token)&&key===shellChatKey())render();
+  }catch(error){if(shellCurrent(token)){shellNetwork(error);toast(errMsg(error),'e');}}
+  finally{if(shellCurrent(token))SHELL.sending.delete(key);}
+}
+function shellMotion(){
+  const choice=localStorage.getItem('app_motion')||'system';
+  document.documentElement.dataset.motion=(choice==='reduce'||(choice==='system'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches))?'reduce':'full';
+  return choice;
+}
+function shellFocusables(root){return [...root.querySelectorAll('button,a[href],input,textarea,select,[tabindex]')].filter(el=>!el.disabled&&el.tabIndex>=0&&el.getClientRects().length);}
+function shellDialogs(){
+  const dialog=$('#preveal')||$('#modal .md')||$('#shell-sheet .sh');
+  if(dialog===SHELL.dialog)return;
+  const previous=SHELL.dialog;
+  if(!previous&&dialog){SHELL.opener=document.activeElement;SHELL.bodyOverflow=document.body.style.overflow;}
+  SHELL.dialog=dialog;
+  const app=$('#app');if(app){app.inert=!!dialog&&!app.contains(dialog);[...app.children].forEach(el=>{el.inert=!!dialog&&app.contains(dialog)&&!el.contains(dialog);});}
+  if(dialog){
+    dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.tabIndex=-1;
+    const title=dialog.querySelector('h3,h4,.pvh');
+    if(title){if(!title.id)title.id='shell-dialog-title';dialog.setAttribute('aria-labelledby',title.id);}
+    else dialog.setAttribute('aria-label',trText('Dialogus'));
+    dialog.querySelectorAll('.fl').forEach((row,i)=>{const label=row.querySelector('label'),field=row.querySelector('input,textarea,select');if(label&&field){if(!field.id)field.id='shell-field-'+i;label.htmlFor=field.id;}});
+    document.body.style.overflow='hidden';(shellFocusables(dialog)[0]||dialog).focus({preventScroll:true});
+  }else if(previous){
+    document.body.style.overflow=SHELL.bodyOverflow||'';
+    const opener=SHELL.opener?.isConnected?SHELL.opener:$('#app [data-a="sheet"]');
+    opener?.focus({preventScroll:true});SHELL.opener=null;
+  }
+}
+/* render({background:true}) updates shell immediately; only an edited main waits for blur.
+   render({resetForms:true}) intentionally discards the current view's saved fields. */
+function render(options={}){
   if(!ME){renderAuth();return;}
-  applyTheme();
-  const changed=UI._lastTab!==UI.tab;UI._lastTab=UI.tab;
-  const app=$('#app');
-  app.innerHTML=header()+nav()+`<main${changed?' class="enter"':''}>${tabContent()}</main>`+bottomNav()+footer();
-  if(UI.sheet)app.insertAdjacentHTML('beforeend',sheetHtml());
-  trDom(app);
-  if(UI.tab==='chat')scrollChat();
+  if(!TABS.some(t=>t[0]===UI.tab)||(UI.tab==='root'&&!ME.admin))UI.tab='holb';
+  applyTheme();shellMotion();document.documentElement.lang=UI.lang==='uk'?'uk':'la';
+  shellCapture();shellChatChanged();
+  const key=shellViewKey(),same=SHELL.view===key,app=$('#app');
+  const active=document.activeElement,activeId=active?.id,selection=active&&'selectionStart'in active?[active.selectionStart,active.selectionEnd,active.selectionDirection]:null;
+  const action=active?.dataset.a,value=active?.dataset.v;
+  if(!$('#shell-main')){
+    const t=document.createElement('template');t.innerHTML=header()+nav()+'<main id="shell-main" tabindex="-1"></main>'+bottomNav()+footer();
+    app.replaceChildren(t.content);SHELL.markup.clear();
+  }
+  shellRegion('#shell-header',header());shellRegion('#shell-nav',nav());shellRegion('#shell-bottom',bottomNav());shellRegion('#shell-footer',footer());
+  let sheet=$('#shell-sheet');
+  if(UI.sheet&&!sheet){app.insertAdjacentHTML('beforeend',sheetHtml());trDom($('#shell-sheet'));}
+  else if(!UI.sheet&&sheet)sheet.remove();
+  shellNetworkBanner();
+  const main=$('#shell-main');
+  if(same&&options.background&&shellEditing(main))SHELL.pending=true;
+  else {
+    SHELL.pending=false;
+    if(options.resetForms)SHELL.forms.delete(key);
+    const saved=options.resetForms?null:SHELL.forms.get(key),old=same&&!options.resetForms?new Map(shellFields(main)):new Map();
+    const oldCount=main.querySelectorAll('#cm .ms').length;
+    const t=document.createElement('template');t.innerHTML=tabContent();shellChatPrivacy(t.content);trDom(t.content);
+    shellFields(t.content).forEach(([name,el])=>{
+      const existing=old.get(name),state=saved?.fields.get(name);
+      if(existing&&existing.tagName===el.tagName&&existing.type===el.type){
+        const value=existing.value;
+        if(existing.tagName==='SELECT'){existing.innerHTML=el.innerHTML;if([...existing.options].some(o=>o.value===value))existing.value=value;}
+        existing.disabled=el.disabled;
+        for(const attr of ['placeholder','aria-label','min','max','maxlength','readonly','required']){if(el.hasAttribute(attr))existing.setAttribute(attr,el.getAttribute(attr));else existing.removeAttribute(attr);}
+        el.replaceWith(existing);
+      }else if(state&&el.type===state.type){el.value=state.value;if('checked'in el)el.checked=state.checked;}
+    });
+    main.replaceChildren(t.content);main.dataset.view=UI.tab;
+    if(!same)main.classList.add('enter');else main.classList.remove('enter');
+    SHELL.view=key;UI._lastTab=UI.tab;
+    if(saved){
+      main.querySelectorAll('details').forEach((el,i)=>{if(saved.details[i]!=null)el.open=saved.details[i];});
+      main.querySelectorAll('.cm,.subtabs,.ts').forEach((el,i)=>{const s=saved.scroll[i];if(s){el.scrollLeft=s.left;el.scrollTop=s.bottom&&el.id==='cm'?el.scrollHeight:s.top;}});
+      window.scrollTo(saved.x,saved.y);
+    }else window.scrollTo(0,0);
+    if(UI.tab==='chat'&&SHELL.chatKey){
+      const ci=$('#ci');if(ci&&!old.has('ci'))ci.value=shellDraftRead(SHELL.chatKey);
+      const box=$('#cm');if(box&&!saved)box.scrollTop=box.scrollHeight;
+      const s=saved?.scroll[0];shellChatNotice(same&&s&&!s.bottom?Math.max(0,main.querySelectorAll('#cm .ms').length-oldCount):0);
+    }
+  }
+  if(active?.isConnected){active.focus({preventScroll:true});if(selection&&selection[0]!=null)try{active.setSelectionRange(...selection);}catch{}}
+  else if(activeId){const next=document.getElementById(activeId);if(next&&same){next.focus({preventScroll:true});if(selection&&selection[0]!=null)try{next.setSelectionRange(...selection);}catch{}}}
+  else if(action){const next=[...app.querySelectorAll('[data-a]')].find(el=>el.dataset.a===action&&el.dataset.v===value);next?.focus({preventScroll:true});}
+  shellDialogs();
 }
-function brandMark(){
-  return ME&&ME.avatar
-    ?`<div class="lg avimg" style="padding:0;overflow:hidden"><img src="${esc(ME.avatar)}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`
-    :`<div class="lg">Ś</div>`;
-}
+function brandMark(){return ava(ME,'lg');}
 function header(){
-  return `<header>
-    <div class="br">${brandMark()}<div><small>${esc(brandTitle())}</small><b>${esc(brandName())}</b></div></div>
+  return `<header id="shell-header">
+    <div class="br">${brandMark()}<div data-no-tr><small>${esc(brandTitle())}</small><b>${esc(brandName())}</b></div></div>
     <div class="ua">
-      <span class="chip" data-a="tab" data-v="bank"><b>${fm(ME.balance)}</b> h</span>
-      <span class="chip" data-a="tab" data-v="ust">@${esc(ME.nick)}</span>
+      <button type="button" class="chip" data-a="tab" data-v="bank" aria-label="Balans"><b>${fm(ME.balance)}</b> h</button>
+      <button type="button" class="chip" data-a="tab" data-v="ust" data-no-tr>@${esc(ME.nick)}</button>
       <button class="bt g sm" data-a="logout" title="Exitus">Exi</button>
     </div>
   </header>`;
@@ -1201,34 +1766,34 @@ function header(){
 function badge(id,u){const n=id==='seg'?u:id==='chat'?unreadChats():0;return n?` <em>${n>99?'99+':n}</em>`:'';}
 function nav(){
   const u=unread();
-  return `<div class="tabs">`+tabsOrdered().filter(t=>t[0]!=='root'||ME.admin).map(([id,label,color])=>{
+  return `<nav id="shell-nav" class="tabs" aria-label="Sectiones">`+tabsOrdered().filter(t=>t[0]!=='root'||ME.admin).map(([id,label,color])=>{
     const locked=ME.status==='neophyte'&&!FREE.includes(id);
-    return `<button class="tab ${UI.tab===id?'on':''} ${locked?'lk':''}" data-a="tab" data-v="${id}">${dot(color)}${label}${badge(id,u)}</button>`;
-  }).join('')+`</div>`;
+    return `<button class="tab ${UI.tab===id?'on':''} ${locked?'lk':''}" data-a="tab" data-v="${id}" aria-current="${UI.tab===id?'page':'false'}" aria-disabled="${locked}">${dot(color)}${label}${badge(id,u)}</button>`;
+  }).join('')+`</nav>`;
 }
 function bottomNav(){
   const u=unread(),cu=unreadChats();
   const ids=quickTabs();
   const inside=ids.includes(UI.tab);
-  return `<nav class="bnav">`+ids.map(id=>{
+  return `<nav id="shell-bottom" class="bnav" aria-label="Cellae celeres">`+ids.map(id=>{
     const t=TABS.find(x=>x[0]===id)||TABS[0];
     const n=id==='seg'?u:id==='chat'?cu:0;
-    return `<button class="${UI.tab===id?'on':''}" data-a="tab" data-v="${id}"><span class="bi">${dot(NAVCOLOR[id])}</span>${t[1]}${n?`<span class="bdg">${n>99?'99+':n}</span>`:''}</button>`;
-  }).join('')+`<button class="${inside?'':'on'}" data-a="sheet"><span class="bi plus">⋯</span>Plus</button></nav>`;
+    return `<button class="${UI.tab===id?'on':''}" data-a="tab" data-v="${id}" aria-current="${UI.tab===id?'page':'false'}"><span class="bi">${dot(NAVCOLOR[id])}</span>${t[1]}${n?`<span class="bdg">${n>99?'99+':n}</span>`:''}</button>`;
+  }).join('')+`<button class="${inside?'':'on'}" data-a="sheet" aria-haspopup="dialog" aria-expanded="${UI.sheet}" aria-controls="shell-sheet"><span class="bi plus">⋯</span>Plus</button></nav>`;
 }
 function sheetHtml(){
-  return `<div class="sheet"><div class="sh"><h4>Omnes sectiones <button class="bt g sm" data-a="closesh">Claude</button></h4><div class="shg">`+
+  return `<div id="shell-sheet" class="sheet"><div class="sh" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1"><h4><span id="sheet-title">Omnes sectiones</span> <button class="bt g sm" data-a="closesh">Claude</button></h4><div class="shg">`+
     tabsOrdered().filter(t=>t[0]!=='root'||ME.admin).map(([id,l,color])=>{
       const locked=ME.status==='neophyte'&&!FREE.includes(id);
-      return `<button class="shitem ${UI.tab===id?'on':''}" data-a="tab" data-v="${id}">${dot(color)}<span class="stx">${l}${locked?' · clausa':''}</span></button>`;
+      return `<button class="shitem ${UI.tab===id?'on':''}" data-a="tab" data-v="${id}" aria-current="${UI.tab===id?'page':'false'}" aria-disabled="${locked}">${dot(color)}<span class="stx">${l}${locked?' · clausa':''}</span></button>`;
     }).join('')+`</div></div></div>`;
 }
 function footer(){
   const c=cfg();
-  return `<div class="foot">
+  return `<footer id="shell-footer" class="foot" data-no-tr>
     <div class="fb"><b>${esc(brandName())}</b> · <span class="fv">v ${esc(c.version||'gamma 3.0')}</span></div>
     <div class="fb">by ${esc(c.byline||'Kurilkinsoft')} · ${esc(c.motto||'Slava Republié!')} · <span class="fv">${esc(c.year||2026)}</span></div>
-  </div>`;
+  </footer>`;
 }
 function tabContent(){
   if(ME.status==='neophyte'&&!FREE.includes(UI.tab))return C('Accessus clausus',`<div class="al">Polog «Neophytus» — accessus limitatus.</div><div class="gs">${bt('Pete Polog','verify','','p')}</div>`);
@@ -1368,7 +1933,7 @@ function bank(){
   const openReq=(DB.requests||[]).filter(r=>r.status==='open'&&(r.to===me||r.from===me)).length;
   return `<div class="banner"><div class="sub">Balans · @${esc(me)}</div><div class="amt">${balText(ME.balance)}</div>
     <div class="sub">Portorium ${fm(cfg().tax)}% · id ${esc(ME.id)}${+ME.salary>0?' · salarium '+fm(ME.salary)+' h':''}</div>
-    <div class="gs" style="margin-top:10px">${bt('Mitte','newtransfer','','p')}${bt('Pete','newrequest','')}</div></div>
+    <div class="gs" style="margin-top:10px">${bt('Mitte','newtransfer','','p')}${bt('Pete','newrequest','')}${bt('Operationes','opHistory','','g')}</div></div>
     <div class="gr">
       ${statBox('Introitus',fm(inn)+' h')}
       ${statBox('Exitus',fm(out)+' h')}
@@ -1437,9 +2002,9 @@ function lotCard(l){
   if(l.status==='sold'&&l.buyer===ME.nick&&!l.reviewed)acts+=bt('Renuntia','review',l.id,'ok');
   if(!mine)acts+=bt('Delatio','report','lot|'+l.id+'|'+l.title,'d sm');
   if(ME.admin&&!live)acts+=bt('Recense','adminedit','lot|'+l.id,'g sm');
-  return `<div class="card"><h3>${esc(l.title)} <span class="hp">${tag(isA?'Auctio':'Venditio',isA?'pp2':'')}${mine?'<span class="tg">MEA</span>':''}${tag(l.status,l.status==='live'?'ok':'')}</span></h3>
+  return `<div class="card"><h3><span data-no-tr>${esc(l.title)}</span> <span class="hp">${tag(isA?'Auctio':'Venditio',isA?'pp2':'')}${mine?'<span class="tg">MEA</span>':''}${tag(l.status,l.status==='live'?'ok':'')}</span></h3>
     <div class="mut">@${esc(l.seller)} · ${esc(l.cat)} · ${rate(l.rating)}</div>
-    <div class="dt">${esc(l.body)}</div>
+    <div class="dt" data-no-tr>${esc(l.body)}</div>
     <div class="rw"><span>${isA?'Licitatio minima':'Pretium'}</span><b>${fm(l.price)} h</b></div>
     ${isA?`<div class="rw"><span>Top</span><b>${l.top?fm(l.top)+' h':'—'}</b></div><div class="rw"><span>Finis</span><b>${left(l.ends)}</b></div>`:''}
     ${l.buyer?`<div class="rw"><span>Emptor</span><b>@${esc(l.buyer)}</b></div>`:''}
@@ -1449,17 +2014,18 @@ function lotCard(l){
 }
 
 /* ---------- Cardky ---------- */
-function cardTile(c,count,val){
+function cardTile(c,count,val,action='cardmenu'){
   if(!c)return'';
-  const attrs=val!=null?` data-a="cardmenu" data-v="${val}" role="button" tabindex="0"`:'';
-  return `<div class="ctile r-${c.rarity}" style="${rarStyle(c.rarity)}"${attrs}>
+  const interactive=val!=null,el=interactive?'button':'div';
+  const attrs=interactive?` type="button" data-a="${esc(action)}" data-v="${esc(val)}"`:'';
+  return `<${el} class="ctile cards-tile fx-${rarEffect(c.rarity)}" style="${rarStyle(c.rarity)}"${attrs}>
     ${count>1?`<span class="cnt">×${count}</span>`:''}
-    <span class="rlab">${rarLabel(c.rarity)}</span>
+    <span class="rlab" data-no-tr="true">${esc(rarLabel(c.rarity))}</span>
     ${cardArt(c)}
-    <div class="cbody"><div class="cname">${esc(c.name)}</div>
-      <div class="cmeta"><span>${esc(collName(c.collection))}</span><span>${c.rarity?rarLabel(c.rarity):''}</span></div>
+    <div class="cbody"><div class="cname" data-no-tr="true">${esc(c.name)}</div>
+      <div class="cmeta" data-no-tr="true"><span>${esc(collName(c.collection))}</span><span>${esc(c.rarity?rarLabel(c.rarity):'')}</span></div>
     </div>
-  </div>`;
+  </${el}>`;
 }
 function cards(){
   const sub=UI.cardTab||'shop';
@@ -1467,14 +2033,14 @@ function cards(){
   if(ME.carder||ME.admin)tabs.push(['studio','Studio']);
   const total=myCardTotal(),uniq=myCardUnique();
   const live=cardMarket().filter(m=>m.status==='live').length;
-  return `<div class="banner">
-    <div class="sub"><span>Collectio</span> · @${esc(ME.nick)}</div>
-    <div class="amt">${total} <span>Cardky</span></div>
+  return `<div class="cards-v4${UI.reduceMotion?' cards-no-motion':''}"><div class="banner">
+    <div class="sub"><span>Collectio</span> · <span data-no-tr="true">@${esc(ME.nick)}</span></div>
+    <div class="amt" data-no-tr="true">${total} <span>${UI.lang==='uk'?ukPlural(total,'картка','картки','карток'):'Cardky'}</span></div>
     <div class="sub">${uniq} unicae · ${collections().length} collectiones · ${live} in foro</div>
-    <div class="gs" style="margin-top:10px">${bt('Eme pack','cardsub','shop','p')}${bt('Mine','cardsub','mine')}${bt('Market','cardsub','market')}</div>
+    <div class="gs" style="margin-top:10px">${bt('Eme pack','cardsub','shop','p')}${bt('Mine','cardsub','mine')}${bt('Market','cardsub','market')}${bt('Historia emptionum','opHistory')}</div>
   </div>
   <div class="subtabs">${tabs.map(([id,l])=>`<button class="sbt ${sub===id?'on':''}" data-a="cardsub" data-v="${id}">${l}</button>`).join('')}</div>
-  ${sub==='mine'?cardsMine():sub==='market'?cardsMarket():sub==='studio'&&(ME.carder||ME.admin)?cardsStudio():cardsShop()}`;
+  ${sub==='mine'?cardsMine():sub==='market'?cardsMarket():sub==='studio'&&(ME.carder||ME.admin)?cardsStudio():cardsShop()}</div>`;
 }
 function cardsShop(){
   const coll=UI.packColl||'';
@@ -1484,18 +2050,22 @@ function cardsShop(){
   });
   return `<div class="tb"><div class="filters">
       <button class="fchip ${!coll?'on':''}" data-a="packcoll" data-v="">Omnes</button>
-      ${collections().map(c=>`<button class="fchip ${String(coll)===String(c.id)?'on':''}" data-a="packcoll" data-v="${c.id}">${esc(c.name)}</button>`).join('')}
+      ${collections().map(c=>`<button class="fchip ${String(coll)===String(c.id)?'on':''}" data-a="packcoll" data-v="${esc(c.id)}" data-no-tr="true">${esc(c.name)}</button>`).join('')}
     </div><span class="mut">${list.length} packs</span></div>
     ${list.map(packCard).join('')||C('Packs',e('Packs desunt','#e8c37a'))}`;
 }
+function packOddsRows(odds){
+  return odds.map(o=>`<div class="oddsrow"><span data-no-tr="true">${esc(o.card.name)} · <span style="color:${rarColor(o.card.rarity)}">${esc(rarLabel(o.card.rarity))}</span></span><b>${oddsText(o.pct)}</b></div>`).join('');
+}
 function packCard(p){
   const odds=packOdds(p);
-  const c=odds[0]&&odds[0].card;
-  return `<div class="card"><h3>${esc(p.name)} <span class="hp">${tag(fm(p.price)+' h','pp2')}${p.by?`<span class="pl">@${esc(p.by)}</span>`:''}</span></h3>
-    ${c?`<div class="mut">${esc(collName(c.collection))} · ${odds.length} cardae</div>`:''}
-    <div class="cbar">${odds.slice(0,24).map(o=>`<i style="width:${Math.max(o.pct,.8)}%;background:${rarColor(o.card.rarity)}"></i>`).join('')}</div>
-    <div style="margin-top:6px">${odds.slice(0,7).map(o=>`<div class="oddsrow"><span>${esc(o.card.name)} · <span style="color:${rarColor(o.card.rarity)}">${rarLabel(o.card.rarity)}</span></span><b>${o.pct}%</b></div>`).join('')}${odds.length>7?`<div class="mut">+${odds.length-7} cardae</div>`:''}</div>
-    <div class="gs" style="margin-top:8px">${bt('Eme pack','packbuy',p.id,'p')}</div>
+  return `<div class="card"><h3><span data-no-tr="true">${esc(p.name)}</span> <span class="hp">${tag(fm(p.price)+' h','pp2')}${p.by?`<span class="pl" data-no-tr="true">@${esc(p.by)}</span>`:''}</span></h3>
+    <p class="hint">Una karta per emptionem; 1–10 emptiones independentes. Repetitiones possibiles.</p>
+    <div class="cbar" aria-hidden="true">${odds.map(o=>`<i style="width:${o.pct}%;background:${rarColor(o.card.rarity)}"></i>`).join('')}</div>
+    <div style="margin-top:6px">${packOddsRows(odds.slice(0,7))}</div>
+    ${odds.length>7?`<details><summary>Omnes probabilitates · ${odds.length}</summary>${packOddsRows(odds.slice(7))}</details>`:''}
+    <p class="hint">Probabilitates = pondus / summa ponderum cardarum activarum. Summa 100%; valores visi rotundati.</p>
+    <div class="gs" style="margin-top:8px">${odds.length?bt('Eme pack','packbuy',p.id,'p'):'<span class="mut">Cardae activae desunt</span>'}</div>
   </div>`;
 }
 function cardsMine(){
@@ -1512,11 +2082,11 @@ function cardsMine(){
   return `<div class="tb"><input class="srch" id="cardq" maxlength="50" value="${esc(UI.cardQ||'')}" placeholder="Quaere cardky…"><button class="bt p sm" data-a="cardsearch">Quaere</button></div>
     <div class="tb"><div class="filters">
       <button class="fchip ${!coll?'on':''}" data-a="cardcoll" data-v="">Omnes</button>
-      ${collections().map(c=>`<button class="fchip ${String(coll)===String(c.id)?'on':''}" data-a="cardcoll" data-v="${c.id}">${esc(c.name)}</button>`).join('')}
+      ${collections().map(c=>`<button class="fchip ${String(coll)===String(c.id)?'on':''}" data-a="cardcoll" data-v="${esc(c.id)}" data-no-tr="true">${esc(c.name)}</button>`).join('')}
     </div></div>
     <div class="tb"><div class="filters">
       <button class="fchip ${!rar?'on':''}" data-a="cardrar" data-v="">Omnes</button>
-      ${rarList().filter(r=>r.active||r.id===rar).map(r=>`<button class="fchip ${rar===r.id?'on':''}" data-a="cardrar" data-v="${r.id}" style="--dot:${r.color}">${esc(r.label)}</button>`).join('')}
+      ${rarList().filter(r=>r.active||r.id===rar||myCards().some(x=>cMap()[x.card]?.rarity===r.id)).map(r=>`<button class="fchip ${rar===r.id?'on':''}" data-a="cardrar" data-v="${esc(r.id)}" data-no-tr="true" style="--dot:${rarColor(r.id)}">${esc(r.label)}</button>`).join('')}
     </div><span class="mut">${inv.length} unicae · ${inv.reduce((s,x)=>s+(+x.count||0),0)} cardae</span></div>
     <div class="cgrid">${shown.map(x=>cardTile(cMap()[x.card],+x.count||1,x.id)).join('')||e('Cardky desunt — eme pack','#e8c37a')}</div>
     ${inv.length>shown.length?`<div class="gs" style="margin-top:10px">${bt('Plures','cardmore','','g')}</div>`:''}`;
@@ -1548,11 +2118,11 @@ function marketTile(m){
   }
   if(live&&mine)acts+=bt('Abroga','cardcancel',m.id,'d sm');
   if(!mine)acts+=bt('Delatio','report','card|'+m.card+'|'+m.name,'d sm');
-  return `<div class="ctile r-${c.rarity}" style="${rarStyle(c.rarity)};cursor:default">
+  return `<div class="ctile fx-${rarEffect(c.rarity)}" style="${rarStyle(c.rarity)};cursor:default">
     <span class="rlab">${isA?'Auctio':'Venditio'}</span>
     ${cardArt(c)}
-    <div class="cbody"><div class="cname">${esc(m.name)}</div>
-      <div class="cmeta"><span>@${esc(m.seller)}</span><span>${esc(m.collection||'')}</span></div>
+    <div class="cbody"><div class="cname" data-no-tr="true">${esc(m.name)}</div>
+      <div class="cmeta" data-no-tr="true"><span>@${esc(m.seller)}</span><span>${esc(m.collection||'')}</span></div>
       <div class="oddsrow" style="margin-top:4px"><span>${isA?'Top':'Pretium'}</span><b>${fm(isA&&m.top?m.top:m.price)} h</b></div>
       ${isA?`<div class="oddsrow"><span>Finis</span><b>${left(m.ends)}</b></div>`:''}
       ${m.my_bid?`<div class="mut">Tu: ${fm(m.my_bid)} h${m.top_by===ME.nick?' · top':''}</div>`:''}
@@ -1561,79 +2131,118 @@ function marketTile(m){
   </div>`;
 }
 function packDraft(){
-  if(!UI.packDraft)UI.packDraft={name:'',price:'',items:{},q:''};
+  if(!UI.packDraft)UI.packDraft={id:null,name:'',price:'',items:Object.create(null),q:'',coll:'',rar:'',limit:48};
   return UI.packDraft;
 }
 function readPackDraft(){
-  const d=packDraft();
-  const n=$('#pkName'),p=$('#pkPrice'),q=$('#pkQ');
-  if(n)d.name=n.value;if(p)d.price=p.value;if(q)d.q=q.value;
-  document.querySelectorAll('.pkp').forEach(inp=>{
-    const id=inp.dataset.card;
-    if(id)d.items[id]=Math.max(.1,Math.min(100,Math.round((+inp.value||0)*10)/10));
-  });
+  const d=packDraft(),root=document.getElementById('pack-editor');if(!root)return d;
+  [['pkName','name'],['pkPrice','price'],['pkQ','q'],['pkColl','coll'],['pkRar','rar']].forEach(([id,key])=>{const el=root.querySelector('#'+id);if(el)d[key]=el.value;});
+  root.querySelectorAll('.pkp').forEach(inp=>{if(inp.dataset.card)d.items[inp.dataset.card]=inp.value;});
+  return d;
 }
+function packDraftItems(d=packDraft()){
+  return Object.entries(d.items).map(([card,weight])=>({card,weight:Number(weight)}));
+}
+function packDraftError(d=packDraft()){
+  const items=packDraftItems(d);
+  if(d.name.trim().length<2)return 'Nomen: minimum 2 signa';
+  if(!Number.isFinite(+d.price)||+d.price<=0)return 'Pretium > 0 necessarium';
+  if(!items.length)return 'Cardas adde';
+  if(items.length>100)return 'Maximum 100 cardae';
+  if(items.some(i=>!cardById(i.card)||cardById(i.card).active===false))return 'Cardae inactivae: remove ante servare';
+  if(items.some(i=>!Number.isFinite(i.weight)||i.weight<=0))return 'Pondera > 0 necessaria';
+  return '';
+}
+function packDraftSummary(){
+  const d=packDraft(),odds=packOdds({items:packDraftItems(d)}),root=document.getElementById('pack-editor');if(!root)return;
+  root.querySelectorAll('[data-pk-odds]').forEach(el=>{const o=odds.find(x=>String(x.card.id)===el.dataset.pkOdds);el.textContent=oddsText(o?o.pct:0);});
+  const err=root.querySelector('#pk-error');if(err){err.textContent=packDraftError(d);trDom(err);}
+}
+// Snapshot only Cardky draft inputs; never observe generic modal/password fields.
+document.addEventListener('input',event=>{
+  if(!event.target.closest('#pack-editor'))return;
+  readPackDraft();packDraftSummary();
+});
+document.addEventListener('change',event=>{
+  if(!event.target.matches('#pkColl,#pkRar'))return;
+  readPackDraft();packDraft().limit=48;render();
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Enter'&&event.target.matches('#pkQ')){event.preventDefault();A.packsearch();document.getElementById('pkQ')?.focus();}
+});
 function cardsStudio(){
-  const d=packDraft();
-  const colls=collections();
+  const d=packDraft(),colls=collections(),rarities=rarList();
   const q=(UI.cardQ||'').trim().toLowerCase();
-  const cat=catalog().filter(c=>!q||(c.name+' '+(c.about||'')+' '+collName(c.collection)).toLowerCase().includes(q)).slice(0,60);
-  const sel=Object.keys(d.items).filter(id=>cMap()[id]);
-  const pq=(d.q||'').trim().toLowerCase();
-  const pick=catalog().filter(c=>!pq||(c.name+' '+collName(c.collection)).toLowerCase().includes(pq)).slice(0,36);
-  const sum=sel.reduce((s,id)=>s+(+d.items[id]||0),0);
-  return `${C('Collectiones',`<div class="gs" style="margin-bottom:8px">${bt('Collectio nova','cardcollnew','','p')}</div>
-      ${colls.map(c=>`<div class="it"><div class="r"><i>${dot('#e8c37a')}</i><div class="in"><b>${esc(c.name)}</b><small>${catalog().filter(x=>String(x.collection)===String(c.id)).length} cardae</small></div></div></div>`).join('')||e('Collectiones desunt','#e8c37a')}`)}
-    ${C('Raritates',`<div class="gs" style="margin-bottom:8px">${bt('Raritas nova','rarnew','','p')}</div>
-      ${rarList().map(r=>`<div class="it"><div class="r" data-a="raredit" data-v="${r.id}" role="button" tabindex="0"><i>${dot(r.color)}</i><div class="in"><b>${esc(r.label)}</b><small>#${esc(r.id)} · sort ${r.sort}</small></div>${r.active?'<span class="pl ok">activa</span>':'<span class="pl">clausa</span>'}</div></div>`).join('')||e('Raritates desunt','#94a3b8')}`)}
-    ${C('Karta nova',`<div class="gs" style="margin-bottom:8px">${bt('Karta nova','cardnew','','p')}</div>
-      <div class="tb"><input class="srch" id="cardq" maxlength="50" value="${esc(UI.cardQ||'')}" placeholder="Quaere catalogum…"><button class="bt p sm" data-a="cardsearch">Quaere</button></div>
-      <div class="cgrid">${cat.map(c=>`<div class="ctile r-${c.rarity}" style="${rarStyle(c.rarity)}" data-a="cardedit" data-v="${c.id}" role="button" tabindex="0"><span class="rlab">${rarLabel(c.rarity)}</span>${cardArt(c)}<div class="cbody"><div class="cname">${esc(c.name)}</div><div class="cmeta"><span>${esc(collName(c.collection))}</span><span>${c.active?'on':'off'}</span></div></div></div>`).join('')||e('Catalogus vacius','#94a3b8')}</div>`)}
-    ${C('Packs',`<div class="gs" style="margin-bottom:8px">${bt('Pack novus','packfocus','','p')}</div>
-      ${packs().map(p=>`<div class="it"><div class="r"><i>${dot(p.active?'#34d399':'#94a3b8')}</i><div class="in"><b>${esc(p.name)}</b><small>${fm(p.price)} h · ${(p.items||[]).length} cardae · ${p.active?'active':'clausus'}</small></div>${bt(p.active?'Claude':'Aperi','packtoggle',p.id+':'+(p.active?'off':'on'),p.active?'d sm':'ok sm')}</div></div>`).join('')||e('Packs desunt','#e8c37a')}`)}
-    ${C('Pack builder',`<div class="tb"><input class="srch" id="pkName" maxlength="60" value="${esc(d.name)}" placeholder="Nomen pack"><input class="srch" id="pkPrice" type="number" min="0.01" step="0.01" value="${esc(d.price)}" placeholder="Pretium" style="max-width:110px"></div>
-      <div class="tb"><input class="srch" id="pkQ" maxlength="40" value="${esc(d.q)}" placeholder="Quaere cardas…"><button class="bt p sm" data-a="packsearch">Quaere</button></div>
-      <div class="cgrid">${pick.map(c=>{const on=d.items[c.id]!=null;return `<div class="ctile r-${c.rarity}" data-a="packadd" data-v="${c.id}" role="button" tabindex="0" style="cursor:pointer;${rarStyle(c.rarity)}"><span class="rlab">${on?'✓ ':''}${rarLabel(c.rarity)}</span>${cardArt(c)}<div class="cbody"><div class="cname">${esc(c.name)}</div><div class="cmeta"><span>${esc(collName(c.collection))}</span><span>${on?'×'+d.items[c.id]:''}</span></div></div></div>`;}).join('')||e('Nihil inventum','#94a3b8')}</div>
-      <div style="margin-top:10px">${sel.map(id=>{const c=cMap()[id];const w=+d.items[id]||0;return `<div class="oddsrow"><span>${esc(c.name)} <button class="bt d sm" data-a="packdel" data-v="${id}">×</button></span><span><input class="pkp" data-card="${id}" type="number" min="0.1" max="100" step="0.1" value="${w}" style="width:78px"> % <span class="mut">→ ${((w*100)/(sum||1)).toFixed(1)}%</span></span></div>`;}).join('')||e('Cardas adde','#94a3b8')}</div>
-      ${sel.length?`<div class="oddsrow"><span>Summa ponderum</span><b style="${Math.abs(sum-100)>.05?'color:var(--wn)':''}">${sum.toFixed(1)}%</b></div>
-      <div class="gs" style="margin-top:6px"><button class="bt g sm" data-a="packequa">Aequa</button><button class="bt g sm" data-a="packnorm">Ad 100%</button></div>
-      <div class="hint">Pondera normalizantur: sufficit proportio. «Aequa» = casus aequales; «Ad 100%» = scala ad summam 100.</div>`:''}
-      <div class="gs" style="margin-top:10px">${bt('Crea pack','packsave','','p')}${bt('Purga','packclear','','d')}</div>`)}`;
+  const cat=catalog().filter(c=>!q||(c.name+' '+(c.about||'')+' '+collName(c.collection)).toLowerCase().includes(q)).slice(0,UI.cardLimit||60);
+  const sel=Object.keys(d.items),pq=(d.q||'').trim().toLowerCase();
+  const found=catalog().filter(c=>c.active!==false&&(!d.coll||String(c.collection)===d.coll)&&(!d.rar||c.rarity===d.rar)&&(!pq||(c.name+' '+(c.about||'')+' '+collName(c.collection)).toLowerCase().includes(pq)));
+  const pick=found.slice(0,d.limit||48),odds=packOdds({items:packDraftItems(d)});
+  const grouped=new Map();pick.forEach(c=>{const key=c.collection||'';if(!grouped.has(key))grouped.set(key,[]);grouped.get(key).push(c);});
+  const selected=sel.slice(0,100).map(id=>{
+    const c=cardById(id),bad=!c||c.active===false,o=odds.find(x=>String(x.card.id)===id);
+    return `<div class="pk-selected ${bad?'pk-inactive':''}"><div><span data-no-tr="true">${esc(c?c.name:id)}</span>${bad?'<small class="cards-warning">Cardae inactivae: remove ante servare</small>':''}</div><label><span class="sr-only">Pondus</span><input class="pkp" aria-label="Pondus" data-card="${esc(id)}" type="number" min="0" step="any" value="${esc(d.items[id])}"></label><b data-pk-odds="${esc(id)}">${oddsText(o?o.pct:0)}</b>${bt('Remove','packdel',id,'d sm')}</div>`;
+  }).join('');
+  return `<div class="cards-studio${UI.reduceMotion?' cards-no-motion':''}">${C('Collectiones',`<div class="gs" style="margin-bottom:8px">${bt('Collectio nova','cardcollnew','','p')}</div>
+    ${colls.map(c=>`<div class="it"><div class="r"><i>${dot('#e8c37a')}</i><div class="in"><b data-no-tr="true">${esc(c.name)}</b><small>${catalog().filter(x=>String(x.collection)===String(c.id)).length} cardae</small></div></div></div>`).join('')||e('Collectiones desunt','#e8c37a')}`)}
+    ${C('Raritates',`<div class="gs">${bt('Raritas nova','rarnew','','p')}</div><p class="hint">Ordo et effectus independentes.</p>
+      ${rarities.map((r,i)=>`<div class="rar-row"><span class="rar-swatch fx-${rarEffect(r.id)}" style="${rarStyle(r.id)}" aria-hidden="true">Ś</span><div class="in"><b data-no-tr="true">${esc(r.label)}</b><small><span>${r.active?'Activa':'Clausa'}</span> · <span>${esc(rarEffect(r.id))}</span></small></div><div class="gs"><button type="button" class="bt g sm" data-a="rarmove" data-v="${esc(r.id)}|-1" aria-label="Sursum" ${i===0?'disabled':''}>↑</button><button type="button" class="bt g sm" data-a="rarmove" data-v="${esc(r.id)}|1" aria-label="Deorsum" ${i===rarities.length-1?'disabled':''}>↓</button>${bt('Recense','raredit',r.id)}</div></div>`).join('')||e('Raritates desunt','#94a3b8')}`)}
+    ${C('Catalogus',`<div class="gs">${bt('Karta nova','cardnew','','p')}</div><div class="tb"><input class="srch" id="cardq" aria-label="Quaere catalogum…" maxlength="50" value="${esc(UI.cardQ||'')}" placeholder="Quaere catalogum…">${bt('Quaere','cardsearch','','p sm')}</div><div class="cgrid">${cat.map(c=>`<div>${cardTile(c,0,c.id,'cardedit')}${c.active===false?'<span class="mut">Clausa</span>':''}</div>`).join('')||e('Catalogus vacius','#94a3b8')}</div>${cat.length===(UI.cardLimit||60)?bt('Plures','cardmore'):''}`)}
+    ${C('Packs',`<div class="gs">${bt('Pack novus','packnew','','p')}</div>${packs().map(p=>`<div class="it"><div class="r"><div class="in"><b data-no-tr="true">${esc(p.name)}</b><small>${fm(p.price)} h · ${(p.items||[]).length} cardae · ${p.active?'Activa':'Clausa'}</small></div><div class="gs">${bt('Recense','packedit',p.id)}${bt(p.active?'Claude':'Aperi','packtoggle',p.id+':'+(p.active?'off':'on'),p.active?'d sm':'ok sm')}</div></div></div>`).join('')||e('Packs desunt','#e8c37a')}`)}
+    <section id="pack-editor">${C(d.id?'Recense pack':'Pack builder',`<div class="pk-fields"><label>Nomen pack<input class="srch" id="pkName" data-no-tr="true" maxlength="60" value="${esc(d.name)}"></label><label>Pretium (h)<input class="srch" id="pkPrice" type="number" min="0.01" step="0.01" value="${esc(d.price)}"></label></div>
+      <p class="hint">Una karta per emptionem; 1–10 emptiones independentes. Repetitiones possibiles.</p>
+      <div class="pk-layout"><div><h4>Cardae activae</h4><div class="tb"><input class="srch" id="pkQ" aria-label="Quaere cardas…" maxlength="60" value="${esc(d.q)}" placeholder="Quaere cardas…">${bt('Quaere','packsearch','','p sm')}</div>
+      <div class="pk-fields"><label>Collectio<select id="pkColl"><option value="">Omnes</option>${colls.map(c=>`<option data-no-tr="true" value="${esc(c.id)}" ${String(c.id)===d.coll?'selected':''}>${esc(c.name)}</option>`).join('')}</select></label><label>Raritas<select id="pkRar"><option value="">Omnes</option>${rarities.map(r=>`<option data-no-tr="true" value="${esc(r.id)}" ${r.id===d.rar?'selected':''}>${esc(r.label)}</option>`).join('')}</select></label></div>
+      <p class="mut">${pick.length} / ${found.length}</p>${[...grouped].map(([coll,list])=>`<h4 data-no-tr="true">${esc(collName(coll))}</h4><div class="pk-picker">${list.map(c=>`<div class="pk-pick${d.items[c.id]!=null?' selected':''}">${cardTile(c,0,c.id,'packadd')}${d.items[c.id]!=null?'<span class="pl ok">Selecta</span>':''}</div>`).join('')}</div>`).join('')||e('Nihil inventum','#94a3b8')}${found.length>pick.length?bt('Plures','packmore'):''}</div>
+      <aside class="pk-selection"><h4>Cardae selectae · ${sel.length} / 100</h4><p class="hint">Pondus → probabilitas</p><div class="pk-selected-list">${selected||e('Cardas adde','#94a3b8')}</div>${sel.length>100?'<p class="cards-warning">Maximum 100 cardae</p>':''}<div class="gs">${bt('Aequa','packequa')}${bt('Ad 100%','packnorm')}</div><p class="hint">Probabilitates = pondus / summa ponderum cardarum activarum. Summa 100%; valores visi rotundati.</p><p class="hint">Aequa: pondera 1. Ad 100%: scala tantum, sine minimo artificioso.</p><div id="pk-error" class="cards-warning" role="status">${esc(packDraftError(d))}</div><div class="gs">${bt('Praevisa pack','packpreview','','p')}${bt('Purga','packclear','','d')}</div></aside></div>`)}</section></div>`;
 }
 function findInv(id){return myCards().find(x=>String(x.id)===String(id))||null;}
+function cardsAsk(title,fields=[],submit='Confirma',note='',validate=null){
+  const pending=ask(title,fields,submit,note,validate),host=document.getElementById('modal');
+  fields.filter(f=>['name','about','collection','rarity'].includes(f.n)).forEach(f=>{
+    const el=host.querySelector('#mf-'+f.n);if(!el)return;el.setAttribute('data-no-tr','true');
+    if(f.opts)[...el.options].forEach((o,i)=>{o.textContent=f.opts[i].l;});
+  });
+  if(note){const el=host.querySelector('.mbd');if(el){el.setAttribute('data-no-tr','true');el.textContent=note;}}
+  return pending;
+}
 async function rarForm(r){
   const isNew=!r;
   const fields=[
-    ...(isNew?[{n:'id',label:'ID (a-z, 0-9, _)',max:24,ph:'epica'}]:[]),
+    ...(isNew?[{n:'id',label:'ID (a-z, 0-9, _)',max:24}]:[]),
     {n:'label',label:'Nomen',max:24,value:isNew?'':r.label},
     {n:'color',label:'Color #RRGGBB',max:7,value:isNew?'#94a3b8':r.color},
-    {n:'sort',label:'Sort',type:'num',value:isNew?60:r.sort},
+    {n:'effect',label:'Effectus',type:'sel',value:isNew?'plain':rarEffect(r.id),opts:[{v:'plain',l:'plain'},{v:'glow',l:'glow'},{v:'flare',l:'flare'}]},
     {n:'active',label:'Activa',type:'sel',value:isNew||r.active?'1':'0',opts:[{v:'1',l:'Sic'},{v:'0',l:'Non'}]}
   ];
-  const f=await ask(isNew?'Raritas nova':'Raritas · '+r.label,fields,isNew?'Crea':'Serva','',
-    v=>{
-      if(isNew&&!/^[a-z0-9_-]{2,24}$/.test(v.id.trim().toLowerCase()))return'ID: a-z, 0-9, _ (2–24)';
-      if(v.label.trim().length<1)return'Nomen necessarium';
-      if(!/^#[0-9a-fA-F]{6}$/.test(v.color.trim()))return'Color: #RRGGBB';
-      return'';
-    });
-  if(!f)return;
-  await run(()=>rpc('api_rarity_save',{
-    p_id:isNew?f.id.trim().toLowerCase():r.id,
-    p_label:f.label.trim(),
-    p_color:f.color.trim().toLowerCase(),
-    p_sort:Math.round(+f.sort||0),
-    p_active:f.active==='1'
+  const pending=ask(isNew?'Raritas nova':'Recense raritatem',fields,isNew?'Crea':'Serva','Ordo et effectus independentes.',v=>{
+    if(isNew&&!/^[a-z0-9_-]{2,24}$/.test(v.id.trim().toLowerCase()))return'ID: a-z, 0-9, _ (2–24)';
+    if(!v.label.trim())return'Nomen necessarium';
+    if(!/^#[0-9a-fA-F]{6}$/.test(v.color.trim()))return'Color: #RRGGBB';
+    return'';
+  });
+  const host=document.getElementById('modal'),preview=document.createElement('div');
+  preview.className='rar-previews'+(UI.reduceMotion?' cards-no-motion':'');
+  host.querySelector('form').insertBefore(preview,host.querySelector('.ft'));
+  const update=()=>{
+    const label=host.querySelector('#mf-label').value,color=cardColor(host.querySelector('#mf-color').value),effect=host.querySelector('#mf-effect').value;
+    preview.innerHTML=`${r?`<div><small>Nunc</small><div class="rar-sample fx-${rarEffect(r.id)}" style="${rarStyle(r.id)}"><span aria-hidden="true">Ś</span><b data-no-tr="true">${esc(r.label)}</b></div></div>`:''}<div><small>Praevisa</small><div class="rar-sample fx-${['plain','glow','flare'].includes(effect)?effect:'plain'}" style="--rc:${color}"><span aria-hidden="true">Ś</span><b data-no-tr="true">${esc(label||'—')}</b></div></div>`;
+    trDom(preview);
+  };
+  host.querySelector('#mf-label').setAttribute('data-no-tr','true');
+  host.addEventListener('input',update);host.addEventListener('change',update);update();
+  const f=await pending;if(!f)return;
+  await run(()=>rpc('api_rarity_save_v2',{
+    p_id:isNew?f.id.trim().toLowerCase():r.id,p_label:f.label.trim(),p_color:f.color.trim().toLowerCase(),p_effect:f.effect,p_active:f.active==='1'
   }),'Raritas servata');
 }
 function cardMenu(id){
   const inv=findInv(id);if(!inv)return;
   const c=cardById(inv.card);if(!c)return;
   const isAv=ME.avatar_card&&String(ME.avatar_card)===String(c.id);
-  showInfo(`<h3>${esc(c.name)}</h3>
-    <div class="mut">${esc(collName(c.collection))} · <span style="color:${rarColor(c.rarity)}">${rarLabel(c.rarity)}</span> · ×${inv.count}</div>
-    <div class="dt">${esc(c.about||'—')}</div>
-    ${c.img?`<div class="cimg" style="margin:8px 0;border-radius:12px;overflow:hidden"><img src="${esc(c.img)}" alt="" style="width:100%;display:block"></div>`:''}
+  showInfo(`<h3 data-no-tr="true">${esc(c.name)}</h3>
+    <div class="mut" data-no-tr="true">${esc(collName(c.collection))} · <span style="color:${rarColor(c.rarity)}">${esc(rarLabel(c.rarity))}</span> · ×${inv.count}</div>
+    <div class="dt" data-no-tr="true">${esc(c.about||'—')}</div>
+    ${cardArt(c)}
     <div class="gs">
       ${bt('Donum','cardgift',inv.id,'p sm')}${bt('Vendere','cardsell',inv.id,'g sm')}
       ${bt(isAv?'Avatar claude':'Avataris','cardavatar',c.id,isAv?'d sm':'g sm')}
@@ -1665,81 +2274,128 @@ const CONTRACT_KIND={
   foedus:['Foedus','#34d399'],testamentum:['Testamentum','#b07bff'],
   petitio:['Petitio','#22d3ee']
 };
-const CONTRACT_STATUS={open:['Apertus','wn'],quorum:['Quorum','ok'],cancelled:['Abrogatus','er']};
-const contracts=()=>(DB&&DB.contracts)||[];
-const contractById=id=>contracts().find(c=>String(c.id)===String(id))||null;
-const contractExpired=c=>c.closes&&new Date(c.closes).getTime()<=Date.now();
-function contractSigns(c){return (c.signs||[]).length;}
+const CONTRACT_STATUS={draft:['Adumbratio',''],open:['Apertus','wn'],quorum:['Quorum','ok'],cancelled:['Abrogatus','er']};
+const contracts=()=>UI.contractList??((DB&&DB.contracts)||[]);
+const contractById=id=>UI.contractDetail&&String(UI.contractDetail.id)===String(id)?UI.contractDetail:contracts().find(c=>String(c.id)===String(id))||null;
+const contractExpired=c=>c.expired===true||!!(c.closes&&new Date(c.closes).getTime()<=Date.now());
+function contractSigns(c){return c.count??c.sign_count??(c.signs||[]).length;}
+async function loadContracts(more=false){
+  const uid=ME&&ME.uid;if(!uid)return;
+  const serial=UI.contractRequest=(UI.contractRequest||0)+1;
+  const previous=more?contracts():[];
+  UI.contractLoading=true;render();
+  try{
+    const list=await rpc('api_contract_list',{p_filter:UI.csF||'all',p_query:UI.csQ||'',p_before:previous.length?previous[previous.length-1].ts:null,p_limit:30});
+    if(!ME||ME.uid!==uid||serial!==UI.contractRequest)return;
+    UI.contractList=[...previous,...list.filter(c=>!previous.some(p=>p.id===c.id))];
+    UI.contractMore=list.length===30;
+  }catch(err){if(ME&&ME.uid===uid)toast(errMsg(err),'e');}
+  finally{if(serial===UI.contractRequest){UI.contractLoading=false;if(ME&&ME.uid===uid&&UI.tab==='seti')render();}}
+}
 function seti(){
-  const q=(UI.csQ||'').trim().toLowerCase();
-  const f=UI.csF||'all';
+  const q=(UI.csQ||'').trim().toLowerCase(),f=UI.csF||'all';
   const list=contracts().filter(c=>{
-    if(f==='open'&&c.status!=='open')return false;
+    if(f==='open'&&(c.status!=='open'||contractExpired(c)))return false;
     if(f==='quorum'&&c.status!=='quorum')return false;
-    if(f==='mine'&&!c.mine&&!c.can_cancel)return false;
-    if(q&&!(c.title+' '+(c.body||'')+' '+c.by).toLowerCase().includes(q))return false;
-    return true;
+    if(f==='draft'&&c.status!=='draft')return false;
+    if(f==='cancelled'&&c.status!=='cancelled')return false;
+    if(f==='expired'&&(!contractExpired(c)||c.status==='cancelled'))return false;
+    if(f==='mine'&&!c.mine&&c.author!==ME.uid)return false;
+    return !q||(c.title+' '+(c.body||'')+' '+c.by).toLowerCase().includes(q);
   });
-  const live=contracts().filter(c=>c.status!=='cancelled').length;
-  const signed=contracts().filter(c=>c.mine).length;
-  return `<div class="banner"><div class="sub">Setи · @${esc(ME.nick)}</div>
-    <div class="amt">${live} <span>Documenta</span></div>
-    <div class="sub">${signed} signata a te · ${contracts().filter(c=>c.status==='quorum').length} quorum</div>
-    <div class="gs" style="margin-top:10px">${bt('Documentum novum','setinew','','p')}</div>
-  </div>
-  <div class="tb"><input class="srch" id="setiq" maxlength="80" value="${esc(UI.csQ||'')}" placeholder="Quaere documenta…"><button class="bt p sm" data-a="setisearch">Quaere</button></div>
-  <div class="subtabs">${[['all','Omnia'],['open','Aperta'],['quorum','Quorum'],['mine','Mea']].map(([id,l])=>`<button class="sbt ${f===id?'on':''}" data-a="setif" data-v="${id}">${l}</button>`).join('')}</div>
-  ${list.map(contractCard).join('')||C('Setи',e('Documenta desunt','#c084fc'))}`;
+  return `<div class="banner"><div class="sub">Setи · <span data-no-tr>@${esc(ME.nick)}</span></div>
+    <div class="amt">Documenta</div><div class="sub">Textus fixus. Signature servatae.</div>
+    <div class="gs" style="margin-top:10px">${bt('Documentum novum','setinew','','p')}${bt('Renova','setireload','','g')}</div></div>
+    <div class="tb"><input class="srch" id="setiq" maxlength="80" value="${esc(UI.csQ||'')}" placeholder="Quaere documenta…">${bt('Quaere','setisearch','','p sm')}</div>
+    <div class="subtabs">${[['all','Omnia'],['open','Aperta'],['quorum','Quorum'],['mine','Mea'],['draft','Adumbrationes'],['expired','Tempus finitum'],['cancelled','Abrogata']].map(([id,l])=>`<button class="sbt ${f===id?'on':''}" data-a="setif" data-v="${id}">${l}</button>`).join('')}</div>
+    ${UI.contractLoading?'<div class="al" role="status">Documenta onerantur…</div>':''}
+    ${list.map(contractCard).join('')||C('Setи',e('Documenta desunt','#c084fc'))}
+    ${UI.contractMore||UI.contractList==null&&contracts().length>=30?bt('Plures','setimore','','g'):''}`;
 }
 function contractCard(c){
   const k=CONTRACT_KIND[c.kind]||[c.kind,'#8aa4ff'];
   const st=CONTRACT_STATUS[c.status]||[c.status,''];
-  const n=contractSigns(c);
-  const exp=contractExpired(c);
-  return `<div class="card"><h3><span style="display:flex;gap:8px;align-items:center;min-width:0"><span class="dot" style="--dot:${k[1]}"></span><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.title)}</span></span>
-      <span class="hp"><span class="pl ${st[1]}">${st[0]}</span></span></h3>
-    <div class="mut">${esc(k[0])} · @${esc(c.by||'—')} · ${dt(c.ts)}${c.closes?` · finis ${dt(c.closes)}`:''}</div>
-    <div class="dt">${esc(String(c.body||'').slice(0,240))}${String(c.body||'').length>240?'…':''}</div>
-    <div class="oddsrow" style="margin-top:7px"><span>Signature</span><b>${n} / ${c.min}${c.status==='quorum'?' · quorum':''}</b></div>
-    <div class="gs" style="margin-top:8px">${bt('Aperi','setiview',c.id,'g sm')}${!c.mine&&c.status!=='cancelled'&&!exp?bt('Signa','setisign',c.id,'p sm'):''}</div>
-  </div>`;
+  return `<article class="card"><h3><span data-no-tr style="overflow-wrap:anywhere">${esc(c.title)}</span><span class="pl ${st[1]}">${esc(st[0])}</span></h3>
+    <div class="mut"><span>${esc(k[0])}</span> · <span data-no-tr>@${esc(c.by||'—')} · ${esc(dt(c.ts))}</span> · v${+c.version||1}</div>
+    <div class="dt" data-no-tr>${esc(String(c.body||'').slice(0,240))}${String(c.body||'').length>=240?'…':''}</div>
+    <div class="oddsrow"><span>Signature</span><b>${contractSigns(c)} / ${c.min}</b></div>
+    ${contractExpired(c)?'<div class="mut">Tempus finitum</div>':''}
+    <div class="gs">${bt('Aperi','setiview',c.id,'p sm')}${c.status==='draft'&&c.author===ME.uid?bt('Recense','setiedit',c.id,'g sm'):''}</div></article>`;
+}
+function contractBody(c){
+  const k=CONTRACT_KIND[c.kind]||[c.kind,'#8aa4ff'],st=CONTRACT_STATUS[c.status]||[c.status,''];
+  return `<article class="contract-paper"><h3 data-no-tr>${esc(c.title)}</h3>
+    <div class="mut"><span>${esc(k[0])}</span> · <span class="pl ${st[1]}">${esc(st[0])}</span> · v${+c.version||1}</div>
+    <p data-no-tr>@${esc(c.by||ME.nick)} · ${esc(dt(c.published_at||c.ts))}</p>
+    <div class="al"><b>Participes</b><div data-no-tr>${(c.members||[]).length?(c.members||[]).map(n=>'@'+esc(typeof n==='string'?n:n.nick)).join(', '):esc(trText('Omnes cives'))}</div></div>
+    <div class="dt" data-no-tr style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(c.body)}</div>
+    ${rows([['Signature',contractSigns(c)+' / '+c.min],['Terminus',c.closes?esc(dt(c.closes)):trText('Sine termino')]])}
+    ${contractExpired(c)?'<div class="al">Tempus finitum. Signature servantur.</div>':''}
+    ${c.hash?`<details><summary>Fides documenti</summary><div class="dt mono" data-no-tr style="overflow-wrap:anywhere">${esc(c.hash_alg||'legacy-md5')}<br>${esc(c.hash)}</div></details>`:''}
+    <div class="hint">Confirmatio interna; non est signatura qualificata.</div>
+    ${(c.signs||[]).map(s=>`<div class="rw" data-no-tr><span>@${esc(s.nick)}</span><time>${esc(dt(s.ts))}</time></div>`).join('')}
+    ${c.cancel_reason?`<div class="al"><b>Ratio abrogationis</b><p data-no-tr>${esc(c.cancel_reason)}</p></div>`:''}
+    ${c.parent?`<div class="gs">${bt('Versio prior','setiview',c.parent,'g sm')}</div>`:''}</article>`;
 }
 function contractView(c){
-  const k=CONTRACT_KIND[c.kind]||[c.kind,'#8aa4ff'];
-  const st=CONTRACT_STATUS[c.status]||[c.status,''];
-  const exp=contractExpired(c);
-  const signs=(c.signs||[]).map(s=>`<span class="pl">@${esc(s.nick)}</span>`).join(' ')||'—';
-  showInfo(`<h3>${esc(c.title)}</h3>
-    <div class="mut">${esc(k[0])} · @${esc(c.by||'—')} · ${dt(c.ts)} · <span class="pl ${st[1]}">${st[0]}</span></div>
-    ${c.closes?`<div class="mut">Terminus: ${dt(c.closes)}${exp?' · finitus':''}</div>`:''}
-    <div class="dt">${esc(c.body)}</div>
-    <div class="oddsrow" style="margin-top:10px"><span>Signature</span><b>${contractSigns(c)} / ${c.min}</b></div>
-    <div class="mut" style="margin-top:6px">Fides: <b class="mono">${esc((c.hash||'').slice(0,16))}…</b></div>
-    <div class="dt" style="margin-top:8px;background:transparent">${signs}</div>
-    <div class="gs" style="margin-top:10px">
-      ${!c.mine&&c.status!=='cancelled'&&!exp?bt('Signa documentum','setisign',c.id,'p'):''}
-      ${c.can_cancel&&c.status!=='cancelled'?bt('Abroga','seticancel',c.id,'d'):''}
-      <button class="bt g" data-a="modalcancel">Claude</button>
-    </div>`);
+  UI.contractDetail=c;
+  showInfo(`${contractBody(c)}<div class="gs no-print">
+    ${c.can_edit?bt('Recense','setiedit',c.id,'g')+bt('Publica','setipublish',c.id,'p'):''}
+    ${c.can_sign?bt('Signa documentum','setisign',c.id,'p'):''}
+    ${c.status!=='draft'&&c.author===ME.uid?bt('Versio nova','setiversion',c.id,'g'):''}
+    ${c.can_cancel&&c.status!=='cancelled'?bt('Abroga','seticancel',c.id,'d'):''}
+    ${bt('Forma imprimenda','setiprint',c.id,'g')}</div>`);
 }
-async function contractNew(){
-  const f=await ask('Documentum novum',[
-    {n:'title',label:'Titulus',max:120},
-    {n:'kind',label:'Typus',type:'sel',opts:Object.keys(CONTRACT_KIND).map(k=>({v:k,l:CONTRACT_KIND[k][0]}))},
-    {n:'body',label:'Textus',type:'ta',max:6000},
-    {n:'min',label:'Signature ad quorum',type:'num',value:3},
-    {n:'hours',label:'Terminus',type:'sel',opts:[{v:'24',l:'24 h'},{v:'72',l:'72 h'},{v:'168',l:'7 dies'},{v:'720',l:'30 dies'},{v:'0',l:'Sine termino'}]}
-  ],'Crea','',v=>{
-    if(v.title.trim().length<4)return'Titulus: minimum 4 signa';
-    if(v.body.trim().length<10)return'Textus: minimum 10 signa';
-    if(!(+v.min>=1&&+v.min<=50))return'Quorum: 1–50';
-    return'';
-  });
-  if(!f)return;
-  await run(()=>rpc('api_contract_create',{
-    p_title:f.title.trim(),p_body:f.body.trim(),p_kind:f.kind,
-    p_min:Math.round(+f.min),p_hours:Math.round(+f.hours)
-  }),'Documentum creatum');
+async function openContract(id){
+  const uid=ME&&ME.uid;if(!uid)return;
+  const request=UI.contractDetailRequest=(UI.contractDetailRequest||0)+1;
+  showInfo('<h3>Documentum</h3><div role="status">Documenta onerantur…</div>');
+  const modal=UI.modal;
+  try{
+    const c=await rpc('api_contract_get',{p_contract:id});
+    if(ME&&ME.uid===uid&&request===UI.contractDetailRequest&&UI.modal===modal)contractView(c);
+  }catch(err){if(ME&&ME.uid===uid&&UI.modal===modal)showInfo(`<h3>Documentum</h3><div class="al e">${esc(errMsg(err))}</div>`);}
+}
+function readContractDraft(){
+  const d=UI.contractDraft;if(!d||!$('#doc-title'))return d;
+  for(const k of ['title','body','kind','min','hours','members'])d[k]=$('#doc-'+k).value;
+  return d;
+}
+function contractDraftError(d){
+  if(d.title.trim().length<4||d.title.length>120)return'Titulus: 4–120 signa';
+  if(d.body.trim().length<10||d.body.length>6000)return'Textus: 10–6000 signa';
+  if(!Number.isInteger(+d.min)||+d.min<1||+d.min>50)return'Quorum: 1–50';
+  if(!Number.isInteger(+d.hours)||+d.hours<0||+d.hours>720)return'Terminus: 0–720 h';
+  return '';
+}
+function contractEditor(c=null,version=false){
+  if(c)UI.contractDraft={id:version?null:c.id,parent:version?c.id:c.parent||null,title:c.title,body:c.body,kind:c.kind,min:c.min,hours:c.duration_hours??72,members:(c.members||[]).map(n=>typeof n==='string'?n:n.nick).join(', ')};
+  const d=UI.contractDraft||{id:null,parent:null,title:'',body:'',kind:'pactum',min:3,hours:72,members:''};UI.contractDraft=d;
+  showInfo(`<h3>${d.id?'Adumbratio':'Documentum novum'}</h3><div class="hint">Adumbratio tantum a te visibilis est. Post publicationem textus non mutatur.</div>
+    <div class="contract-editor">
+    <div class="fl"><label for="doc-title">Titulus</label><input id="doc-title" maxlength="120" value="${esc(d.title)}"></div>
+    <div class="fl"><label for="doc-kind">Typus</label><select id="doc-kind">${Object.entries(CONTRACT_KIND).map(([k,v])=>`<option value="${k}"${d.kind===k?' selected':''}>${v[0]}</option>`).join('')}</select></div>
+    <div class="fl"><label for="doc-body">Textus</label><textarea id="doc-body" maxlength="6000" rows="10">${esc(d.body)}</textarea></div>
+    <div class="grid2"><div class="fl"><label for="doc-min">Signature ad quorum</label><input id="doc-min" type="number" step="1" min="1" max="50" value="${esc(d.min)}"></div>
+    <div class="fl"><label for="doc-hours">Terminus (h, 0 = sine termino)</label><input id="doc-hours" type="number" step="1" min="0" max="720" value="${esc(d.hours)}"></div></div>
+    <div class="fl"><label for="doc-members">Participes · nomina per comma</label><input id="doc-members" maxlength="900" value="${esc(d.members)}"><span class="hint">Vacuum = omnes cives. Auctor semper signat.</span></div></div>
+    <div class="gs">${bt('Praevisio','setipreview','','g')}${bt('Serva adumbrationem','setidraftsave','','p')}</div>`);
+}
+function contractNew(){
+  if(UI.contractDraft){contractEditor();return;}
+  UI.contractDraft={id:null,parent:null,title:'',body:'',kind:'pactum',min:3,hours:72,members:''};contractEditor();
+}
+async function saveContractDraft(){
+  const d=readContractDraft();if(!d)return;
+  const err=contractDraftError(d);if(err){toast(err,'e');return;}
+  const uid=ME.uid;
+  try{
+    const result=await rpc('api_contract_save',{p_id:d.id||null,p_title:d.title.trim(),p_body:d.body.trim(),p_kind:d.kind,p_min:+d.min,p_hours:+d.hours,p_members:d.members.split(/[,\n]/).map(n=>n.trim().replace(/^@/,'')).filter(Boolean),p_parent:d.parent||null});
+    if(!ME||ME.uid!==uid)return;
+    UI.contractDraft=null;UI.contractList=null;
+    await openContract(result.id);
+    try{await sync();}catch{toast('Adumbratio servata; renovatio differetur.','i');}
+  }catch(err){if(ME&&ME.uid===uid)toast(errMsg(err),'e');}
 }
 
 /* ---------- Teckelié ---------- */
@@ -1843,7 +2499,7 @@ function chat(){
   }
   const directory=users().filter(u=>u.nick!==ME.nick&&match(u))
     .map(u=>`<div class="it"><div class="r" data-a="prof" data-v="${esc(u.nick)}">${ava(u,'av-sm')}<div class="in"><b>${esc(u.name)} ${esc(u.sur)}</b><small>@${esc(u.nick)} · ${esc(u.rank||u.roy)}</small></div>${u.status==='abrodie'?'<span class="pl ad">ADM</span>':''}</div>
-      <div class="gs" style="margin-top:8px">${bt('Chat','newchat',u.nick)}${bt('h','newtransfer',u.nick)}${bt('Delatio','report','user|'+u.nick+'|@'+u.nick,'d sm')}</div></div>`).join('');
+      <div class="gs" style="margin-top:8px">${bt('Chat','newchat',u.nick)}${bt('Mitte h','newtransfer',u.nick)}${bt('Delatio','report','user|'+u.nick+'|@'+u.nick,'d sm')}</div></div>`).join('');
   return `<div class="card"><h3>Besedy <span class="hp">${bt('Chat','newchat','','p sm')}${bt('Grex','newgroup','')}</span></h3>
     <div class="subtabs">${[['dm','Directi'],['grp','Greges']].map(([id,l])=>`<button class="sbt ${sub===id?'on':''}" data-a="csub" data-v="${id}">${l}</button>`).join('')}</div>
     <div class="tb"><input class="srch" id="chq" maxlength="40" value="${esc(UI.chQ||'')}" placeholder="Quaere homines…"><button class="bt p sm" data-a="chsearch">Quaere</button></div>
@@ -1872,7 +2528,7 @@ function jur(){
     return `<div class="tb">${bt('Retro','topicexit')}<div class="grow"><b>${esc(t.cat)}</b><div class="tiny">@${esc(t.by)} · ${dt(t.ts)}</div></div>${tag(t.locked?'LOCK':'OPEN',t.locked?'er':'ok')}</div>
       <div class="card"><h3>${t.pinned?'<span class="tg pin">PIN</span> ':''}${esc(t.title)} <span class="hp">${tag(t.cat,'pp2')}</span></h3>
       <div class="mut">@${esc(t.by)} · ${dt(t.ts)} · ${t.views||0} visus · ${(t.posts||[]).length} responsa · ${(t.likes||[]).length} likes</div>
-      <div class="dt" style="font-size:.88rem;line-height:1.7">${esc(t.body)}</div>
+      <div class="dt" data-no-tr style="font-size:.88rem;line-height:1.7">${esc(t.body)}</div>
       ${pollHtml(t)}
       <div class="gs" style="margin-top:9px">
         <button class="like ${t.liked?'on':''}" data-a="topiclike" data-v="${t.id}">${t.liked?'♥':'♡'} ${(t.likes||[]).length}</button>
@@ -1883,7 +2539,7 @@ function jur(){
         ${!mine?bt('Delatio','report','topic|'+t.id+'|'+t.title,'d sm'):''}
       </div></div>
       <div class="card"><h3>Responsa <small class="mu">${(t.posts||[]).length}</small></h3>
-        ${(t.posts||[]).map((p,i)=>`<div class="it"><div class="r">${ava(unick(p.by)||{nick:p.by},'av-sm')}<div class="in"><b>@${esc(p.by)}</b><small>${dt(p.ts)}</small></div>${(p.by===ME.nick||ME.admin)?bt('×','delpost',p.id,'d sm'):''}</div><div class="dt">${esc(p.text)}</div>
+        ${(t.posts||[]).map((p,i)=>`<div class="it"><div class="r">${ava(unick(p.by)||{nick:p.by},'av-sm')}<div class="in"><b>@${esc(p.by)}</b><small>${dt(p.ts)}</small></div>${(p.by===ME.nick||ME.admin)?bt('×','delpost',p.id,'d sm'):''}</div><div class="dt" data-no-tr>${esc(p.text)}</div>
           <div class="gs" style="margin-top:6px">${ME.admin?bt('Recense','adminedit','post|'+p.id,'g sm'):''}${p.by!==ME.nick?bt('Delatio','report','post|'+p.id+'|responsum','d sm'):''}</div></div>`).join('')||e('Responsa desunt','#f472b6')}
         ${canPost?`<div class="sr"><input id="ri" maxlength="500" placeholder="Responsum tuum..."><button class="bt p" data-a="ftreply" data-v="${t.id}">Mitte</button></div>`:'<div class="al">Tema clausa est.</div>'}
       </div>`;
@@ -1924,9 +2580,9 @@ function news(){
     if(!n){UI.nwOpen=null;return news();}
     const mine=n.mine||n.by===ME.nick;
     return `<div class="tb">${bt('Retro','nwexit')}<div class="grow"><b>Vesti civitatis</b><div class="tiny">@${esc(n.by)} · ${dt(n.ts)}</div></div></div>
-      <div class="card"><h3>${esc(n.title)} <span class="hp">${newsBadges(n)}</span></h3>
+      <div class="card"><h3><span data-no-tr>${esc(n.title)}</span> <span class="hp">${newsBadges(n)}</span></h3>
       <div class="quote">@${esc(n.by)} · ${dt(n.ts)} · ${(n.likes||[]).length} likes · ${(n.comments||[]).length} commenta</div>
-      <div class="dt" style="font-size:.9rem;line-height:1.7">${esc(n.body)}</div>
+      <div class="dt" data-no-tr style="font-size:.9rem;line-height:1.7">${esc(n.body)}</div>
       <div class="gs" style="margin-top:9px">
         <button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'♥':'♡'} ${(n.likes||[]).length}</button>
         ${!mine?bt(isSub('author',n.author)?'Sequi desine':'Sequi auctorem','subscribe','author|'+n.author,isSub('author',n.author)?'ok sm':'g sm'):''}
@@ -1935,7 +2591,7 @@ function news(){
         ${!mine?bt('Delatio','report','news|'+n.id+'|'+n.title,'d sm'):''}
       </div></div>
       <div class="card"><h3>Commenta <small class="mu">${(n.comments||[]).length}</small></h3>
-      ${(n.comments||[]).map(c=>`<div class="it"><div class="r">${ava(unick(c.by)||{nick:c.by},'av-sm')}<div class="in"><b>@${esc(c.by)}</b><small>${dt(c.ts)}</small></div>${(c.by===ME.nick||ME.admin)?bt('×','delcomment',c.id,'d sm'):''}</div><div class="dt">${esc(c.text)}</div>
+      ${(n.comments||[]).map(c=>`<div class="it"><div class="r">${ava(unick(c.by)||{nick:c.by},'av-sm')}<div class="in"><b>@${esc(c.by)}</b><small>${dt(c.ts)}</small></div>${(c.by===ME.nick||ME.admin)?bt('×','delcomment',c.id,'d sm'):''}</div><div class="dt" data-no-tr>${esc(c.text)}</div>
         <div class="gs" style="margin-top:6px">${ME.admin?bt('Recense','adminedit','news_comment|'+c.id,'g sm'):''}${c.by!==ME.nick?bt('Delatio','report','news_comment|'+c.id+'|commentum','d sm'):''}</div></div>`).join('')||e('Commenta desunt','#e8c37a')}
       <div class="sr"><input id="nci" maxlength="400" placeholder="Commentum..."><button class="bt p" data-a="nwcm" data-v="${n.id}">Mitte</button></div></div>`;
   }
@@ -1951,7 +2607,7 @@ function news(){
   return `<div class="tb">${bt('Acta nova','newnews','','p')}<span class="mut">${filtered.length} acta</span>${catList.length?'':'<button class="bt g sm" data-a="tab" data-v="root">Categoriae</button>'}</div>
     <div class="tb"><input class="srch" id="nwq" maxlength="60" value="${esc(UI.nwQ||'')}" placeholder="Quaere acta…"><button class="bt p sm" data-a="nwsearch">Quaere</button></div>
     <div class="tb"><div class="filters">${['Omnes',...catList].map(c=>`<button class="fchip ${cat===c?'on':''}" data-a="nwcat" data-v="${c}">${c}</button>`).join('')}<button class="fchip ${UI.nwSub?'on':''}" data-a="nwsub">Subscriptiones</button></div></div>
-    ${filtered.map(n=>{const mine=n.mine||n.by===ME.nick;return `<div class="card"><h3>${esc(n.title)} <span class="hp">${newsBadges(n)}</span></h3>
+    ${filtered.map(n=>{const mine=n.mine||n.by===ME.nick;return `<div class="card"><h3><span data-no-tr>${esc(n.title)}</span> <span class="hp">${newsBadges(n)}</span></h3>
       <div class="mut">@${esc(n.by)} · ${dt(n.ts)} · ${(n.likes||[]).length} likes · ${(n.comments||[]).length} commenta</div>
       <div class="dt" style="font-size:.82rem">${esc(n.body.slice(0,240))}${n.body.length>240?'…':''}</div>
       <div class="gs" style="margin-top:8px"><button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'♥':'♡'} ${(n.likes||[]).length}</button>${bt('Lege','nwopen',n.id,'g sm')}${!mine?bt(isSub('author',n.author)?'Sequi desine':'Sequi','subscribe','author|'+n.author,isSub('author',n.author)?'ok sm':'g sm'):''}${ME.admin?bt('Recense','adminedit','news|'+n.id,'g sm'):''}${!mine?bt('Delatio','report','news|'+n.id+'|'+n.title,'d sm'):''}</div>
@@ -1967,9 +2623,9 @@ function lawCard(l){
   const open=l.status==='vote';
   const cls=l.status==='passed'?'ok':l.status==='rejected'?'er':'wn';
   const mine=l.author===ME.uid;
-  return `<div class="card"><h3>${esc(l.title)} <span class="hp">${tag(pet?'Petitio':'Votum',pet?'pp2':'ad')}${tag(l.status,cls)}</span></h3>
+  return `<div class="card"><h3><span data-no-tr>${esc(l.title)}</span> <span class="hp">${tag(pet?'Petitio':'Votum',pet?'pp2':'ad')}${tag(l.status,cls)}</span></h3>
     <div class="mut">@${esc(l.by)} · ${dt(l.ts)}${pet?' · meta '+y+' / '+goal:''}</div>
-    <div class="dt">${esc(l.body)}</div>
+    <div class="dt" data-no-tr>${esc(l.body)}</div>
     ${pet?`<div class="pollopt" style="cursor:default"><span class="pbar" style="width:${gpc}%"></span><span class="pv"><span>${y} / ${goal}</span><span>${gpc}%</span></span></div>`:
       `<div class="pollopt" style="cursor:default"><span class="pbar" style="width:${pc}%"></span><span class="pv"><span>${y} pro · ${n} contra</span><span>${pc}%</span></span></div>`}
     ${open?`<div class="gs" style="margin-top:7px">
@@ -2143,7 +2799,7 @@ function tagPermsText(t){
 }
 function ust(){
   const m=ME,r=m.rating||{avg:0,n:0},a=m.activity||{ops:0,topics:0,lots:0,cards:0,bets:0};
-  const sw=(on,act)=>`<button class="sw ${on?'on':''}" data-a="${act}"></button>`;
+  const sw=(on,act)=>`<button type="button" class="sw ${on?'on':''}" data-a="${act}" role="switch" aria-checked="${on}" aria-label="${{compact:'Modus compactus',hide:'Celare Kapol aliis',sound:'Sonus'}[act]||act}"></button>`;
   const lim=k=>`<div class="rw"><span>${LIMIT_LABEL[k]||k}</span><b>${capLine(k)}</b></div>`;
   const sal=mySalaries().find(s=>s.uid===m.uid&&s.active);
   const subs=(DB.subs||[]).length;
@@ -2153,9 +2809,9 @@ function ust(){
   const mainLimits=['ticket','turgent','topen','tkreply','news','cardbuy','cardlist','betnew','betstake','forum','reply','mitto','lots','report','search'];
   const restLimits=LIMIT_KEYS.filter(k=>!mainLimits.includes(k));
   return muteAlert+`<div class="cols"><div class="stack">
-    ${C('Profil',`<div class="it"><div class="r">${ava(m,'av')}<div class="in"><b>${esc(m.name)} ${esc(m.sur)}</b><small>@${esc(m.nick)} · ${esc(m.roy)}</small></div>${statusTag(m.status)}</div></div>
-      <div class="rw"><span>Rang</span><b>${esc(m.rank||'Zinkie')}</b></div>
-      <div class="rw"><span>Rébnostь</span><b>${esc(m.reb)}</b></div>
+    ${C('Profil',`<div class="it"><div class="r">${ava(m,'av')}<div class="in" data-no-tr><b>${esc(m.name)} ${esc(m.sur)}</b><small>@${esc(m.nick)} · ${esc(m.roy)}</small></div>${statusTag(m.status)}</div></div>
+      <div class="rw"><span>Rang</span><b data-no-tr>${esc(m.rank||'Zinkie')}</b></div>
+      <div class="rw"><span>Rébnostь</span><b data-no-tr>${esc(m.reb)}</b></div>
       <div class="rw"><span>Sharpy</span><b>${tagsHtml(m)||'—'}</b></div>
       <div class="rw"><span>Fama</span><b>${r.n?`<span class="stars">${starsHtml(r.avg)}</span> ${r.avg} (${r.n})`:'—'}</b></div>
       <div class="rw"><span>Operationes</span><b>${a.ops} · temata ${a.topics} · lots ${a.lots} · cardky ${a.cards||0} · stavky ${a.bets||0}</b></div>
@@ -2172,21 +2828,24 @@ function ust(){
       <div class="setrow"><span>Modus</span><div class="seg">
         <button class="segbtn ${UI.theme==='dark'?'on':''}" data-a="theme" data-v="dark">${dot('#8aa4ff')}Tenebrae</button>
         <button class="segbtn ${UI.theme==='light'?'on':''}" data-a="theme" data-v="light">${dot('#fbbf24')}Lux</button>
-        <button class="segbtn ${UI.theme==='wine'?'on':''}" data-a="theme" data-v="wine">${dot('#d4789a')}Burgundia</button>
+        <button class="segbtn ${UI.theme==='brown'?'on':''}" data-a="theme" data-v="brown">${dot('#b07a4a')}Bura</button>
       </div></div>
-      <div class="setrow"><span>Color</span><div class="accents">
+      <div class="setrow"><span>Color</span>${UI.theme==='brown'
+        ?`<span class="mut">Fixus in Bura</span>`
+        :`<div class="accents">
         ${ACCENTS.map(([id,label,c1,c2])=>`<button class="acc ${UI.accent===id?'on':''}" style="--a1:${c1};--a2:${c2}" data-a="accent" data-v="${id}" title="${label}" aria-label="${label}"></button>`).join('')}
-      </div></div>
+      </div>`}</div>
       <div class="setrow"><span>Ordo sectionum</span><button class="bt g sm" data-a="taborderreset">Reset</button></div>
-      <div class="sorder">${ord.map(([id,l,color],i)=>`<div class="sorow"><span>${dot(color)}</span><span class="sname">${l}</span><span class="sorbtns"><button class="bt g sm" data-a="tabup" data-v="${id}" ${i===0?'disabled':''}>↑</button><button class="bt g sm" data-a="tabdn" data-v="${id}" ${i===ord.length-1?'disabled':''}>↓</button></span></div>`).join('')}</div>
-      <div class="setrow"><span>Cellae celeres</span><span class="mut">4 cellae</span></div>
+      <div class="sorder">${ord.map(([id,l,color],i)=>`<div class="sorow"><span>${dot(color)}</span><span class="sname">${l}</span><span class="sorbtns"><button class="bt g sm" data-a="tabup" data-v="${id}" aria-label="${esc(trText('Sursum')+': '+trText(l))}" ${i===0?'disabled':''}>↑</button><button class="bt g sm" data-a="tabdn" data-v="${id}" aria-label="${esc(trText('Deorsum')+': '+trText(l))}" ${i===ord.length-1?'disabled':''}>↓</button></span></div>`).join('')}</div>
+      <div class="setrow"><span>Cellae celeres</span><button class="bt g sm" data-a="quickreset">Reset cellae</button></div>
+      <div class="quick-preview" aria-label="Praevisus cellarum">${quickTabs().map(id=>`<span>${dot(NAVCOLOR[id])}${esc(TABS.find(t=>t[0]===id)[1])}</span>`).join('')}</div>
       <div class="qgrid">${quickTabs().map((id,i)=>{
-        const cur=TABS.find(t=>t[0]===id);
-        return `<div class="fl"><label>Cella ${i+1}</label><select data-a="quickset" data-v="${i}">${
+        return `<div class="fl"><label for="quick-${i}">Cella ${i+1}</label><select id="quick-${i}" data-a="quickset" data-v="${i}">${
           ord.map(([tid,l])=>`<option value="${tid}"${tid===id?' selected':''}>${esc(l)}</option>`).join('')
         }</select></div>`;
       }).join('')}</div>
       <div class="hint">Cellae celeres sunt quattuor sectiones in ima parte telephoni. Ordo sectionum eas non mutat.</div>
+      <div class="setrow"><span>Motus</span><div class="seg">${[['system','Systema'],['reduce','Motus reductus'],['full','Motus plenus']].map(([id,label])=>`<button class="segbtn ${shellMotion()===id?'on':''}" data-a="motion" data-v="${id}" aria-pressed="${shellMotion()===id}">${label}</button>`).join('')}</div></div>
       <div class="setrow"><span>Modus compactus</span>${sw(UI.compact,'compact')}</div>
       <div class="setrow"><span>Celare Kapol aliis</span>${sw(UI.hide,'hide')}</div>
       <div class="setrow"><span>Sonus</span><span class="gs" style="align-items:center">${sw(UI.sound,'sound')}<button class="bt g sm" data-a="testsnd">Proba</button></span></div>
@@ -2372,16 +3031,18 @@ function pickMsg(id){return activeMessages().find(m=>String(m.id)===String(id));
 
 const A={
   tab(v){
-    if(!ME)return;
+    if(!ME||!TABS.some(t=>t[0]===v))return;
     if(v==='root'&&!ME.admin){toast('Nema prav','e');return;}
     if(ME.status==='neophyte'&&!FREE.includes(v)){toast('Polog non confirmatus — accessus clausus','e');return;}
+    shellCapture();SHELL.route=(SHELL.route||0)+1;
     if(v!=='chat'){UI.chat=null;UI.grp=null;UI.reply=null;}
     if(v!=='root')UI.rootOk=false;
     UI.th=null;UI.nwOpen=null;UI.ticket=null;UI.faq=null;
-    UI.tab=v;UI.sheet=false;toTop();render();
+    UI.tab=v;UI.sheet=false;render();
   },
-  sheet(){UI.sheet=true;render();},
-  closesh(){UI.sheet=false;render();},
+  sheet(){UI.sheet=true;render({background:true});},
+  closesh(){UI.sheet=false;render({background:true});},
+  async retry(){SHELL.retryAt=0;await boot();},
   authmode(v){UI.authMode=v;renderAuth();},
   modalcancel(){closeModal(null);},
   modalsubmit(){submitModal();},
@@ -2422,27 +3083,35 @@ const A={
     }
   },
   async logout(){
-    try{await sb.auth.signOut();}catch(e){}
-    ME=null;DB=null;UI.rootOk=false;UI.chat=null;UI.grp=null;UI.reply=null;renderAuth();
+    shellReset();renderAuth();
+    try{const {error}=await sb.auth.signOut();if(error)throw error;}catch(error){shellNetwork(error);}
   },
   async notif(v){
-    const n=(DB.notifications||[]).find(x=>String(x.id)===String(v));
-    try{await rpc('api_notif_read',{p_id:+v});}catch(e){}
-    if(n&&n.kind==='chat'&&n.ref){
-      const g=myGroups().find(x=>x.id===n.ref);
-      if(g){
-        UI.grp=g.id;UI.chat=null;UI.tab='chat';UI.reply=null;
-        try{await rpc('api_group_read',{p_group:g.id});}catch(e){}
-        await sync();return;
-      }
+    const n=(DB?.notifications||[]).find(x=>String(x.id)===String(v));if(!n||!ME)return;
+    const token=shellToken(),route=SHELL.route||0;
+    const current=()=>shellCurrent(token)&&route===(SHELL.route||0);
+    try{await rpc('api_notif_read',{p_id:+v});}catch(error){if(current())shellNetwork(error);}
+    if(!current())return;
+    if(n.kind==='chat'&&n.ref){
+      const g=myGroups().find(x=>String(x.id)===String(n.ref));
+      if(g){await shellOpenChat(g.id,true);return;}
+      const c=myChats().find(x=>String(x.id)===String(n.ref)||x.peer===n.ref);
+      if(c){await shellOpenChat(c.id,false);return;}
       try{
-        const d=await rpc('api_chat_open',{p_nick:n.ref});
-        UI.chat=d.id;UI.grp=null;UI.reply=null;UI.tab='chat';await sync();return;
-      }catch(e){}
+        const d=await rpc('api_chat_open',{p_nick:n.ref});if(!current())return;
+        await sync({background:true});if(current())await shellOpenChat(d.id,false);return;
+      }catch(error){if(current())toast(errMsg(error),'e');}
     }
-    const go=n&&n.go;
-    if(go&&TABS.some(t=>t[0]===go)){UI.tab=go;UI.th=null;UI.nwOpen=null;UI.ticket=null;toTop();}
-    await sync();
+    if(!current())return;
+    const go=n.go;
+    if(go&&TABS.some(t=>t[0]===go)){
+      A.tab(go);if(UI.tab!==go)return;
+      if(n.ref&&go==='seti'){await openContract(n.ref);return;}
+      if(n.ref&&go==='jur'){await A.topicopen(n.ref);return;}
+      if(n.ref&&go==='news'){await A.nwopen(n.ref);return;}
+      if(n.ref&&go==='help'){A.openticket(n.ref);return;}
+    }
+    await sync({background:true});
   },
   async notifreadall(){await run(()=>rpc('api_notif_read_all'),'Omnia lecta');},
   async notifclear(){await run(()=>rpc('api_notif_clear'),'Purga facta');},
@@ -2456,9 +3125,7 @@ const A={
       {n:'note',label:'Nota',max:200}
     ],'Mitte','',v=>!v.to?'Nomen necessarium':!(+v.amount>0)?'Summa > 0 necessaria':'');
     if(!f)return;
-    const amt=+f.amount,fee=Math.min(amt,r2(amt*cfg().tax/100));
-    if(!await ask('Confirma transmissionem',[],'Mitte',`@${f.to.trim()} accipit ${fm(amt-fee)} h · portorium ${fm(fee)} h.`))return;
-    await run(()=>rpc('api_transfer',{p_to:f.to.trim(),p_amount:amt,p_note:f.note.trim()}),'Missum');
+    await run(()=>rpc('api_transfer',{p_to:f.to.trim(),p_amount:+f.amount,p_note:f.note.trim()}),'Missum');
   },
   async newrequest(){
     const f=await ask('Pete',[
@@ -2471,8 +3138,6 @@ const A={
   },
   async payreq(id){
     const r=pickRequest(id);if(!r)return;
-    const f=await ask('Solve petitionem',[],'Solve',`@${r.to} → @${r.from} · ${fm(r.amount)} h`);
-    if(!f)return;
     await run(()=>rpc('api_request_pay',{p_id:id}),'Solutum');
   },
   async declinereq(id){
@@ -2523,8 +3188,6 @@ const A={
   },
   async buy(id){
     const l=pickLot(id);if(!l)return;
-    const fee=Math.min(l.price,r2(l.price*cfg().tax/100));
-    if(!await ask('Eme lot',[],'Eme',`«${l.title}» · ${fm(l.price)} h · portorium ~${fm(fee)} h. Venditor accipit ${fm(l.price-fee)} h.`))return;
     await run(()=>rpc('api_lot_buy',{p_id:id}),'Lot emptus');
   },
   async bid(id){
@@ -2555,45 +3218,60 @@ const A={
   cardmenu(id){cardMenu(id);},
   rarnew(){rarForm(null);},
   raredit(id){const r=rarList().find(x=>x.id===id);if(r)rarForm(r);},
-  async packbuy(id){
-    const p=packs().find(x=>String(x.id)===String(id));if(!p)return;
-    const f=await ask('Eme pack',[
-      {n:'count',label:'Quantitas',type:'num',value:1}
-    ],'Eme',`«${p.name}» · ${fm(p.price)} h / pack.`,v=>!(+v.count>=1&&+v.count<=10)?'1–10':'');
-    if(!f)return;
-    if(!await ask('Confirma emptionem',[],'Eme',`${fm(p.price*(+f.count))} h e Kapol.`))return;
-    try{
-      const res=await rpc('api_card_pack_buy',{p_pack:p.id,p_count:+f.count});
-      await sync();
-      if(res&&res.cards&&res.cards.length)packReveal(res.cards,res.total);
-      else toast('Pack emptus','s');
-    }catch(err){toast(errMsg(err),'e');}
+  async rarmove(v){
+    const [id,dir]=String(v).split('|');if(![-1,1].includes(+dir))return;
+    await run(()=>rpc('api_rarity_move',{p_id:id,p_dir:+dir}),'Raritas servata');
   },
-  pvclose(){const el=$('#preveal');if(el)el.remove();if(UI.sound)beep();},
-  pvflat(){const g=$('#pvgrid');if(g)g.classList.add('flat');},
+  async packbuy(id){
+    if(UI.packBuying)return;
+    const p=packs().find(x=>String(x.id)===String(id));if(!p)return;
+    UI.packBuying=true;const focus=document.activeElement;
+    try{
+      const f=await ask('Eme pack',[
+        {n:'count',label:'Quantitas',type:'num',value:1}
+      ],'Eme','Una karta per emptionem; 1–10 emptiones independentes. Repetitiones possibiles.',v=>!(Number.isInteger(+v.count)&&+v.count>=1&&+v.count<=10)?'1–10':'');
+      if(!f)return;
+      const res=await rpc('api_card_pack_buy',{p_pack:p.id,p_count:+f.count});
+      UI.packBuyFocus=focus;
+      packReveal(res&&res.cards||[],res&&res.total,res&&res.receipt);
+      try{await sync();}catch(err){toast('Pack emptus; synchronizatio differt. Historia emptionum servata.','i');}
+    }catch(err){if(!err.cancelled)toast(errMsg(err),'e');}
+    finally{UI.packBuying=false;}
+  },
+  pvclose(){
+    const state=UI.packRevealState;document.getElementById('preveal')?.remove();UI.packRevealState=null;
+    const original=state&&state.focus;
+    const replacement=original&&[...document.querySelectorAll('button[data-a]')].find(el=>el.dataset.a===original.dataset?.a&&el.dataset.v===original.dataset?.v);
+    if(original&&original.isConnected)original.focus();
+    else if(replacement)replacement.focus();
+    else document.querySelector('[data-a="opHistory"],[data-a="packbuy"],[data-a="cardsub"]')?.focus();
+  },
+  pvnext(){packRevealNext(false);},
+  pvflat(){packRevealNext(true);},
+  pvreceipt(){const s=UI.packRevealState;if(!s||!s.receipt)return;A.pvclose();showReceipt({cards:s.cards,total:s.spent,receipt:s.receipt});},
   async cardgift(id){
     const inv=findInv(id);if(!inv)return;
     const c=cardById(inv.card);
-    const f=await ask('Donum',[{n:'nick',label:'Receptor · Nomen',max:16}],'Dona',`${c?c.name:'Karta'} → civis.`,v=>!v.nick.trim()?'Nomen necessarium':'');
+    const f=await cardsAsk('Donum',[{n:'nick',label:'Receptor · Nomen',max:16}],'Dona',`${c?c.name:'Karta'} → civis.`,v=>!v.nick.trim()?'Nomen necessarium':'');
     if(!f)return;
-    if(!await ask('Confirma donum',[],'Dona',`@${f.nick.trim()} accipit «${c?c.name:'kartam'}».`))return;
+    if(!await cardsAsk('Confirma donum',[],'Dona',`@${f.nick.trim()} accipit «${c?c.name:'kartam'}».`))return;
     await run(()=>rpc('api_card_gift',{p_user_card:+inv.id,p_nick:f.nick.trim()}),'Karta donata');
   },
   async cardsell(id){
     const inv=findInv(id);if(!inv)return;
     const c=cardById(inv.card);
-    const f=await ask('Vende kartam',[
+    const f=await cardsAsk('Vende kartam',[
       {n:'kind',label:'Typus',type:'sel',opts:[{v:'sale',l:'Venditio'},{v:'auction',l:'Auctio'}]},
       {n:'price',label:'Pretium / minimum (h)',type:'num'},
       {n:'hours',label:'Durata auctionis',type:'sel',opts:[1,6,24,72,168].map(h=>({v:String(h),l:h+' h'}))}
     ],'Pone',c?c.name:'',v=>!(+v.price>0)?'Pretium > 0 necessarium':'');
     if(!f)return;
-    if(!await ask('Confirma venditionem',[],'Pone',`«${c?c.name:'Karta'}» · ${fm(f.price)} h · ${f.kind==='auction'?'auctio '+f.hours+' h':'venditio'}.`))return;
+    if(!await cardsAsk('Confirma venditionem',[],'Pone',`«${c?c.name:'Karta'}» · ${fm(f.price)} h · ${f.kind==='auction'?'auctio '+f.hours+' h':'venditio'}.`))return;
     await run(()=>rpc('api_card_market_list',{p_user_card:+inv.id,p_kind:f.kind,p_price:+f.price,p_hours:+f.hours}),'Karta in foro');
   },
   async cardavatar(id){
     const c=cardById(id);if(!c)return;
-    if(!await ask('Pone in avatar?',[],'Pone',`«${c.name}» in avatar.`))return;
+    if(!await cardsAsk('Pone in avatar?',[],'Pone',`«${c.name}» in avatar.`))return;
     await run(()=>rpc('api_card_avatar',{p_card:c.id}),'Avatar mutatus');
   },
   async avatarclear(){
@@ -2605,12 +3283,10 @@ const A={
     const min=Math.max(+m.price,(m.top?+m.top:0)+0.01);
     const f=await ask('Offero',[{n:'amount',label:'Licitatio (h)',type:'num',value:r2(min)}],'Offero',`Minimum ${fm(min)} h.`,v=>!(+v.amount>=min)?`Minimum ${fm(min)} h`:'');
     if(!f)return;
-    if(!await ask('Confirma licitationem',[],'Offero',`${fm(f.amount)} h in tutela.`))return;
     await run(()=>rpc('api_card_market_bid',{p_listing:m.id,p_amount:+f.amount}),'Licitatio missa');
   },
   async cardbuy(id){
     const m=pickCardListing(id);if(!m)return;
-    if(!await ask('Eme kartam',[],'Eme',`«${m.name}» · ${fm(m.price)} h · venditor @${m.seller}.`))return;
     await run(()=>rpc('api_card_market_buy',{p_listing:m.id}),'Karta empta');
   },
   async cardcancel(id){
@@ -2619,7 +3295,7 @@ const A={
     await run(()=>rpc('api_card_market_cancel',{p_listing:m.id}),'Lot abrogatus');
   },
   async cardcollnew(){
-    const f=await ask('Collectio nova',[
+    const f=await cardsAsk('Collectio nova',[
       {n:'name',label:'Nomen',max:40},
       {n:'about',label:'Descriptio',type:'ta',max:300}
     ],'Crea','',v=>v.name.trim().length<2?'Nomen: minimum 2 signa':'');
@@ -2628,7 +3304,8 @@ const A={
   },
   async cardnew(){
     if(!collections().length){toast('Collectionem crea prius','e');return;}
-    const f=await ask('Karta nova',[
+    if(!rarList().some(r=>r.active)){toast('Raritatem crea prius','e');return;}
+    const f=await cardsAsk('Karta nova',[
       {n:'collection',label:'Collectio',type:'sel',opts:collections().map(c=>({v:c.id,l:c.name}))},
       {n:'name',label:'Nomen',max:60},
       {n:'rarity',label:'Raritas',type:'sel',opts:rarList().filter(r=>r.active).map(r=>({v:r.id,l:r.label}))},
@@ -2640,9 +3317,11 @@ const A={
   },
   async cardedit(id){
     const c=cardById(id);if(!c)return;
-    const f=await ask('Recense kartam',[
+    const options=rarList().filter(r=>r.active||r.id===c.rarity).map(r=>({v:r.id,l:r.label}));
+    if(c.rarity&&!options.some(o=>o.v===c.rarity))options.push({v:c.rarity,l:rarLabel(c.rarity)});
+    const f=await cardsAsk('Recense kartam',[
       {n:'name',label:'Nomen',max:60,value:c.name},
-      {n:'rarity',label:'Raritas',type:'sel',value:c.rarity,opts:rarList().filter(r=>r.active||r.id===c.rarity).map(r=>({v:r.id,l:r.label}))},
+      {n:'rarity',label:'Raritas',type:'sel',value:c.rarity,opts:options},
       {n:'about',label:'Descriptio',type:'ta',max:400,value:c.about||''},
       {n:'img',label:'URL imaginis',max:300,value:c.img||''},
       {n:'active',label:'Activa',type:'sel',value:c.active?'1':'0',opts:[{v:'1',l:'Sic'},{v:'0',l:'Non'}]}
@@ -2652,69 +3331,126 @@ const A={
   },
   packfocus(){
     const el=$('#pkName');
-    if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.focus();}
-    toast('Nomen, pretium, deinde cardas adde','i');
+    if(el){el.scrollIntoView({block:'center',behavior:UI.reduceMotion||window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});el.focus();}
   },
-  packsearch(){readPackDraft();render();},
+  async packnew(){
+    readPackDraft();const d=packDraft();
+    if((d.id||d.name||Object.keys(d.items).length)&&!await ask('Purga draft?',[],'Purga'))return;
+    UI.packDraft=null;render({resetForms:true});A.packfocus();
+  },
+  async packedit(id){
+    readPackDraft();const p=packs().find(x=>String(x.id)===String(id));if(!p)return;
+    const d=packDraft();if(String(d.id)===String(id)){A.packfocus();return;}
+    if((d.id||d.name||Object.keys(d.items).length)&&!await ask('Purga draft?',[],'Purga'))return;
+    const items=Object.create(null);(p.items||[]).forEach(i=>{items[i.card]=i.weight;});
+    UI.packDraft={id:p.id,name:p.name,price:String(p.price),items,q:'',coll:'',rar:'',limit:48};render({resetForms:true});A.packfocus();
+  },
+  packsearch(){readPackDraft();packDraft().limit=48;render();},
+  packmore(){readPackDraft();packDraft().limit=(packDraft().limit||48)+48;render();},
   packadd(id){
-    readPackDraft();const d=packDraft();
-    d.items[id]=d.items[id]==null?10:Math.min(100,Math.round(((+d.items[id]||0)+1)*10)/10);
-    render();
+    readPackDraft();const d=packDraft(),c=cardById(id);if(!c||c.active===false)return;
+    if(d.items[id]!=null){delete d.items[id];render();return;}
+    if(Object.keys(d.items).length>=100){toast('Maximum 100 cardae','e');return;}
+    d.items[id]=1;render();
   },
-  packdel(id){
-    readPackDraft();const d=packDraft();delete d.items[id];render();
-  },
+  packdel(id){readPackDraft();delete packDraft().items[id];render();},
   packequa(){
-    readPackDraft();const d=packDraft();
-    const ids=Object.keys(d.items).filter(id=>cMap()[id]);
-    if(!ids.length){toast('Cardas adde','e');return;}
-    const w=Math.round((100/ids.length)*10)/10;
-    ids.forEach(id=>{d.items[id]=w;});
-    render();
+    readPackDraft();const d=packDraft();Object.keys(d.items).forEach(id=>{d.items[id]=1;});render({resetForms:true});
   },
   packnorm(){
-    readPackDraft();const d=packDraft();
-    const ids=Object.keys(d.items).filter(id=>cMap()[id]);
-    const sum=ids.reduce((s,id)=>s+(+d.items[id]||0),0);
-    if(!ids.length||sum<=0){toast('Cardas adde','e');return;}
-    let acc=0;
-    ids.forEach((id,i)=>{
-      const w=i===ids.length-1?Math.round((100-acc)*10)/10:Math.round((+d.items[id]*100/sum)*10)/10;
-      d.items[id]=Math.max(.1,w);acc+=w;
-    });
-    render();
+    readPackDraft();const d=packDraft(),items=packDraftItems(d);
+    if(!items.length||items.some(x=>!Number.isFinite(x.weight)||x.weight<=0)){toast('Pondera > 0 necessaria','e');return;}
+    if(items.some(i=>!cardById(i.card)||cardById(i.card).active===false)){toast('Cardae inactivae: remove ante servare','e');return;}
+    const scale=Math.max(...items.map(x=>x.weight)),sum=items.reduce((s,x)=>s+x.weight/scale,0);
+    const normalized=items.map(x=>({card:x.card,weight:(x.weight/scale)/sum*100}));
+    // Correct floating residual on the largest weight, never round/clamp small odds.
+    const largest=normalized.reduce((a,b)=>a.weight>b.weight?a:b);
+    largest.weight+=100-normalized.reduce((s,x)=>s+x.weight,0);
+    normalized.forEach(x=>{d.items[x.card]=x.weight;});render({resetForms:true});
   },
-  packclear(){UI.packDraft=null;render();},
+  async packclear(){if(!await ask('Purga draft?',[],'Purga'))return;UI.packDraft=null;render({resetForms:true});},
+  packpreview(){
+    readPackDraft();const d=packDraft(),error=packDraftError(d);if(error){toast(error,'e');return;}
+    showInfo(`<h3>Praevisa pack</h3><h4 data-no-tr="true">${esc(d.name)}</h4><p>${fm(d.price)} h</p><p class="hint">Una karta per emptionem; 1–10 emptiones independentes. Repetitiones possibiles.</p>${packOddsRows(packOdds({items:packDraftItems(d)}))}<p class="hint">Probabilitates = pondus / summa ponderum cardarum activarum. Summa 100%; valores visi rotundati.</p><div class="gs">${bt('Serva pack','packsave','','p')}${bt('Recense','modalcancel')}</div>`);
+  },
   async packsave(){
-    readPackDraft();const d=packDraft();
-    const items=Object.keys(d.items).map(id=>({card:id,weight:Math.round((+d.items[id]||0)*100)/100}));
-    if(d.name.trim().length<2){toast('Nomen: minimum 2 signa','e');return;}
-    if(!(+d.price>0)){toast('Pretium > 0 necessarium','e');return;}
-    if(!items.length){toast('Cardas adde','e');return;}
-    if(items.some(x=>x.weight<=0)){toast('Pondera > 0 necessaria','e');return;}
-    const res=await run(()=>rpc('api_card_pack_create',{p_name:d.name.trim(),p_price:+d.price,p_items:items}),'Pack creatus');
-    if(res!==null){UI.packDraft=null;render();}
+    if(UI.packSaving)return;
+    readPackDraft();const d=packDraft(),error=packDraftError(d);if(error){toast(error,'e');return;}
+    UI.packSaving=true;
+    const snapshot=JSON.stringify(d);
+    try{
+      await rpc('api_card_pack_save',{p_pack:d.id||null,p_name:d.name.trim(),p_price:+d.price,p_items:packDraftItems(d)});
+      // A successful save clears its draft, not edits typed during the request.
+      if(UI.packDraft===d&&JSON.stringify(d)===snapshot){UI.packDraft=null;render({resetForms:true});}
+      if(UI.modal&&UI.modal.info)closeModal();
+      toast('Pack servatus','s');
+      try{await sync();}catch(err){toast('Pack servatus; synchronizatio differt.','i');render();}
+    }catch(err){if(!err.cancelled)toast(errMsg(err),'e');}
+    finally{UI.packSaving=false;}
   },
   async packtoggle(v){
     const [id,on]=String(v).split(':');
     await run(()=>rpc('api_card_pack_toggle',{p_pack:id,p_on:on==='on'}),'Pack mutatus');
   },
   /* seti */
-  setif(v){UI.csF=v;render();},
-  setisearch(){const el=$('#setiq');UI.csQ=el?el.value:UI.csQ;render();},
-  setiview(id){const c=contractById(id);if(c)contractView(c);},
+  async setif(v){UI.csF=v;await loadContracts();},
+  async setisearch(){const el=$('#setiq');UI.csQ=el?el.value:UI.csQ;await loadContracts();},
+  setiview(id){return openContract(id);},
   setinew(){contractNew();},
+  setireload(){return loadContracts();},
+  setimore(){return loadContracts(true);},
+  setidraftsave(){return saveContractDraft();},
+  async setiedit(id){const uid=ME.uid,c=await rpc('api_contract_get',{p_contract:id});if(ME&&ME.uid===uid&&c.can_edit)contractEditor(c);},
+  setieditlocal(){contractEditor();},
+  async setiversion(id){const uid=ME.uid,c=await rpc('api_contract_get',{p_contract:id});if(ME&&ME.uid===uid)contractEditor(c,true);},
+  setipreview(){
+    const d=readContractDraft();if(!d)return;
+    const err=contractDraftError(d);if(err){toast(err,'e');return;}
+    showInfo(`<h3>Praevisio</h3>${contractBody({...d,by:ME.nick,status:'draft',members:d.members.split(',').map(n=>n.trim()).filter(Boolean),signs:[],hash:null})}<div class="al" data-no-tr>${esc(trText('Terminus post publicationem'))}: ${+d.hours?esc(d.hours)+' '+esc(trText('horae')):esc(trText('Sine termino'))}</div><div class="gs">${bt('Retro','setieditlocal','','g')}${bt('Serva adumbrationem','setidraftsave','','p')}</div>`);
+  },
+  async setipublish(id){
+    const uid=ME.uid,c=await rpc('api_contract_get',{p_contract:id});
+    if(!ME||ME.uid!==uid||!c.can_edit)return;
+    if(!await ask('Publica documentum?',[],'Publica',trText('Textus fiet immutabilis. Auctor signat.')+'\n'+c.title+'\n'+c.body))return;
+    if(!ME||ME.uid!==uid)return;
+    const res=await run(()=>rpc('api_contract_publish',{p_contract:id}),'Documentum publicatum');
+    if(res){UI.contractList=null;await openContract(id);}
+  },
   async setisign(id){
-    const c=contractById(id);if(!c)return;
-    if(!await ask('Signa documentum',[],'Signa',`«${c.title}» · fides ${String(c.hash||'').slice(0,12)}…`))return;
-    const res=await run(()=>rpc('api_contract_sign',{p_contract:c.id}),'Documentum signatum');
-    if(res){const n=contractById(id);if(n)contractView(n);}
+    const c=UI.contractDetail,uid=ME.uid;
+    if(!c||String(c.id)!==String(id)||!c.can_sign)return openContract(id);
+    const note=trText('Confirmas hanc versionem; nulla pecunia movetur.')+'\n'+c.title+'\n'+trText('Versio')+': '+(c.version||1)+'\n'+trText('Terminus')+': '+(c.closes?dt(c.closes):trText('Sine termino'))+'\n'+trText('Fides documenti')+': '+c.hash;
+    if(!await ask('Quid signo?',[],'Signa',note))return;
+    if(!ME||ME.uid!==uid)return;
+    const res=await run(()=>rpc('api_contract_sign_v2',{p_contract:c.id,p_hash:c.hash}),'Documentum signatum');
+    if(res){UI.contractList=null;await openContract(id);}
   },
   async seticancel(id){
-    const c=contractById(id);if(!c)return;
-    if(!await ask('Abroga documentum?',[],'Abroga',`«${c.title}» claudetur.`))return;
-    const res=await run(()=>rpc('api_contract_cancel',{p_contract:c.id}),'Documentum abrogatum');
-    if(res)closeModal(null);
+    const c=contractById(id),uid=ME.uid;if(!c)return;
+    const f=await ask('Abroga documentum?',[{n:'reason',label:'Ratio abrogationis',type:'ta',max:500}],'Abroga','Signature et historia servantur.',v=>v.reason.trim().length<5?'Ratio: minimum 5 signa':'');
+    if(!f||!ME||ME.uid!==uid)return;
+    const res=await run(()=>rpc('api_contract_cancel_v2',{p_contract:id,p_reason:f.reason.trim()}),'Documentum abrogatum');
+    if(res){UI.contractList=null;await openContract(id);}
+  },
+  async setiprint(id){
+    const uid=ME.uid,c=await rpc('api_contract_get',{p_contract:id});if(!ME||ME.uid!==uid)return;
+    contractView(c);document.body.classList.add('printing-contract');
+    try{window.print();}finally{document.body.classList.remove('printing-contract');}
+  },
+  opHistory(){return loadOperationHistory();},
+  opMore(){return loadOperationHistory(true);},
+  opView(id){const o=(UI.operations||[]).find(x=>String(x.id)===String(id));if(o)showReceipt(o.result);},
+  async opReplay(id){
+    const uid=ME.uid;
+    const result=await rpcRaw('api_operation_get',{p_key:id});
+    if(!ME||ME.uid!==uid)return;
+    if(result&&result.cards){closeModal(null);packReveal(result.cards,result.total,result.receipt);}
+  },
+  async opRetry(id){
+    const op=pendingOperations(ME.uid).find(x=>x.key===id);if(!op)return;
+    const result=await resumeOperation(op);
+    if(result.cards){closeModal(null);packReveal(result.cards,result.total,result.receipt);}else showReceipt(result);
+    try{await sync();}catch{toast('Actio perfecta; renovatio differetur.','i');}
   },
   /* teckelie */
   bettab(v){UI.betTab=v;render();},
@@ -2761,7 +3497,6 @@ const A={
       n:'amount',label:'Summa (h)',type:'num',value:r2(Math.min(rest,10))
     }],'Stake',`«${opt.label}» ×${(+opt.odds).toFixed(2)} · max ${fm(rest)} h.`,v=>!(+v.amount>0&&+v.amount<=rest)?`1–${fm(rest)} h`:'');
     if(!f)return;
-    if(!await ask('Confirma stavkam',[],'Stake',`${fm(f.amount)} h in «${opt.label}». Potential: ${fm(f.amount*(+opt.odds))} h.`))return;
     await run(()=>rpc('api_bet_stake',{p_bet:b.id,p_option:+idx,p_amount:+f.amount}),'Stavka posita');
   },
   async betcancel(id){
@@ -2781,63 +3516,51 @@ const A={
     await run(()=>rpc('api_bet_resolve',{p_bet:b.id,p_option:+f.opt}),'Stavka resoluta');
   },
   /* besedy */
-  async csub(v){UI.csub=v;render();},
+  csub(v){if(!['dm','grp'].includes(v))return;UI.csub=v;render();},
   chsearch(){const el=$('#chq');UI.chQ=el?el.value:UI.chQ;render();},
-  async openchat(id){
-    try{await rpc('api_chat_read',{p_chat:id});}catch(e){}
-    UI.chat=id;UI.grp=null;UI.reply=null;await run(()=>Promise.resolve(),'');
-  },
-  async opengrp(id){try{await rpc('api_group_read',{p_group:id});}catch(e){}UI.grp=id;UI.chat=null;UI.reply=null;await run(()=>Promise.resolve(),'');},
-  chatexit(){UI.chat=null;UI.grp=null;UI.reply=null;render();},
-  async sendchat(){
-    const inp=$('#ci');const text=(inp?.value||'').trim();if(!text)return;
-    const reply=UI.reply?+UI.reply.id:null;
-    const ok=await run(()=>rpc('api_chat_send',{p_chat:UI.chat,p_text:text,p_reply:reply}),'');
-    if(ok!==null){if(inp)inp.value='';UI.reply=null;render();scrollChat();}
-  },
-  async sendgrp(){
-    const inp=$('#ci');const text=(inp?.value||'').trim();if(!text)return;
-    const reply=UI.reply?+UI.reply.id:null;
-    const ok=await run(()=>rpc('api_group_send',{p_group:UI.grp,p_text:text,p_reply:reply}),'');
-    if(ok!==null){if(inp)inp.value='';UI.reply=null;render();scrollChat();}
-  },
+  async openchat(id){await shellOpenChat(id,false);},
+  async opengrp(id){await shellOpenChat(id,true);},
+  chatexit(){shellCapture();SHELL.route=(SHELL.route||0)+1;UI.chat=null;UI.grp=null;UI.reply=null;render();},
+  async sendchat(){await shellSend(false);},
+  async sendgrp(){await shellSend(true);},
+  chatlatest(){const box=$('#cm');if(box)box.scrollTop=box.scrollHeight;SHELL.newMessages=0;shellChatNotice();},
   setreply(id){
     const m=pickMsg(id);if(!m||m.deleted)return;
-    UI.reply={id:m.id,by:m.from,text:m.text};render();
+    closeModal(null);UI.reply={id:m.id,by:m.from,text:m.text};render();$('#ci')?.focus();
   },
   replycancel(){UI.reply=null;render();},
   msgmenu(id){
     const m=pickMsg(id);if(!m)return;
     const self=m.from===ME.nick,own=self||ME.admin;
-    showInfo(`<h3>@${esc(m.from)}</h3><div class="quote">${m.deleted?'<i>Nuntius deletus</i>':esc(m.text)}</div>
+    showInfo(`<h3 data-no-tr>@${esc(m.from)}</h3><div class="quote"${m.deleted?'':' data-no-tr'}>${m.deleted?'<i>Nuntius deletus</i>':esc(m.text)}</div>
       <div class="gs" style="margin-top:8px">${m.deleted?'':bt('Responsum','setreply',m.id,'p sm')}${self&&!m.deleted?bt('Muta','msgedit',m.id):''}${own&&!m.deleted?bt('Dele','msgdel',m.id,'d'):''}</div>`);
   },
   async msgedit(id){
-    const m=pickMsg(id);if(!m||m.deleted)return;
-    if(m.from!==ME.nick)return;
+    const m=pickMsg(id);if(!m||m.deleted||m.from!==ME.nick)return;
+    const token=shellToken(),key=shellChatKey(),grp=!!UI.grp;
     closeModal(null);
     const f=await ask('Muta nuntium',[{n:'text',label:'Textus',type:'ta',max:500,value:m.text}],'Muta','',v=>!v.text.trim()?'Textus necessarius':'');
-    if(!f)return;
-    const grp=!!UI.grp;
-    await run(()=>rpc(grp?'api_group_edit':'api_chat_edit',grp?{p_msg:+id,p_text:f.text.trim()}:{p_msg:+id,p_text:f.text.trim()}),'Nuntius mutatus');
+    if(!f||!shellCurrent(token)||key!==shellChatKey())return;
+    await run(()=>rpc(grp?'api_group_edit':'api_chat_edit',{p_msg:+id,p_text:f.text.trim()}),'Nuntius mutatus');
   },
   async msgdel(id){
-    const m=pickMsg(id);if(!m||m.deleted)return;
-    if(m.from!==ME.nick&&!ME.admin)return;
+    const m=pickMsg(id);if(!m||m.deleted||m.from!==ME.nick&&!ME.admin)return;
+    const token=shellToken(),key=shellChatKey(),grp=!!UI.grp;
     closeModal(null);
-    if(!await ask('Dele nuntium?',[],'Dele'))return;
-    const grp=!!UI.grp;
+    if(!await ask('Dele nuntium?',[],'Dele')||!shellCurrent(token)||key!==shellChatKey())return;
     if(UI.reply&&String(UI.reply.id)===String(id))UI.reply=null;
     await run(()=>rpc(grp?'api_group_delete':'api_chat_delete',{p_msg:+id}),'Nuntius deletus');
   },
   async newchat(nick){
     if(typeof nick!=='string')nick='';
+    const token=shellToken(),route=SHELL.route||0;
+    const current=()=>shellCurrent(token)&&route===(SHELL.route||0);
     const f=await ask('Novus chat',[{n:'nick',label:'Nomen civis',max:16,value:nick}],'Aperi','',v=>!v.nick?'Nomen necessarium':'');
-    if(!f)return;
+    if(!f||!current())return;
     try{
-      const d=await rpc('api_chat_open',{p_nick:f.nick.trim()});
-      UI.chat=d.id;UI.grp=null;UI.reply=null;await sync();
-    }catch(e){toast(errMsg(e),'e');}
+      const d=await rpc('api_chat_open',{p_nick:f.nick.trim()});if(!current())return;
+      await sync({background:true});if(current())await shellOpenChat(d.id,false);
+    }catch(error){if(current())toast(errMsg(error),'e');}
   },
   async newgroup(){
     const f=await ask('Grex novus',[
@@ -2853,7 +3576,16 @@ const A={
     if(!f)return;
     await run(()=>rpc('api_group_add',{p_group:id,p_nick:f.nick.trim()}),'Membrum additum');
   },
-  async grpleave(id){if(!await ask('Exi grege?',[],'Exi'))return;await run(()=>rpc('api_group_leave',{p_group:id}),'Exitus');UI.grp=null;UI.reply=null;},
+  async grpleave(id){
+    const token=shellToken(),key=shellChatKey();
+    if(!await ask('Exi grege?',[],'Exi')||!shellCurrent(token)||key!==shellChatKey())return;
+    try{
+      await rpc('api_group_leave',{p_group:id});if(!shellCurrent(token))return;
+      shellDraftSave(key,'');
+      if(key===shellChatKey()){UI.grp=null;UI.reply=null;render();}
+      await sync({background:true});
+    }catch(error){if(shellCurrent(token))toast(errMsg(error),'e');}
+  },
   /* forum */
   async jcat(v){UI.jcat=v;render();},
   jsearch(){const el=$('#jq');UI.jq=el?el.value:UI.jq;render();},
@@ -3057,11 +3789,13 @@ const A={
   async ticketreopen(id){await run(()=>rpc('api_ticket_reopen',{p_ticket:id}),'Zvernennia apertum');},
   /* settings */
   lang(v){
-    UI.lang=(typeof v==='string'&&v)?v:(UI.lang==='uk'?'la':'uk');
+    UI.lang=['la','uk'].includes(v)?v:(UI.lang==='uk'?'la':'uk');
     localStorage.setItem('app_lang',UI.lang);render();
   },
+  motion(v){if(!['system','reduce','full'].includes(v))return;localStorage.setItem('app_motion',v);shellMotion();render();},
+  quickreset(){UI.quick=['holb','cards','bank','chat'];localStorage.removeItem('app_quick');render();},
   theme(v){
-    UI.theme=['dark','light','wine'].includes(v)?v:(UI.theme==='dark'?'light':UI.theme==='light'?'wine':'dark');
+    UI.theme=['dark','light','brown'].includes(v)?v:(UI.theme==='dark'?'light':UI.theme==='light'?'brown':'dark');
     localStorage.setItem('app_theme',UI.theme);applyTheme();render();
   },
   tabup(v){moveTab(v,-1);},
@@ -3338,56 +4072,120 @@ const A={
 };
 
 /* ---------- events ---------- */
+const actionBusy=new Set();
 document.addEventListener('click',async ev=>{
   const el=ev.target.closest('[data-a]');
   if(!el)return;
-  const key=el.dataset.a;
-  const val=el.dataset.v;
-  const fn=A[key];
+  const key=el.dataset.a,val=el.dataset.v,fn=A[key];
   if(!fn)return;
   ev.preventDefault();
+  const token=(ME?.uid||'auth')+'|'+key+'|'+(val||'');
+  if(actionBusy.has(token))return;
+  actionBusy.add(token);
+  const uid=ME?.uid;
   try{
-    if(key==='newchat'&&val){await A.newchat(val);return;}
-    await fn(val,el);
-  }catch(err){toast(errMsg(err),'e');}
+    const result=fn(val,el);
+    if(result&&typeof result.then==='function'){
+      el.setAttribute('aria-busy','true');
+      await result;
+    }
+  }catch(err){if(!err.cancelled&&ME?.uid===uid)toast(errMsg(err),'e');}
+  finally{actionBusy.delete(token);el.removeAttribute('aria-busy');}
 });
 document.addEventListener('submit',ev=>{
   if(ev.target.closest('.md'))return;
   ev.preventDefault();
 });
-/* simplified input: A/ → Á, s/ → ś, etc. Applies to every text field. */
-document.addEventListener('input',ev=>{
+/* Simplified alphabet never rewrites passwords, URLs, or active IME composition. */
+function shellInput(ev){
   const el=ev.target;
-  if(!el||(el.tagName!=='INPUT'&&el.tagName!=='TEXTAREA'))return;
-  if(el.type==='password'||el.type==='number'||el.type==='color'||el.type==='date')return;
-  const v=el.value;
-  if(v.indexOf('/')<0)return;
-  const n=v.replace(/([ASCEJBIU])\//gi,(m,c)=>{
-    const x=MAP[c.toUpperCase()];
-    return c===c.toUpperCase()?x:x.toLowerCase();
-  });
-  if(n===v)return;
-  const pos=Math.max(0,(el.selectionStart??n.length)-(v.length-n.length));
-  el.value=n;
-  try{el.setSelectionRange(pos,pos);}catch{}
-});
+  if(!el||(el.tagName!=='INPUT'&&el.tagName!=='TEXTAREA')||el.type==='password')return;
+  if(!ev.isComposing&&!el.matches('[type="number"],[type="color"],[type="date"],[type="url"],[type="email"]')&&!/url|image|img|avatar/i.test(el.name+' '+el.id)&&!/:\/\/|data:/.test(el.value)){
+    const v=el.value,n=v.replace(/([ASCEJBIU])\//gi,(m,c)=>{const x=MAP[c.toUpperCase()];return c===c.toUpperCase()?x:x.toLowerCase();});
+    if(n!==v){const pos=Math.max(0,(el.selectionStart??n.length)-(v.length-n.length));el.value=n;try{el.setSelectionRange(pos,pos);}catch{}}
+  }
+  if(el.id==='ci'&&ME)shellDraftSave(shellChatKey(),el.value);
+}
+document.addEventListener('input',shellInput);
+document.addEventListener('compositionend',shellInput);
 document.addEventListener('change',ev=>{
   const el=ev.target;
   if(!el||el.dataset.a!=='quickset')return;
   ev.preventDefault();
-  setQuick(Number(el.dataset.v)||0,el.value);
+  setQuick(Number(el.dataset.v),el.value);
 });
 document.addEventListener('keydown',ev=>{
+  if(ev.isComposing)return;
+  shellDialogs();
+  const dialog=SHELL.dialog;
+  if(ev.key==='Escape'&&dialog){
+    ev.preventDefault();
+    if($('#preveal')){if(A.pvclose)A.pvclose();else $('#preveal').remove();}
+    else if(UI.modal)closeModal(null);else A.closesh();
+    shellDialogs();return;
+  }
+  if(ev.key==='Tab'&&dialog){
+    const list=shellFocusables(dialog),first=list[0],last=list[list.length-1];
+    if(!first){ev.preventDefault();dialog.focus();return;}
+    if(ev.shiftKey&&(document.activeElement===first||!dialog.contains(document.activeElement))){ev.preventDefault();last.focus();}
+    else if(!ev.shiftKey&&(document.activeElement===last||!dialog.contains(document.activeElement))){ev.preventDefault();first.focus();}
+    return;
+  }
+  const el=ev.target;
+  if((ev.key==='Enter'||ev.key===' ')&&el.matches('[data-a][role="button"]')&&!el.matches('button,input,select,textarea')){ev.preventDefault();el.click();return;}
+  if(dialog)return;
   const ent={
     sq:()=>A.search(),lawq:()=>A.lawsearch(),bq:()=>A.bsearch(),mkq:()=>A.mksearch(),
     jq:()=>A.jsearch(),chq:()=>A.chsearch(),cardq:()=>A.cardsearch(),pkQ:()=>A.packsearch(),
     betq:()=>A.betsearch(),nwq:()=>A.nwsearch(),rootQ:()=>A.rootsearch(),rpw:()=>A.rootauth(),
-    setiq:()=>A.setisearch()
+    setiq:()=>A.setisearch(),ci:()=>UI.grp?A.sendgrp():A.sendchat()
   };
-  if(ev.key==='Enter'&&ev.target&&ent[ev.target.id]){ev.preventDefault();ent[ev.target.id]();}
-  if(ev.key==='Escape'&&UI.modal)closeModal(null);
+  if(ev.key==='Enter'&&el&&ent[el.id]){ev.preventDefault();Promise.resolve(ent[el.id]()).catch(error=>toast(errMsg(error),'e'));}
 });
-window.addEventListener('online',()=>{if(ME)sync().catch(()=>{});});
+function shellFlush(){
+  if(SHELL.flushTimer)return;
+  SHELL.flushTimer=setTimeout(()=>{SHELL.flushTimer=null;const main=$('#shell-main');if(ME&&SHELL.pending&&main&&!shellEditing(main))render({background:true});},0);
+}
+document.addEventListener('focusout',shellFlush);
+document.addEventListener('selectionchange',shellFlush);
+document.addEventListener('pointerdown',ev=>{
+  if(ev.target.classList?.contains('sheet'))A.closesh();
+  if(ev.target.closest('[data-a]'))shellCapture();
+});
+document.addEventListener('scroll',ev=>{
+  const box=ev.target;
+  if(box.id==='cm'&&box.scrollHeight-box.clientHeight-box.scrollTop<64&&SHELL.newMessages){SHELL.newMessages=0;shellChatNotice();}
+},true);
+window.addEventListener('pagehide',()=>{if(ME)shellCapture();});
+window.addEventListener('offline',()=>shellNetworkBanner());
+window.addEventListener('online',()=>{SHELL.retryAt=0;shellNetworkBanner();if(ME||SHELL.account)boot();});
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden'){
+    if(ME)shellCapture();clearInterval(UI._pollTimer);clearInterval(UI._chatTimer);UI._pollTimer=null;UI._chatTimer=null;
+  }else if(ME){pollingStart();pollPulse();pollChat();}
+});
+function shellViewport(){
+  const vp=window.visualViewport,h=document.documentElement;
+  h.style.setProperty('--shell-vh',(vp?vp.height:window.innerHeight)+'px');
+  h.style.setProperty('--shell-vtop',(vp?vp.offsetTop:0)+'px');
+  const keyboard=vp&&vp.scale===1?Math.max(0,window.innerHeight-vp.height-vp.offsetTop):0;
+  h.style.setProperty('--shell-keyboard',(keyboard>120?keyboard:0)+'px');
+  h.dataset.keyboard=keyboard>120?'open':'closed';
+}
+window.visualViewport?.addEventListener('resize',shellViewport);
+window.visualViewport?.addEventListener('scroll',shellViewport);
+window.addEventListener('resize',shellViewport);
+window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',shellMotion);
+new MutationObserver(()=>{
+  shellDialogs();
+  document.querySelectorAll('[data-a]:not(button):not(input):not(select):not(textarea):not([role])').forEach(el=>{el.setAttribute('role','button');el.tabIndex=0;});
+}).observe(document.body,{childList:true,subtree:true});
+sb.auth.onAuthStateChange((event,session)=>{
+  const uid=session?.user?.id;
+  if(event==='SIGNED_OUT'){shellReset();renderAuth();}
+  else if(uid&&SHELL.account&&uid!==SHELL.account){shellReset();SHELL.account=uid;queueMicrotask(()=>boot());}
+});
+shellViewport();
 
 /* ---------- download ---------- */
 function download(name,text,type){
@@ -3397,7 +4195,75 @@ function download(name,text,type){
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 
+Object.assign(UKD,{
+  'Schema renovanda: schema-part4.sql necessaria.':'Потрібне оновлення бази: спочатку застосуйте schema-part4.sql.',
+  'Transmissio':'Переказ','Solutio':'Оплата','Emptio':'Покупка','Licitatio':'Ставка на аукціоні','Operatio':'Операція',
+  'Ex Kapol':'Списання з балансу','Portorium inclusum':'Комісія в сумі','Receptum':'Отримувачу','Confirma operationem':'Підтвердження операції',
+  'Exitus incertus. Aperi operationes; noli iterum emere.':'Результат поки невідомий. Відкрийте історію операцій; не створюйте повторну покупку.',
+  'Repete eandem operationem?':'Відновити цю операцію?','Repete':'Повторити','Clavis eadem: altera solutio non fiet.':'Буде використано той самий номер спроби — повторного списання не буде.',
+  'Receptum non inventum':'Квитанцію не знайдено','Receptum operationis':'Квитанція операції','Perfecta':'Виконано','Copia numerum':'Копіювати номер','Specta cardas':'Переглянути картки',
+  'Portorium iam in summa inclusum est.':'Комісія вже входить у суму списання.','Exitus incertus':'Результат уточнюється','Verifica exitum':'Перевірити результат','Operationes desunt':'Операцій ще немає',
+  'Actio perfecta; renovatio differetur.':'Дію виконано. Дані оновляться після відновлення зв’язку.',
+  'Adumbratio':'Чернетка','Adumbrationes':'Чернетки','Textus fixus. Signature servatae.':'Незмінний текст. Збережені підписи.','Renova':'Оновити','Tempus finitum':'Строк минув','Abrogata':'Скасовані','Documenta onerantur…':'Завантаження документів…',
+  'Participes':'Учасники','Omnes cives':'Усі громадяни','Tempus finitum. Signature servantur.':'Строк підписання минув. Наявні підписи зберігаються.',
+  'Fides documenti':'Контрольна сума документа','Confirmatio interna; non est signatura qualificata.':'Внутрішнє підтвердження Appentana, а не кваліфікований електронний підпис.',
+  'Ratio abrogationis':'Причина скасування','Versio prior':'Попередня версія','Versio nova':'Нова версія','Versio':'Версія','Publica':'Опублікувати','Forma imprimenda':'Друкована версія','Documentum':'Документ',
+  'Titulus: 4–120 signa':'Заголовок: 4–120 символів','Textus: 10–6000 signa':'Текст: 10–6000 символів','Quorum: 1–50':'Потрібно від 1 до 50 підписів','Terminus: 0–720 h':'Термін: 0–720 годин',
+  'Adumbratio tantum a te visibilis est. Post publicationem textus non mutatur.':'Чернетку бачите лише ви. Після публікації текст змінити не можна.',
+  'Terminus (h, 0 = sine termino)':'Строк у годинах (0 — без обмеження)','Participes · nomina per comma':'Учасники — ніки через кому','Vacuum = omnes cives. Auctor semper signat.':'Порожнє поле — усі громадяни. Автор підписує під час публікації.',
+  'Praevisio':'Попередній перегляд','Serva adumbrationem':'Зберегти чернетку','Terminus post publicationem':'Строк після публікації','horae':'год',
+  'Adumbratio servata; renovatio differetur.':'Чернетку збережено. Оновлення даних відкладено.','Publica documentum?':'Опублікувати документ?',
+  'Textus fiet immutabilis. Auctor signat.':'Текст стане незмінним. Публікація додає підпис автора.','Documentum publicatum':'Документ опубліковано',
+  'Confirmas hanc versionem; nulla pecunia movetur.':'Ви підтверджуєте цю версію документа. Кошти не списуються.','Quid signo?':'Що я підписую?',
+  'Abroga documentum?':'Скасувати документ?','Signature et historia servantur.':'Підписи та історія залишаться збереженими.','Ratio: minimum 5 signa':'Причина: щонайменше 5 символів',
+  'Pretium / minimum (h)':'Ціна / мінімум (h)','Max stavka (h)':'Максимальна ставка (h)','Bank (h)':'Банк (h)'
+});
+document.addEventListener('input',ev=>{if(ev.target.closest('.contract-editor'))readContractDraft();});
+sb.auth.onAuthStateChange(event=>{
+  if(event==='SIGNED_OUT'){
+    UI.contractDraft=null;UI.contractDetail=null;UI.contractList=null;UI.operations=null;UI.lastOperation=null;
+    UI.contractRequest=(UI.contractRequest||0)+1;UI.contractDetailRequest=(UI.contractDetailRequest||0)+1;
+  }
+});
+
+const L10N_CARDS={
+  'Historia emptionum':'Історія покупок',
+  'Una karta per emptionem; repetitiones possibiles.':'Одна картка за покупку; можливі повтори.',
+  'Una karta per emptionem; 1–10 emptiones independentes. Repetitiones possibiles.':'Одна картка за покупку; 1–10 незалежних покупок. Можливі повтори.',
+  'Probabilitates = pondus / summa ponderum cardarum activarum. Summa 100%; valores visi rotundati.':'Імовірність = вага / сума ваг активних карток. Разом 100%; показані значення округлено.',
+  'Aequa: pondera 1. Ad 100%: scala tantum, sine minimo artificioso.':'Порівну: усі ваги 1. До 100%: лише зміна масштабу, без штучного мінімуму.',
+  'Proxima karta':'Наступна картка','Nova karta':'Нова картка','Duplicata':'Повтор',
+  'Receptum':'Квитанція','Omnes probabilitates':'Усі ймовірності',
+  'Cardae activae desunt':'Немає активних карток','Cardae activae':'Активні картки',
+  'Cardae selectae':'Вибрані картки','Selecta':'Вибрано','Pondus':'Вага',
+  'Pondus → probabilitas':'Вага → імовірність','Remove':'Прибрати',
+  'Maximum 100 cardae':'Щонайбільше 100 карток',
+  'Cardae inactivae: remove ante servare':'Неактивні картки: приберіть перед збереженням',
+  'Ordo et effectus independentes.':'Порядок і ефект налаштовуються незалежно.',
+  'Sursum':'Вище','Deorsum':'Нижче','Recense':'Редагувати','Recense pack':'Редагувати пак',
+  'Recense raritatem':'Редагувати рідкість','Effectus':'Ефект','plain':'Без ефекту','glow':'Сяйво','flare':'Перелив',
+  'Nunc':'Зараз','Praevisa':'Попередній перегляд','Praevisa pack':'Перегляд пака',
+  'Serva pack':'Зберегти пак','Pack servatus':'Пак збережено','Purga draft?':'Очистити чернетку?',
+  'Pack emptus; synchronizatio differt. Historia emptionum servata.':'Пак куплено; оновлення даних затримується. Покупка збережена в історії.',
+  'Pack servatus; synchronizatio differt.':'Пак збережено; оновлення даних затримується.',
+  'Clausa':'Неактивна','Catalogus':'Каталог','Pretium (h)':'Ціна (h)',
+  'Raritatem crea prius':'Спочатку створіть активну рідкість'
+};
+Object.assign(UKD,L10N_CARDS);
 /* ---------- boot ---------- */
+const L10N_SHELL={
+  'Connexio interrupta':'З’єднання перервано','Sine rete':'Немає з’єднання з мережею','Iterum conare':'Спробувати знову',
+  'Sessio servata. Iterum conare.':'Сесію збережено. Спробуйте підключитися знову.','Sessio non congruit':'Сесія не відповідає обліковому запису',
+  'Nuntii novi':'Нові повідомлення','Nuntius deletus':'Повідомлення видалено','mutatus':'змінено','Actus':'Дії',
+  'Dialogus':'Діалог','Sectiones':'Розділи','Omnes sectiones':'Усі розділи','Plus':'Ще','Exi':'Вийти',
+  'Cellae celeres':'Швидкі вкладки','Reset cellae':'Скинути швидкі вкладки','Praevisus cellarum':'Попередній перегляд швидких вкладок',
+  'Cella 1':'Вкладка 1','Cella 2':'Вкладка 2','Cella 3':'Вкладка 3','Cella 4':'Вкладка 4',
+  'Cellae celeres sunt quattuor sectiones in ima parte telephoni. Ordo sectionum eas non mutat.':'Чотири швидкі вкладки внизу екрана телефону. Загальний порядок розділів на них не впливає.',
+  'Motus':'Анімація','Systema':'Як у системі','Motus reductus':'Зменшена','Motus plenus':'Повна',
+  'Nuntius gregis...':'Повідомлення групі...','Polog non confirmatus — accessus clausus':'Статус не підтверджено — доступ закрито'
+};
+Object.assign(UKD,L10N_SHELL);
+shellMotion();shellNetworkBanner();
 boot();
 </script>
 </body>
