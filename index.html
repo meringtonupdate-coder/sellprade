@@ -570,7 +570,33 @@ html[data-theme=light] .sharp{color:color-mix(in srgb,var(--sc,#c8a24a) 52%,var(
 .av.avimg>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .shell-network{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;padding:7px 12px;background:var(--c2);color:var(--tx);border-bottom:1px solid var(--wn);font-size:.8rem}
 .chat-new{display:block;margin:6px auto;position:relative;z-index:1}
-#shell-main #cm{scroll-behavior:auto;overflow-anchor:none}
+#shell-main #cm{scroll-behavior:auto;overflow-anchor:none;overscroll-behavior:contain;touch-action:pan-y}
+.onl{display:inline-block;width:7px;height:7px;border-radius:50%;background:#5b6478;margin-left:6px;vertical-align:middle;flex-shrink:0;transition:background .25s}
+.onl.on{background:#22c55e;box-shadow:0 0 0 2px color-mix(in srgb,#22c55e 22%,transparent)}
+.cr-chips{display:flex;gap:7px;overflow-x:auto;padding:2px 0 9px;scrollbar-width:none}
+.cr-chips::-webkit-scrollbar{display:none}
+.cr-chip{flex:0 0 auto;display:flex;flex-direction:column;gap:2px;align-items:flex-start;min-width:82px;padding:8px 10px;border-radius:12px;border:1px solid var(--bd);background:color-mix(in srgb,var(--bg) 58%,transparent);color:var(--tx);font:inherit;cursor:pointer}
+.cr-chip.on{border-color:var(--p);box-shadow:inset 3px 0 0 var(--p)}
+.cr-chip b{font-size:.82rem}.cr-chip small{font-size:.66rem;color:var(--mut,#8b98b8)}
+.cr-chart{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--bd);background:color-mix(in srgb,var(--bg) 74%,transparent)}
+.cr-ranges{display:flex;gap:6px;margin:8px 0 2px}
+.cr-ranges .segbtn{min-width:44px;justify-content:center}
+.cr-stat{display:flex;justify-content:space-between;gap:10px;font-size:.74rem;padding:3px 0;color:var(--mut,#8b98b8)}
+.cr-stat b{color:var(--tx);font-variant-numeric:tabular-nums}
+.cr-up{color:#22c55e}.cr-dn{color:#fb7185}
+.cr-vol{display:flex;height:7px;border-radius:6px;overflow:hidden;background:color-mix(in srgb,var(--bg) 62%,transparent);margin:5px 0}
+.cr-vol i{display:block;height:100%}
+.cr-pos{border:1px solid var(--bd);border-radius:12px;padding:9px 10px;margin-bottom:8px}
+.cr-pos .r{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.cr-pos small{display:block;color:var(--mut,#8b98b8);font-size:.68rem;margin-top:2px}
+.cr-pend{border-color:var(--wn,#e8c37a)}
+.nfhead,.nfrow{display:grid;grid-template-columns:1fr 52px 52px;align-items:center;gap:8px}
+.nfhead{font-size:.63rem;letter-spacing:.07em;text-transform:uppercase;color:var(--mu);padding:2px 0 5px}
+.nfhead>span:not(:first-child),.nfrow>span:not(:first-child){text-align:right}
+.nfrow{padding:4px 0;border-top:1px dashed var(--bd);font-size:.8rem}
+.nfrow .sw{width:44px;height:26px;border-radius:13px;display:inline-block}
+.nfrow .sw::after{top:3px}
+.nfrow .sw.on::after{transform:translateX(18px)}
 .quick-preview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0 12px}
 .quick-preview>span{display:flex;align-items:center;justify-content:center;gap:5px;min-height:44px;padding:6px 3px;border:1px solid var(--bd);border-radius:10px;font-size:.68rem;overflow-wrap:anywhere}
 #shell-main .sw{height:44px;border-radius:22px}.sw::after{top:12px}
@@ -994,7 +1020,7 @@ const vPass=s=>!s||s.length<6||s.length>72?'Clavis: 6–72 signa':/\s/.test(s)?'
 
 /* ---------- state ---------- */
 const TABS=[
-  ['holb','Holb','#8aa4ff'],['cards','Cardky','#e8c37a'],['bets','Teckelié','#34d399'],
+  ['holb','Holb','#8aa4ff'],['cards','Cardky','#e8c37a'],['crypto','Invié','#f5c451'],['bets','Teckelié','#34d399'],
   ['seg','Segnalи','#fb7185'],['bank','Sellprade','#34d399'],['prad','Pradи','#fbbf24'],
   ['seti','Setи','#c084fc'],['chat','Besedy','#22d3ee'],['jur','Viche','#f472b6'],['news','Vesti','#e8c37a'],
   ['vlada','Vlada','#a3e635'],['quaere','Isk','#94a3b8'],['help','Pomagach','#fb923c'],
@@ -1023,6 +1049,7 @@ const UI={
   pcat:'Omnes', mk:'nundinae', mkQ:'',
   cardTab:'shop', cardQ:'', cardColl:'', cardRar:'', cardLimit:60, packColl:'', studioColl:null,
   revExtra:null, revMore:false,
+  cryptoAsset:null, cryptoRange:'30', cryptoTab:'market', cryptoQ:'',
   betTab:'open', betQ:'',
   csF:'all', csQ:'',
   jcat:'Omnes', jq:'', jsort:'new', th:null,
@@ -1032,7 +1059,7 @@ const UI={
   ticket:null, tkF:'all', faq:null, q:'',
   sq:'', sk:'', sc:'', sfrom:'', sto:'', ssort:'new', smin:'', smax:'', sres:null, sload:false,
   sheet:false, rootOk:false, rootQ:'', rootP:'all', rootTab:'users',
-  segNew:false,
+  segNew:false, segCat:'all',
   hide:localStorage.getItem('app_hide')==='1',
   sound:localStorage.getItem('app_sound')==='1',
   lang:localStorage.getItem('app_lang')||'la',
@@ -1050,7 +1077,7 @@ function tabOrder(){
 }
 function tabsOrdered(){
   const root=TABS.find(t=>t[0]==='root');
-  const list=tabOrder().map(id=>TABS.find(t=>t[0]===id));
+  const list=tabOrder().filter(id=>id!=='crypto'||canCrypto()).map(id=>TABS.find(t=>t[0]===id));
   return root?[...list,root]:list;
 }
 function moveTab(id,dir){
@@ -1063,7 +1090,7 @@ function moveTab(id,dir){
   render();
 }
 function quickTabs(){
-  const known=TABS.map(t=>t[0]).filter(id=>id!=='root');
+  const known=TABS.map(t=>t[0]).filter(id=>id!=='root'&&(id!=='crypto'||canCrypto()));
   const q=(UI.quick||[]).filter((id,i,a)=>known.includes(id)&&a.indexOf(id)===i);
   for(const id of known)if(q.length<4&&!q.includes(id))q.push(id);
   return q.slice(0,4);
@@ -1154,7 +1181,24 @@ function errMsg(e){
     'Teckel necessarius':uk?'Потрібен тег Teckel':'Teckel tag required',
     'Aerarium insufficiens':uk?'Недостатньо коштів у скарбниці':'Insufficient treasury',
     'Nullae copiae':uk?'Немає копій для відкликання':'No copies to revoke',
-    'Compensatio invalida':uk?'Невірна компенсація':'Invalid compensation'
+    'Compensatio invalida':uk?'Невірна компенсація':'Invalid compensation',
+    'Crypto non inventa':uk?'Криптовалюту не знайдено':'Crypto asset not found',
+    'Crypto clausa':uk?'Торги цією криптовалютою закрито':'Crypto trading is closed',
+    'Crypto in usu':uk?'Криптовалюта використовується':'Crypto asset is in use',
+    'Symbolum invalidum':uk?'Невірний символ (2–8 A-Z, 0-9)':'Invalid symbol (2–8 A-Z, 0-9)',
+    'Symbolum iam est':uk?'Такий символ уже існує':'Symbol already exists',
+    'Color invalidus':uk?'Невірний колір (#RRGGBB)':'Invalid color (#RRGGBB)',
+    'Pretium invalidum':uk?'Невірна ціна':'Invalid price',
+    'Clavis repetita: alia operatio':uk?'Ключ повтору вже використано для іншої операції':'Repeated key used for a different operation',
+    'Copiae insufficiens':uk?'Недостатньо одиниць':'Insufficient units',
+    'Portorium invalidum':uk?'Невірне мито':'Invalid fee',
+    'Quantitas invalida':uk?'Невірна кількість':'Invalid quantity',
+    'Portorium 0-10 percentum':uk?'Мито: 0–10 %':'Fee must be 0–10%',
+    'Portorium 0-10 percentum diei':uk?'Денне мито: 0–10 %':'Daily fee must be 0–10%',
+    'Optiones invalidae':uk?'Невірні параметри':'Invalid options',
+    'Categoria ignota':uk?'Невідома категорія':'Unknown category',
+    'Optio invalida':uk?'Невірний параметр':'Invalid option',
+    'Optiones notificationum invalidae':uk?'Невірні налаштування сповіщень':'Invalid notification preferences'
   };
   for(const k in map)if(m.startsWith(k))return m.replace(k,map[k]);
   return m;
@@ -1183,7 +1227,7 @@ function drawModal(){
     else if(f.type==='sel'){
       inp=`<select id="${id}">`+(f.opts||[]).map(o=>`<option value="${esc(o.v)}"${String(o.v)===String(f.value)?' selected':''}>${esc(o.l)}</option>`).join('')+`</select>`;
     }else{
-      inp=`<input id="${id}" type="${f.type==='num'?'number':f.type==='pass'?'password':'text'}"${f.type==='num'?' step="0.01" min="0"':''} maxlength="${f.max||120}" value="${esc(f.value==null?'':f.value)}" placeholder="${esc(f.ph||'')}">`;
+      inp=`<input id="${id}" type="${f.type==='num'?'number':f.type==='pass'?'password':'text'}"${f.type==='num'?` step="${f.step||'0.01'}" min="0"`:''} maxlength="${f.max||120}" value="${esc(f.value==null?'':f.value)}" placeholder="${esc(f.ph||'')}">`;
     }
     return `<div class="fl"><label>${esc(f.label||f.n)}</label>${inp}${f.hint?`<span class="hint">${esc(f.hint)}</span>`:''}</div>`;
   }).join('');
@@ -1299,7 +1343,18 @@ function trDom(root){
 /* ---------- data helpers ---------- */
 const users=()=>(DB&&DB.users)||[];
 const unick=n=>users().find(u=>u.nick===n);
-const unread=()=>((DB&&DB.notifications)||[]).filter(n=>!n.read).length;
+const isOnline=n=>!!n&&SHELL.online.has(String(n));
+const onDot=n=>`<span class="onl${isOnline(n)?' on':''}" data-onl="${esc(String(n))}" aria-label="${esc(trText(isOnline(n)?'In rete':'Extra rete'))}" title="${esc(trText(isOnline(n)?'In rete':'Extra rete'))}"></span>`;
+function shellPresence(list,merge=false){
+  if(!Array.isArray(list))return;
+  const set=merge?new Set([...SHELL.online,...list.map(String)]):new Set(list.map(String));
+  SHELL.online=set;
+  document.querySelectorAll('[data-onl]').forEach(el=>{
+    const on=set.has(el.dataset.onl),label=trText(on?'In rete':'Extra rete');
+    el.classList.toggle('on',on);el.setAttribute('aria-label',label);el.title=label;
+  });
+}
+const unread=()=>((DB&&DB.notifications)||[]).filter(n=>!n.read&&notifPref(ncat(n.kind)).inapp).length;
 const myChats=()=>(DB&&DB.chats)||[];
 const myGroups=()=>(DB&&DB.groups)||[];
 const myLots=()=>(DB&&DB.lots)||[];
@@ -1366,6 +1421,8 @@ const myCards=()=>cardData().mine||[];
 const cardById=id=>catalog().find(c=>c.id===id)||null;
 const canPurge=()=>Number(DB&&DB.api_version)>=5;
 const canRevoke=()=>canPurge()&&!!(ME&&ME.admin);
+const canCrypto=()=>Number(DB&&DB.api_version)>=6;
+const cryptoData=()=>(DB&&DB.crypto)||null;
 const revocations=()=>{
   const seen=new Set(),out=[];
   [...((DB&&DB.card_revocations)||[]),...(UI.revExtra||[])].forEach(r=>{
@@ -1495,12 +1552,13 @@ function pollingStart(){
   UI._pollTimer=setInterval(pollPulse,6000);
   UI._chatTimer=setInterval(pollChat,2300);
 }
-function shellCanPoll(){return ME&&navigator.onLine!==false&&document.visibilityState!=='hidden'&&Date.now()>=SHELL.retryAt;}
+function shellCanPoll(){return ME&&navigator.onLine!==false&&Date.now()>=SHELL.retryAt;}
 async function pollPulse(){
   if(!shellCanPoll()||UI._pollBusy)return;
   const token=shellToken();UI._pollBusy=true;
   try{
     const d=await rpc('api_pulse');if(!shellCurrent(token))return;
+    if(Array.isArray(d.online)){shellPresence(d.online);SHELL.onlineReady=true;}
     const recovering=!!SHELL.network; shellNetwork();
     const n=+d.notif||0,m=+d.msg||0;
     if(!UI._pulseReady||n>UI._notifMax||m>UI._msgMax||recovering){
@@ -1560,7 +1618,8 @@ async function pollChat(){
       appendBubbles(fresh.filter(m=>!drawn.has(String(m.id))).map(m=>bubble(m,m.from===ME.nick,isGrp)).join(''));
       if(fresh.some(m=>m.from!==ME.nick))beep();
     }
-    applyEdits(live,(d&&d.edits)||[],isGrp);
+    const edited=applyEdits(live,(d&&d.edits)||[],isGrp);
+    if((fresh.length||edited)&&SHELL.view===shellViewKey())SHELL.mainSig=UI.lang+'|'+tabContent();
   }catch(error){if(current())shellNetwork(error);}
   finally{if(current())UI._chatBusy=false;}
 }
@@ -1596,11 +1655,15 @@ async function sync(options={}){
       throw error;
     }
     if(!data?.me||String(data.me.uid)!==String(uid))throw new Error('Sessio non congruit');
+    const prevNotif=UI._notifMax||0;
     DB=data;ME=data.me;UI.hide=!!ME.hide_bal;
+    shellPresence((data.users||[]).filter(u=>u.online).map(u=>u.nick),true);
+    if((data.users||[]).some(u=>u.online))SHELL.onlineReady=true;
     if(UI.tab==='root'&&!ME.admin)UI.tab='holb';
     shellNetwork();pollingStart();
     const nu=unread()+unreadChats();if(UI._unread&&nu>UI._unread)beep();UI._unread=nu;
     render({background:!!options.background});
+    shellBrowserNotify(data.notifications||[],prevNotif);
   }catch(error){
     if(request!==SHELL.sync||epoch!==SHELL.epoch)return;
     shellNetwork(error);throw error;
@@ -1626,7 +1689,7 @@ async function rpcRaw(name,args){
   if(!/^api_[a-z0-9_]+$/.test(name))throw new Error('API invalida');
   const {data,error}=await sb.rpc(name,args||{});
   if(error){
-    if(error.code==='PGRST202')error.message=trText('Schema renovanda: schema-part5.sql necessaria.');
+    if(error.code==='PGRST202')error.message=trText('Schema renovanda: applica schema-part5.sql et schema-part6.sql.');
     throw error;
   }
   return data;
@@ -1716,7 +1779,7 @@ function authErrBox(msg){const el=$('#a-err');if(el)el.textContent=trText(msg||'
 
 /* ---------- stable shell / private view state ---------- */
 const SHELL_DEFAULTS={...UI};
-const SHELL={account:null,epoch:0,sync:0,chatEpoch:0,chatKey:'',view:null,forms:new Map(),markup:new Map(),pending:false,failures:0,retryAt:0,network:'',sending:new Set(),dialog:null,opener:null};
+const SHELL={account:null,epoch:0,sync:0,chatEpoch:0,chatKey:'',view:null,forms:new Map(),markup:new Map(),mainSig:'',online:new Set(),onlineReady:false,pending:false,failures:0,retryAt:0,network:'',sending:new Set(),dialog:null,opener:null};
 function shellToken(){return {uid:SHELL.account||ME?.uid,epoch:SHELL.epoch};}
 function shellCurrent(t){return !!t.uid&&t.uid===SHELL.account&&t.epoch===SHELL.epoch;}
 function shellChatKey(){return ME&&UI.tab==='chat'&&(UI.grp||UI.chat)?`${ME.uid}:${UI.grp?'group':'dm'}:${UI.grp||UI.chat}`:'';}
@@ -1740,7 +1803,7 @@ function shellReset(){
   for(const k of Object.keys(UI))delete UI[k];
   Object.assign(UI,SHELL_DEFAULTS,prefs,{open:new Set(),hide:false});
   ME=null;DB=null;SHELL.account=null;SHELL.view=null;SHELL.chatKey='';SHELL.pending=false;
-  SHELL.forms.clear();SHELL.markup.clear();SHELL.sending.clear();SHELL.newMessages=0;
+  SHELL.forms.clear();SHELL.markup.clear();SHELL.mainSig='';SHELL.online=new Set();SHELL.onlineReady=false;SHELL.sending.clear();SHELL.newMessages=0;
   SHELL.failures=0;SHELL.retryAt=0;SHELL.network='';
   document.querySelectorAll('input[type="password"]').forEach(el=>{el.value='';});
   $('#app')?.replaceChildren();$('#tw')?.replaceChildren();
@@ -1760,7 +1823,7 @@ function shellNetworkBanner(){
   if(host.innerHTML!==html)host.innerHTML=html;
 }
 function shellViewKey(){
-  const fields={bank:['bsub'],prad:['mk','pcat'],cards:['cardTab','cardColl','cardRar','packColl','studioColl'],bets:['betTab'],seti:['csF'],chat:['csub','chat','grp'],jur:['th','jcat'],news:['nwOpen','nwCat'],vlada:['vsub','lawKind'],help:['ticket','tkF','faq'],root:['rootOk','rootTab','rootP'],seg:['segNew']}[UI.tab]||[];
+  const fields={bank:['bsub'],prad:['mk','pcat'],cards:['cardTab','cardColl','cardRar','packColl','studioColl'],bets:['betTab'],seti:['csF'],chat:['csub','chat','grp'],jur:['th','jcat'],news:['nwOpen','nwCat'],vlada:['vsub','lawKind'],help:['ticket','tkF','faq'],root:['rootOk','rootTab','rootP'],seg:['segNew','segCat'],crypto:['cryptoAsset','cryptoRange','cryptoTab']}[UI.tab]||[];
   return JSON.stringify([ME.uid,UI.tab,...fields.map(k=>UI[k]??null)]);
 }
 function shellFields(root){
@@ -1878,13 +1941,17 @@ function render(options={}){
   else if(!UI.sheet&&sheet)sheet.remove();
   shellNetworkBanner();
   const main=$('#shell-main');
+  const content=tabContent();
+  const sig=UI.lang+'|'+content;
+  const sameMarkup=same&&!options.resetForms&&!options.forceMain&&SHELL.mainSig===sig;
   if(same&&options.background&&shellEditing(main))SHELL.pending=true;
+  else if(sameMarkup)SHELL.pending=false;
   else {
     SHELL.pending=false;
     if(options.resetForms)SHELL.forms.delete(key);
     const saved=options.resetForms?null:SHELL.forms.get(key),old=same&&!options.resetForms?new Map(shellFields(main)):new Map();
     const oldCount=main.querySelectorAll('#cm .ms').length;
-    const t=document.createElement('template');t.innerHTML=tabContent();shellChatPrivacy(t.content);trDom(t.content);
+    const t=document.createElement('template');t.innerHTML=content;shellChatPrivacy(t.content);trDom(t.content);
     shellFields(t.content).forEach(([name,el])=>{
       const existing=old.get(name),state=saved?.fields.get(name);
       if(existing&&existing.tagName===el.tagName&&existing.type===el.type){
@@ -1896,6 +1963,7 @@ function render(options={}){
       }else if(state&&el.type===state.type){el.value=state.value;if('checked'in el)el.checked=state.checked;}
     });
     main.replaceChildren(t.content);main.dataset.view=UI.tab;
+    SHELL.mainSig=sig;
     if(!same)main.classList.add('enter');else main.classList.remove('enter');
     SHELL.view=key;UI._lastTab=UI.tab;
     if(saved){
@@ -1961,6 +2029,7 @@ function tabContent(){
   if(ME.status==='neophyte'&&!FREE.includes(UI.tab))return C('Accessus clausus',`<div class="al">Polog «Neophytus» — accessus limitatus.</div><div class="gs">${bt('Pete Polog','verify','','p')}</div>`);
   switch(UI.tab){
     case 'cards':return cards();
+    case 'crypto':return cryptoView();
     case 'holb':return holb();
     case 'bets':return bets();
     case 'seg':return seg();
@@ -2014,6 +2083,36 @@ function notifRow(n){
 }
 function statBox(label,val){return `<div>${esc(label)}<b>${val}</b></div>`;}
 
+/* ---------- notifications: categories, prefs, browser ---------- */
+const NCATS=['chat','money','cards','bets','news','forum','gov','support','crypto','system'];
+const NCAT_LABEL={chat:'Besedy',money:'Kapol',cards:'Cardky',bets:'Teckelié',news:'Vesti',forum:'Viche',gov:'Vlada',support:'Pomagach',crypto:'Invié',system:'System'};
+function ncat(kind){
+  const k=String(kind||'');
+  if(NCATS.includes(k))return k;
+  if(['bank','market','prad','salarium','cude','ure','burn','multa','refund','escrow_burn','escrow_refund','escrow_closed'].includes(k))return 'money';
+  if(['card','cardbuy','cardsell','cardauc','cardwin','cardfee','gift','card_revoke','card_refund'].includes(k))return 'cards';
+  if(['bet','stake','betwin','betrefund'].includes(k))return 'bets';
+  if(['post','topic'].includes(k))return 'forum';
+  if(['law','vlada','case','petitio'].includes(k))return 'gov';
+  if(['help','ticket'].includes(k))return 'support';
+  if(['crypto_buy','crypto_sell','crypto_fee','crypto_price'].includes(k))return 'crypto';
+  return 'system';
+}
+function notifPref(cat){
+  return ((DB&&DB.notif_prefs)||[]).find(p=>p.cat===cat)||{cat,inapp:true,push:false};
+}
+function notifPushOn(){return 'Notification' in window&&Notification.permission==='granted';}
+function shellBrowserNotify(list,after){
+  if(!notifPushOn()||document.visibilityState!=='hidden'||!(+after>0))return;
+  const fresh=(list||[]).filter(n=>+n.id>+after&&!n.read&&notifPref(ncat(n.kind)).push).slice(-3);
+  for(const n of fresh){
+    try{
+      const o=new Notification(trText(brandName()),{body:trText(n.text),tag:'appentana-'+n.id});
+      o.onclick=()=>{try{window.focus();}catch(e){}o.close();};
+    }catch(e){}
+  }
+}
+
 /* ---------- Holb ---------- */
 function holb(){
   const s=(DB&&DB.stats)||{};
@@ -2054,7 +2153,7 @@ function holb(){
     ])+`<div class="gs" style="margin-top:8px">${bt('ID','copyid',m.id,'g sm')}${bt('Profil','prof',m.nick,'g sm')}${bt('Ustroy','tab','ust','g sm')}</div>`)}
     ${C('Novissimi motti',ledgerRows((DB.ledger||[]).slice(0,6),true),'<span class="hp">'+bt('Omnes','tab','bank','g sm')+'</span>')}
   </div><div class="stack">
-    ${C('Segnalи',(DB.notifications||[]).slice(0,6).map(notifRow).join('')||e('Nihil novi','#fb7185'),'<span class="hp">'+bt('Omnes','tab','seg','g sm')+'</span>')}
+    ${C('Segnalи',(DB.notifications||[]).filter(n=>notifPref(ncat(n.kind)).inapp).slice(0,6).map(notifRow).join('')||e('Nihil novi','#fb7185'),'<span class="hp">'+bt('Omnes','tab','seg','g sm')+'</span>')}
     ${C('Vesti',news.map(n=>`<div class="it"><div class="r" data-a="nwopen" data-v="${n.id}"><i>${icFor('news')}</i><div class="in"><b>${esc(n.title)}</b><small>${dt(n.ts)} · @${esc(n.by)}</small></div></div></div>`).join('')||e('Acta desunt','#e8c37a'),'<span class="hp">'+bt('Omnes','tab','news','g sm')+'</span>')}
     ${C('Res publica',rows([
       ['Ludie',s.cives||0],['Neophyti',s.neophytes||0],['Lots in Pradи',s.lots||0],
@@ -2066,13 +2165,20 @@ function holb(){
 
 /* ---------- Segnalи ---------- */
 function seg(){
-  const all=(DB.notifications||[]);
-  const list=UI.segNew?all.filter(n=>!n.read):all;
+  const all=(DB.notifications||[]).filter(n=>notifPref(ncat(n.kind)).inapp);
+  const cat=NCATS.includes(UI.segCat)?UI.segCat:'all';
+  const pool=cat==='all'?all:all.filter(n=>ncat(n.kind)===cat);
+  const list=UI.segNew?pool.filter(n=>!n.read):pool;
+  const unreadN=all.filter(n=>!n.read).length;
   return `${C('Segnalи',`<div class="filters" style="margin-bottom:10px">
-      <button class="fchip ${UI.segNew?'':'on'}" data-a="segfilter" data-v="all">Omnes (${all.length})</button>
-      <button class="fchip ${UI.segNew?'on':''}" data-a="segfilter" data-v="new">Nova (${all.filter(n=>!n.read).length})</button>
+      <button class="fchip ${cat==='all'?'on':''}" data-a="segcat" data-v="all">Omnes · ${all.length}</button>
+      ${NCATS.map(c=>{const n=all.filter(x=>ncat(x.kind)===c).length;return n?`<button class="fchip ${cat===c?'on':''}" data-a="segcat" data-v="${c}">${esc(trText(NCAT_LABEL[c]))} · ${n}</button>`:'';}).join('')}
     </div>
-    <div class="gs" style="margin-bottom:10px">${bt('✓ Omnia lecta','notifreadall','','ok sm')}${bt('Purga','notifclear','','d sm')}</div>
+    <div class="filters" style="margin-bottom:10px">
+      <button class="fchip ${UI.segNew?'':'on'}" data-a="segfilter" data-v="all">Omnia</button>
+      <button class="fchip ${UI.segNew?'on':''}" data-a="segfilter" data-v="new">Nova · ${unreadN}</button>
+    </div>
+    <div class="gs" style="margin-bottom:10px">${bt('✓ Omnia lecta','notifreadall','','ok sm')}${bt('Purga','notifclear','','d sm')}${bt('Ustroy','tab','ust','g sm')}</div>
     ${list.map(notifRow).join('')||e('Nihil novi','#fb7185')}`)}`;
 }
 
@@ -2624,6 +2730,137 @@ function betCard(b){
   </div>`;
 }
 
+/* ---------- Invié (crypto) ---------- */
+const crq=n=>{const v=+n||0;return v?String(+v.toFixed(8)):'0';};
+function crAssets(){
+  const d=cryptoData();
+  return ((d&&d.assets)||[]).slice().sort((a,b)=>(b.active?1:0)-(a.active?1:0)||(+a.sort||0)-(+b.sort||0)||String(a.symbol).localeCompare(String(b.symbol)));
+}
+function crAsset(id){return crAssets().find(a=>String(a.id)===String(id));}
+function crSeries(a){
+  const h=((a&&a.history)||[]).map(p=>({ts:+new Date(p.ts),price:+p.price})).filter(p=>isFinite(p.ts)&&isFinite(p.price)).sort((x,y)=>x.ts-y.ts);
+  const price=+(a&&a.price)||0;
+  if(!h.length)return [{ts:Date.now(),price}];
+  if(h[h.length-1].price!==price)h.push({ts:Date.now(),price});
+  return h;
+}
+function crRange(a){
+  const all=crSeries(a),r=UI.cryptoRange;
+  if(!['7','30','90'].includes(r))return all;
+  const from=Date.now()-(+r)*86400000,pts=all.filter(p=>p.ts>=from);
+  return pts.length>=2?pts:all.slice(-2);
+}
+function crChg(a,days){
+  const all=crSeries(a);
+  const from=Date.now()-(days||30)*86400000,pts=days?all.filter(p=>p.ts>=from):all;
+  if(pts.length<2)return 0;
+  const f=pts[0].price,l=pts[pts.length-1].price;
+  return f?((l-f)/f)*100:0;
+}
+function crChart(a){
+  const pts=crRange(a);
+  const W=640,H=220,P=20;
+  const vals=pts.map(p=>p.price),min=Math.min(...vals),max=Math.max(...vals),span=max-min||1;
+  const X=i=>P+(pts.length<2?0:i*(W-P*2)/(pts.length-1));
+  const Y=v=>P+(max-v)/span*(H-P*2);
+  const line=pts.map((p,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(p.price).toFixed(1)}`).join(' ');
+  const last=pts[pts.length-1],up=last.price>=pts[0].price,col=up?'#22c55e':'#fb7185';
+  const area=`${line} L${X(pts.length-1).toFixed(1)} ${H-P} L${X(0).toFixed(1)} ${H-P} Z`;
+  const grid=[0,.5,1].map(k=>{const yy=P+k*(H-P*2),val=max-span*k;return `<line x1="${P}" y1="${yy.toFixed(1)}" x2="${W-P}" y2="${yy.toFixed(1)}" stroke="currentColor" stroke-opacity=".12" stroke-dasharray="4 6"/><text x="${W-P}" y="${(yy-5).toFixed(1)}" text-anchor="end" font-size="12" style="fill:var(--mu)">${fm(val)}</text>`;}).join('');
+  return `<svg class="cr-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(trText('Pretium')+' '+a.symbol)}">
+    <defs><linearGradient id="crg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".32"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+    ${grid}<path d="${area}" fill="url(#crg)"/>
+    <path d="${line}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${X(pts.length-1).toFixed(1)}" cy="${Y(last.price).toFixed(1)}" r="3.5" fill="${col}"/>
+  </svg>`;
+}
+function crVol(a){
+  const rows=((a&&a.volume)||[]).map(v=>({buy:+v.buy||0,sell:+v.sell||0}));
+  const buy=rows.reduce((s,v)=>s+v.buy,0),sell=rows.reduce((s,v)=>s+v.sell,0),tot=buy+sell;
+  if(!tot)return '';
+  return `<div class="cr-stat"><span>Volumen 30 die</span><b>${fm(tot)} h</b></div>
+    <div class="cr-vol"><i style="width:${(buy/tot*100).toFixed(1)}%;background:#22c55e"></i><i style="width:${(sell/tot*100).toFixed(1)}%;background:#fb7185"></i></div>
+    <div class="cr-stat"><span>Emptio ${fm(buy)} h</span><span>Venditio ${fm(sell)} h</span></div>`;
+}
+function crAssetsRow(a){
+  const chg=crChg(a,30),pos=((cryptoData()||{}).positions||[]).find(p=>p.asset===a.id);
+  return `<div class="it"><div class="r" data-a="cryptoasset" data-v="${a.id}"><i>${dot(a.color||'#f5c451')}</i><div class="in"><b>${esc(a.symbol)}${a.active?'':' <span class="pl er">'+esc(trText('Clausa'))+'</span>'}${pos?' <span class="pl ok">'+crq(pos.qty)+'</span>':''}</b><small>${esc(a.name)} · ${fm(a.price)} h</small></div><b class="${chg>=0?'gn':'rd'}">${chg>=0?'+':''}${chg.toFixed(2)}%</b></div></div>`;
+}
+async function cryptoSafe(call){
+  try{return await call();}
+  catch(e){
+    if(e&&e.code)throw e;
+    return call();
+  }
+}
+function crReceipt(r){
+  if(!r)return;
+  const buy=r.side==='buy';
+  showInfo(`<h3>${esc(trText(buy?'Emptio perfecta':'Venditio perfecta'))}</h3>
+    <div class="mut">${esc(r.symbol)} · ${dt(r.ts)}</div>
+    ${rows([
+      [trText('Quantitas'),crq(r.qty)+' '+esc(r.symbol)],
+      [trText('Pretium'),fm(r.price)+' h'],
+      [trText('Summa'),fm(r.gross)+' h'],
+      [trText('Portorium'),fm(r.fee)+' h'],
+      [buy?trText('Portorium statim'):trText('Receptum'),buy?crq(r.fee_qty)+' '+esc(r.symbol):fm(r.net)+' h'],
+      [trText('Balans'),fm(r.balance)+' h']
+    ])}
+    <div class="hint">${esc(trText(buy?'Cotidianum portorium ex unitatibus detrahitur, non ex Kapol.':'Portorium in Fiscum transit.'))}</div>
+    <div class="gs" style="margin-top:10px">${bt('Claude','modalcancel','','g')}${bt('Invie','tab','crypto','p')}</div>`);
+}
+function cryptoView(){
+  const d=cryptoData()||{config:{fee:0,daily:0},assets:[],positions:[],trades:[]};
+  const conf=d.config||{fee:0,daily:0},fee=+(conf.fee||0),daily=+(conf.daily||0);
+  const assets=crAssets().filter(a=>a.active||ME.admin);
+  let a=crAsset(UI.cryptoAsset);
+  if(!a||(!a.active&&!ME.admin))a=crAssets().find(x=>x.active)||crAssets()[0];
+  if(a)UI.cryptoAsset=a.id;
+  let tab=UI.cryptoTab||'market';
+  if(tab==='admin'&&!ME.admin)tab='market';
+  if(!['market','me','admin'].includes(tab))tab='market';
+  if(!a)return `<div class="tb">${ME.admin?bt('Crypto nova','cryptoadminnew','','p'):''}</div>${C('Invié',`<div class="al">Crypto desunt.</div>`)}`;
+  const pos=((d.positions||[]).find(p=>p.asset===a.id));
+  const chg=crChg(a,UI.cryptoRange==='all'?0:+UI.cryptoRange||30);
+  const pts=crRange(a),hi=Math.max(...pts.map(p=>p.price)),lo=Math.min(...pts.map(p=>p.price));
+  const rangeBtn=(id,l)=>`<button class="segbtn ${UI.cryptoRange===id?'on':''}" data-a="cryptorange" data-v="${id}">${l}</button>`;
+  const tabBtn=(id,l)=>`<button class="sbt ${tab===id?'on':''}" data-a="cryptotab" data-v="${id}">${l}</button>`;
+  const market=`<div class="card"><h3>${esc(trText('Mercatus'))} <small class="mu">${assets.length}</small>${ME.admin?'<span class="hp">'+bt('Nova','cryptoadminnew','','p sm')+'</span>':''}</h3>
+      ${assets.map(crAssetsRow).join('')||e('Crypto desunt','#f5c451')}</div>`;
+  const trades=((d.trades||[]).map(t=>`<div class="it"><div class="r"><i>${dot(t.side==='buy'?'#22c55e':'#fb7185')}</i><div class="in"><b>${esc(trText(t.side==='buy'?'Emptio':'Venditio'))} ${crq(t.qty)} ${esc(t.symbol)}</b><small>${dt(t.ts)} · ${fm(t.price)} h · ${esc(trText('Portorium'))} ${fm(t.fee)} h${+t.fee_qty>0?' · '+crq(t.fee_qty)+' '+esc(trText('combusta')):''}</small></div><b>${fm(t.gross)} h</b></div></div>`).join('')||e('Operationes desunt','#94a3b8'));
+  const positions=((d.positions||[]).map(p=>{
+    const cost=+p.cost||0,val=+p.value||0,pl=val-cost,avg=p.qty>0?cost/+p.qty:0;
+    return `<div class="cr-pos"><div class="r"><div><b>${esc(p.symbol)}</b><small>${crq(p.qty)} ${esc(p.symbol)} · ${fm(p.price)} h</small></div><b>${fm(val)} h</b></div>
+      <div class="cr-stat"><span>${esc(trText('Pretium emptionis medium'))}</span><b>${fm(avg)} h</b></div>
+      <div class="cr-stat"><span>${esc(trText('Lucrum / damnum'))}</span><b class="${pl>=0?'cr-up':'cr-dn'}">${pl>=0?'+':''}${fm(pl)} h</b></div>
+      <div class="gs" style="margin-top:7px">${bt('Vendere','cryptosell',p.asset,'d sm')}${bt('Eme','cryptobuy',p.asset,'p sm')}</div></div>`;
+  }).join('')||e('Positiones desunt','#f5c451'));
+  const admin=`${C(trText('Portorium crypto'),`
+      <div class="rw"><span>${esc(trText('Portorium negotiationis'))}</span><b>${fm(fee)}%</b></div>
+      <div class="rw"><span>${esc(trText('Portorium cotidianum'))}</span><b>${fm(daily)}% / ${esc(trText('dies'))}</b></div>
+      <div class="gs" style="margin-top:8px">${bt('Configurare','cryptocfg','','p sm')}${bt('Recense nunc','cryptosettle','','g sm')}</div>
+      <div class="hint">${esc(trText('Cotidianum ex unitatibus detrahitur et uritur; FISK non augetur.'))}</div>`)}
+    <div class="card"><h3>${esc(trText('Crypto administratio'))}<span class="hp">${bt('Nova','cryptoadminnew','','p sm')}</span></h3>
+      ${crAssets().map(x=>`<div class="cr-pos${x.active?'':' cr-pend'}"><div class="r"><div><b>${esc(x.symbol)}</b><small>${esc(x.name)} · ${fm(x.price)} h</small></div><span class="pl ${x.active?'ok':'er'}">${esc(trText(x.active?'Activa':'Clausa'))}</span></div>
+        <div class="gs" style="margin-top:7px">${bt('Recense','cryptoadminedit',x.id,'g sm')}${bt('Pretium','cryptoprice',x.id,'p sm')}${bt('Dele','cryptodel',x.id,'d sm')}</div></div>`).join('')||e('Crypto desunt','#f5c451')}</div>`;
+  return `<div class="banner"><div class="sub">Invié · ${esc(a.name)}</div><div class="amt" data-no-tr>${fm(a.price)} <small>h / ${esc(a.symbol)}</small></div>
+      <div class="sub">${esc(trText('Portorium'))} ${fm(fee)}% · ${esc(trText('cotidianum'))} ${fm(daily)}%/die${pos?' · tuum '+crq(pos.qty)+' '+esc(a.symbol):''}</div></div>
+    <div class="cr-chips">${assets.map(x=>`<button class="cr-chip ${x.id===a.id?'on':''}" data-a="cryptoasset" data-v="${x.id}"><b>${esc(x.symbol)}</b><small>${fm(x.price)} h</small><small class="${crChg(x,30)>=0?'cr-up':'cr-dn'}">${crChg(x,30)>=0?'+':''}${crChg(x,30).toFixed(2)}%</small></button>`).join('')||e('Crypto desunt','#f5c451')}</div>
+    <div class="card"><h3>${esc(a.symbol)} <span class="hp"><span class="pl ${chg>=0?'ok':'er'}">${chg>=0?'+':''}${chg.toFixed(2)}%</span>${a.active?'':tag('Clausa','er')}</span></h3>
+      ${crChart(a)}
+      <div class="cr-ranges">${rangeBtn('7','7d')}${rangeBtn('30','30d')}${rangeBtn('90','90d')}${rangeBtn('all','Omnes')}</div>
+      <div class="cr-stat"><span>${esc(trText('Maximus'))}</span><b>${fm(hi)} h</b></div>
+      <div class="cr-stat"><span>${esc(trText('Minimus'))}</span><b>${fm(lo)} h</b></div>
+      ${crVol(a)}
+      ${a.about?`<div class="dt" data-no-tr style="margin-top:7px">${esc(a.about)}</div>`:''}
+      <div class="gs" style="margin-top:9px">${a.active?bt('Eme','cryptobuy',a.id,'p'):''}${pos&&a.active?bt('Vende','cryptosell',a.id,'d'):''}</div>
+    </div>
+    <div class="subtabs">${tabBtn('market','Mercatus')}${tabBtn('me','Mea')}${ME.admin?tabBtn('admin','ROOT'):''}</div>
+    ${tab==='market'?`${market}<div class="card"><h3>${esc(trText('Operationes meae'))}</h3>${trades}</div>`:''}
+    ${tab==='me'?`${C(trText('Positiones'),`<div class="rw"><span>${esc(trText('Valor totalis'))}</span><b>${fm((d.positions||[]).reduce((s,p)=>s+(+p.value||0),0))} h</b></div>${positions}</div>`)}${C(trText('Historia'),trades)}`:''}
+    ${tab==='admin'?admin:''}`;
+}
+
 /* ---------- Besedy ---------- */
 const lastOf=a=>(a&&a.messages&&a.messages.length)?a.messages[a.messages.length-1]:null;
 function replyBar(){
@@ -2636,7 +2873,7 @@ function chat(){
     if(!g){UI.grp=null;return chat();}
     return `<div class="tb">${bt('Retro','chatexit')}<div class="grow"><b>${esc(g.name)}</b><div class="tiny">@${esc(g.owner)} · ${g.members.length} membra</div></div></div>
       <div class="card"><h3>${esc(g.name)} <span class="hp"><span class="pl">${g.members.length} membra</span>${tag('live','ok')}</span></h3>
-      <div class="quote">${g.members.map(n=>'@'+esc(n)).join(' · ')}</div>
+      <div class="quote">${g.members.map(n=>'@'+esc(n)+onDot(n)).join(' · ')}</div>
       <div class="cm" id="cm">${(g.messages||[]).map(m=>bubble(m,m.from===ME.nick,true)).join('')||e('Silentium — scribe primus','#22d3ee')}</div>
       ${replyBar()}
       <div class="sr"><input id="ci" maxlength="500" placeholder="Nuntius gregis..."><button class="bt p" data-a="sendgrp">Mitte</button></div>
@@ -2646,8 +2883,8 @@ function chat(){
     const c=myChats().find(x=>x.id===UI.chat);
     if(!c){UI.chat=null;return chat();}
     const p=unick(c.peer)||{nick:c.peer,name:'',sur:'',roy:''};
-    return `<div class="tb">${bt('Retro','chatexit')}<div class="grow"><b>@${esc(c.peer)}</b><div class="tiny">${esc(p.name)} ${esc(p.sur)} · ${esc(p.roy)}</div></div>${plTag(p)}</div>
-      <div class="card"><h3><span style="display:flex;gap:9px;align-items:center;min-width:0">${ava(p,'av-sm')}<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">@${esc(c.peer)}</span></span>${plTag(p)}</h3>
+    return `<div class="tb">${bt('Retro','chatexit')}<div class="grow"><b>@${esc(c.peer)}${onDot(c.peer)}</b><div class="tiny">${esc(p.name)} ${esc(p.sur)} · ${esc(p.roy)}</div></div>${plTag(p)}</div>
+      <div class="card"><h3><span style="display:flex;gap:9px;align-items:center;min-width:0">${ava(p,'av-sm')}<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">@${esc(c.peer)}${onDot(c.peer)}</span></span>${plTag(p)}</h3>
       <div class="quote">Chat privatus · nuntii live${p.muted?' · Mutus':''}</div>
       <div class="cm" id="cm">${(c.messages||[]).map(m=>bubble(m,m.from===ME.nick,false)).join('')||e('Scribe primum nuntium','#22d3ee')}</div>
       ${replyBar()}
@@ -2666,7 +2903,7 @@ function chat(){
     list=chats.map(c=>{
       const last=lastOf(c),un=unreadDM(c);
       const preview=last?(last.deleted?'Nuntius deletus':((last.from===ME.nick?'Tu: ':'')+last.text)):'Chat privatus';
-      return `<div class="it ${un?'un':''}"><div class="r" data-a="openchat" data-v="${c.id}"><i>${dot('#22d3ee')}</i><div class="in"><b>@${esc(c.peer)}</b><small>${esc(preview)}</small></div>${un?`<span class="pl wn">${un}</span>`:''}</div></div>`;
+      return `<div class="it ${un?'un':''}"><div class="r" data-a="openchat" data-v="${c.id}"><i>${dot('#22d3ee')}</i><div class="in"><b>@${esc(c.peer)}${onDot(c.peer)}</b><small>${esc(preview)}</small></div>${un?`<span class="pl wn">${un}</span>`:''}</div></div>`;
     }).join('')||e('Chat desunt','#22d3ee');
   }else{
     list=groups.map(g=>{
@@ -2676,7 +2913,7 @@ function chat(){
     }).join('')||e('Greges desunt','#b07bff');
   }
   const directory=users().filter(u=>u.nick!==ME.nick&&match(u))
-    .map(u=>`<div class="it"><div class="r" data-a="prof" data-v="${esc(u.nick)}">${ava(u,'av-sm')}<div class="in"><b>${esc(u.name)} ${esc(u.sur)}</b><small>@${esc(u.nick)} · ${esc(u.rank||u.roy)}</small></div>${u.status==='abrodie'?'<span class="pl ad">ADM</span>':''}</div>
+    .map(u=>`<div class="it"><div class="r" data-a="prof" data-v="${esc(u.nick)}">${ava(u,'av-sm')}<div class="in"><b>${esc(u.name)} ${esc(u.sur)}${onDot(u.nick)}</b><small>@${esc(u.nick)} · ${esc(u.rank||u.roy)}</small></div>${u.status==='abrodie'?'<span class="pl ad">ADM</span>':''}</div>
       <div class="gs" style="margin-top:8px">${bt('Chat','newchat',u.nick)}${bt('Mitte h','newtransfer',u.nick)}${bt('Delatio','report','user|'+u.nick+'|@'+u.nick,'d sm')}</div></div>`).join('');
   return `<div class="card"><h3>Besedy <span class="hp">${bt('Chat','newchat','','p sm')}${bt('Grex','newgroup','')}</span></h3>
     <div class="subtabs">${[['dm','Directi'],['grp','Greges']].map(([id,l])=>`<button class="sbt ${sub===id?'on':''}" data-a="csub" data-v="${id}">${l}</button>`).join('')}</div>
@@ -2975,6 +3212,21 @@ function tagPermsText(t){
   const names={staff:'Pomagach',cards:'Carder',bets:'Teckel',law_votum:'Legislator',news:'Pisach',moderate:'Moderator'};
   return Object.keys(p).filter(k=>p[k]).map(k=>names[k]||k).join(' · ')||'—';
 }
+function notifSettings(){
+  const perm='Notification' in window?Notification.permission:'unsupported';
+  const permLabel=perm==='granted'?'Permissum':perm==='denied'?'Interdictum':perm==='unsupported'?'Non sustinetur':'Non petitum';
+  const swRow=(c)=>{
+    const p=notifPref(c);
+    return `<div class="nfrow"><span>${esc(trText(NCAT_LABEL[c]))}</span>
+      <span><button type="button" class="sw ${p.inapp?'on':''}" data-a="nfpref" data-v="${c}:inapp" role="switch" aria-checked="${!!p.inapp}" aria-label="${esc(trText(NCAT_LABEL[c])+' · '+trText('In app'))}"></button></span>
+      <span><button type="button" class="sw ${p.push?'on':''}" data-a="nfpref" data-v="${c}:push" role="switch" aria-checked="${!!p.push}" aria-label="${esc(trText(NCAT_LABEL[c])+' · '+trText('Web'))}"></button></span></div>`;
+  };
+  return C('Segnalи',`<div class="nfhead"><span>${esc(trText('Categoria'))}</span><span>${esc(trText('In app'))}</span><span>${esc(trText('Web'))}</span></div>
+    ${NCATS.map(swRow).join('')}
+    <div class="hint">In app — segnalum in indice. Web — nuntius systematis, dum pagina in alia parte aperta est. Situs clausus requirit Web Push (VAPID + servitor missor): in uno archivo HTML non continetur.</div>
+    <div class="rw"><span>Permissio systematis</span><b>${esc(trText(permLabel))}</b></div>
+    <div class="gs" style="margin-top:8px">${perm==='default'?bt('Pete permissionem','notifperm','','p sm'):''}${perm==='granted'?bt('Proba nuntium','notiftest','','g sm'):''}</div>`);
+}
 function ust(){
   const m=ME,r=m.rating||{avg:0,n:0},a=m.activity||{ops:0,topics:0,lots:0,cards:0,bets:0};
   const sw=(on,act)=>`<button type="button" class="sw ${on?'on':''}" data-a="${act}" role="switch" aria-checked="${on}" aria-label="${{compact:'Modus compactus',hide:'Celare Kapol aliis',sound:'Sonus'}[act]||act}"></button>`;
@@ -3023,6 +3275,7 @@ function ust(){
       <div class="setrow"><span>Celare Kapol aliis</span>${sw(UI.hide,'hide')}</div>
       <div class="setrow"><span>Sonus</span><span class="gs" style="align-items:center">${sw(UI.sound,'sound')}<button class="bt g sm" data-a="testsnd">Proba</button></span></div>
       <div class="hint">Celare Kapol tantum aliis celat; tu semper tuum balans vides.</div>`)}
+    ${canCrypto()?notifSettings():''}
     ${C('Securitas',`<div class="rw"><span>Clavis</span><button class="bt g sm" data-a="changepass">Muta</button></div><div class="rw"><span>Ultimus aditus</span><b>${dt(m.last)}</b></div>
       <div class="hint">Clavis in server ut a te lecta servatur. Prototypum privatum: cave, ne aliis ostendas.</div>
       <div class="gs" style="margin-top:10px">${bt('Archivum meum','exportme','','g')}${bt('Exitus','logout','','d')}</div>`)}
@@ -3206,11 +3459,13 @@ const A={
   tab(v){
     if(!ME||!TABS.some(t=>t[0]===v))return;
     if(v==='root'&&!ME.admin){toast('Nema prav','e');return;}
+    if(v==='crypto'&&!canCrypto()){toast('Schema renovanda: schema-part6.sql necessaria.','e');return;}
     if(ME.status==='neophyte'&&!FREE.includes(v)){toast('Polog non confirmatus — accessus clausus','e');return;}
     shellCapture();SHELL.route=(SHELL.route||0)+1;
     if(v!=='chat'){UI.chat=null;UI.grp=null;UI.reply=null;}
     if(v!=='root')UI.rootOk=false;
     UI.th=null;UI.nwOpen=null;UI.ticket=null;UI.faq=null;
+    closeModal(null);
     UI.tab=v;UI.sheet=false;render();
   },
   sheet(){UI.sheet=true;render({background:true});},
@@ -3289,6 +3544,34 @@ const A={
   async notifreadall(){await run(()=>rpc('api_notif_read_all'),'Omnia lecta');},
   async notifclear(){await run(()=>rpc('api_notif_clear'),'Purga facta');},
   async segfilter(v){UI.segNew=v==='new';render();},
+  async segcat(v){UI.segCat=NCATS.includes(v)?v:'all';render();},
+  async nfpref(v){
+    const [cat,ch]=String(v).split(':');
+    if(!NCATS.includes(cat)||!['inapp','push'].includes(ch))return;
+    const cur=notifPref(cat);
+    if(ch==='push'&&!cur.push&&'Notification' in window&&Notification.permission!=='granted'){
+      try{await Notification.requestPermission();}catch(e){}
+    }
+    const prefs=NCATS.map(c=>{const p=notifPref(c);const next={cat:c,inapp:!!p.inapp,push:!!p.push};if(c===cat)next[ch]=!next[ch];return next;});
+    const payload={[cat]:{inapp:!!notifPref(cat).inapp,push:!!notifPref(cat).push}};
+    payload[cat][ch]=!payload[cat][ch];
+    await run(async()=>{
+      const d=await rpc('api_notif_prefs',{p_prefs:payload});
+      if(d&&Array.isArray(d.prefs))DB.notif_prefs=d.prefs;else DB.notif_prefs=prefs;
+    },'');
+  },
+  async notifperm(){
+    if(!('Notification' in window)){toast('Systema notificationes non sustinet','e');return;}
+    try{
+      const p=await Notification.requestPermission();
+      toast(p==='granted'?'Permissio data':'Permissio non data',p==='granted'?'s':'e');
+      render();
+    }catch(err){toast(errMsg(err),'e');}
+  },
+  notiftest(){
+    try{new Notification(trText(brandName()),{body:trText('Proba nuntii: systema operatur.')});toast('Nuntius missus','s');}
+    catch(err){toast(errMsg(err),'e');}
+  },
   async verify(){await run(()=>rpc('api_request_verify'),'Petitio missa');},
   /* money */
   async newtransfer(to){
@@ -4060,12 +4343,14 @@ const A={
       const d=await rpc('api_user_profile',{p_nick:String(nickv)});
       const u=d.user,rt=d.rating||{avg:0,n:0},st=d.stats||{};
       const own=u.nick===ME.nick;
-      showInfo(`<h3>@${esc(u.nick)}</h3>
-        <div class="it"><div class="r">${ava(u,'av')}<div class="in"><b>${esc(u.name)} ${esc(u.sur)}</b><small>${esc(u.roy)} · ${esc(u.id)}${u.muted?' · Mutus':''}</small></div>${statusTag(u.status)}</div></div>
+      if(u.online)shellPresence([u.nick],true);
+      showInfo(`<h3>@${esc(u.nick)}${onDot(u.nick)}</h3>
+        <div class="it"><div class="r">${ava(u,'av')}<div class="in"><b>${esc(u.name)} ${esc(u.sur)}${onDot(u.nick)}</b><small>${esc(u.roy)} · ${esc(u.id)}${u.muted?' · Mutus':''}</small></div>${statusTag(u.status)}</div></div>
         <div class="gs" style="margin:6px 0">${rankTag(u)}${tagsHtml(u)}</div>
         ${rows([
           ['Rébnostь',esc(u.reb)],
           ['Fama',rt.n?`<span class="stars">${starsHtml(rt.avg)}</span> ${rt.avg} (${rt.n})`:'—'],
+          ['Aditus',(u.online||isOnline(u.nick))?'In rete':'Extra rete'],
           ['Inscriptio',dt(u.created)],
           ['Ultimus aditus',dt(u.last)],
           ['Kapol',balOther(d.balance)+(d.hidden?' · celatum':'')],
@@ -4110,6 +4395,79 @@ const A={
       cards:myCards(),bets:betList(),cases:myCases().filter(c=>c.by===me||c.against===me),laws:myLaws(),
       salaries:mySalaries(),subscriptions:DB.subs||[]};
     download('sellprade_me_'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(data,null,1));
+  },
+  /* Invié */
+  cryptoasset(v){if(crAsset(v))UI.cryptoAsset=v;render();},
+  cryptotab(v){UI.cryptoTab=['market','me','admin'].includes(v)?v:'market';render();},
+  cryptorange(v){UI.cryptoRange=['7','30','90','all'].includes(v)?v:'30';render();},
+  async cryptobuy(v){
+    const a=crAsset(v||UI.cryptoAsset);
+    if(!a||!a.active)return;
+    const c=(cryptoData()||{}).config||{};
+    const f=await ask(trText('Emptio')+' '+a.symbol,[{n:'amount',label:trText('Summa (h)'),type:'num'}],trText('Eme'),
+      `${trText('Pretium')} ${fm(a.price)} h · ${trText('Portorium')} ${fm(c.fee||0)}% · ${trText('cotidianum')} ${fm(c.daily||0)}%/die.`,
+      x=>!(+x.amount>=1)?trText('Summa 1 h minimum'):'');
+    if(!f)return;
+    const amount=Math.round((+f.amount)*100)/100,key=crypto.randomUUID();
+    const r=await run(()=>cryptoSafe(()=>rpc('api_crypto_buy',{p_asset:a.id,p_amount:amount,p_key:key})),'Emptio perfecta');
+    if(r)crReceipt(r);
+  },
+  async cryptosell(v){
+    const a=crAsset(v||UI.cryptoAsset);if(!a)return;
+    const p=((cryptoData()||{}).positions||[]).find(x=>x.asset===a.id);
+    if(!p||+p.qty<=0){toast('Positiones desunt','e');return;}
+    const c=(cryptoData()||{}).config||{};
+    const f=await ask(trText('Venditio')+' '+a.symbol,[
+      {n:'qty',label:trText('Quantitas')+' ('+a.symbol+')',type:'num',step:'any',value:+p.qty}
+    ],trText('Vende'),
+      `${trText('Habes')} ${crq(p.qty)} ${a.symbol} · ${trText('Pretium')} ${fm(a.price)} h · ${trText('Portorium')} ${fm(c.fee||0)}%.`,
+      x=>!(+x.qty>0)?trText('Quantitas > 0 necessaria'):(+x.qty>+p.qty?trText('Quantitas nimia'):''));
+    if(!f)return;
+    const key=crypto.randomUUID();
+    const r=await run(()=>cryptoSafe(()=>rpc('api_crypto_sell',{p_asset:a.id,p_qty:+f.qty,p_key:key})),'Venditio perfecta');
+    if(r)crReceipt(r);
+  },
+  cryptoadminnew(){A.cryptoadminedit('');},
+  async cryptoadminedit(id){
+    if(!ME.admin)return;
+    const a=id?crAsset(id):null;
+    const f=await ask(trText(a?'Recense crypto':'Crypto nova'),[
+      {n:'symbol',label:'Symbolum',max:8,value:a?a.symbol:''},
+      {n:'name',label:trText('Nomen'),max:40,value:a?a.name:''},
+      {n:'about',label:trText('Descriptio'),type:'ta',max:300,value:a?a.about:''},
+      {n:'color',label:'Color (#RRGGBB)',max:7,value:a?a.color:'#f5c451'},
+      {n:'price',label:trText('Pretium')+' (h)',type:'num',step:'any',value:a?a.price:'1'},
+      {n:'sort',label:'Sort',type:'num',step:'1',value:a?a.sort:0},
+      {n:'active',label:trText('Activa'),type:'sel',value:a?(a.active?'1':'0'):'1',opts:[{v:'1',l:'Sic'},{v:'0',l:'Non'}]}
+    ],'Serva','',x=>!/^[A-Za-z0-9]{2,8}$/.test(x.symbol.trim())?trText('Symbolum 2-8 A-Z/0-9'):x.name.trim().length<2?trText('Nomen minimum 2 signa'):!/^#[0-9a-fA-F]{6}$/.test(x.color.trim())?trText('Color #RRGGBB'):!(+x.price>0)?trText('Pretium > 0 necessarium'):'');
+    if(!f)return;
+    await run(()=>rpc('api_crypto_admin_save',{p_id:a?a.id:null,p_symbol:f.symbol.trim(),p_name:f.name.trim(),p_about:f.about.trim(),p_color:f.color.trim(),p_price:+f.price,p_active:f.active==='1',p_sort:+f.sort||0}),'Crypto servata');
+  },
+  async cryptoprice(id){
+    const a=crAsset(id);if(!a)return;
+    const f=await ask(trText('Pretium')+' '+a.symbol,[{n:'price',label:trText('Pretium')+' (h)',type:'num',step:'any',value:a.price}],'Serva','',x=>!(+x.price>0)?trText('Pretium > 0 necessarium'):'');
+    if(!f)return;
+    await run(()=>rpc('api_crypto_admin_price',{p_id:a.id,p_price:+f.price}),'Pretium servatum');
+  },
+  async cryptodel(id){
+    const a=crAsset(id);if(!a)return;
+    if(!await ask(trText('Dele crypto')+' '+a.symbol,[],trText('Dele'),trText('Si copiae sunt, dele clauditur; si historiae, tantum clauditur.')))return;
+    await run(()=>rpc('api_crypto_admin_delete',{p_id:a.id}),'Crypto deleta');
+  },
+  async cryptocfg(){
+    if(!ME.admin)return;
+    const c=(cryptoData()||{}).config||{};
+    const f=await ask(trText('Portorium crypto'),[
+      {n:'fee',label:trText('Portorium negotiationis')+' (%)',type:'num',value:c.fee??0},
+      {n:'daily',label:trText('Portorium cotidianum')+' (%/die)',type:'num',value:c.daily??0}
+    ],'Serva','',x=>!(+x.fee>=0&&+x.fee<=10)?trText('0-10 percentum'):!(+x.daily>=0&&+x.daily<=10)?trText('0-10 percentum'):'');
+    if(!f)return;
+    await run(()=>rpc('api_crypto_admin_config',{p_fee:+f.fee,p_daily:+f.daily}),'Portorium servatum');
+  },
+  async cryptosettle(){
+    if(!ME.admin)return;
+    if(!await ask(trText('Recense nunc'),[],'Confirma',trText('Portorium cotidianum pro omnibus positionibus maturis applicabitur.')))return;
+    await run(()=>rpc('api_crypto_admin_settle'),'Portorium applicatum');
   },
   /* root */
   rootsearch(){const el=$('#rootQ');UI.rootQ=el?el.value:UI.rootQ;render();},
@@ -4483,6 +4841,37 @@ const L10N_CARDS={
   'Raritatem crea prius':'Спочатку створіть активну рідкість'
 };
 Object.assign(UKD,L10N_CARDS);
+const L10N_INVIE={
+  'Invié':'Інвіє','Mercatus':'Ринок','Emptio':'Купівля','Vende':'Продати','System':'Система',
+  'Portorium crypto':'Комісія криптовалют','Portorium negotiationis':'Комісія торгівлі',
+  'Portorium cotidianum':'Денна комісія','Crypto administratio':'Адміністрування криптовалют',
+  'Crypto nova':'Нова криптовалюта','Recense crypto':'Редагувати криптовалюту','Dele crypto':'Видалити криптовалюту',
+  'Recense nunc':'Нарахувати зараз','Pretium servatum':'Ціну збережено','Crypto servata':'Криптовалюту збережено',
+  'Crypto deleta':'Криптовалюту видалено','Portorium applicatum':'Комісію застосовано','Portorium servatum':'Комісію збережено',
+  'Emptio perfecta':'Купівлю виконано','Venditio perfecta':'Продаж виконано','Operationes meae':'Мої операції',
+  'Positiones':'Позиції','Positiones desunt':'Позицій немає','Pretium emptionis medium':'Середня ціна купівлі',
+  'Lucrum / damnum':'Прибуток / збиток','Valor totalis':'Загальна вартість','Volumen 30 die':'Обсяг за 30 днів',
+  'Maximus':'Максимум','Minimus':'Мінімум','Quantitas > 0 necessaria':'Кількість має бути більше 0',
+  'Quantitas nimia':'Недостатньо одиниць','Summa 1 h minimum':'Мінімальна сума 1 h','Habes':'У вас є',
+  'combusta':'спалено','dies':'день','cotidianum':'щодня','Crypto desunt':'Криптовалют немає',
+  'Symbolum 2-8 A-Z/0-9':'Символ: 2–8 символів A-Z/0-9','Nomen minimum 2 signa':'Назва: мінімум 2 символи',
+  'Pretium > 0 necessarium':'Ціна має бути більше 0','0-10 percentum':'0–10 %',
+  'Si copiae sunt, dele clauditur; si historiae, tantum clauditur.':'Якщо є копії, видалення закриє торги; якщо є історія — лише закриє.',
+  'Portorium cotidianum pro omnibus positionibus maturis applicabitur.':'Денну комісію буде застосовано до всіх позицій, що дозріли.',
+  'Cotidianum portorium ex unitatibus detrahitur, non ex Kapol.':'Денна комісія списується з одиниць, а не з Kapol.',
+  'Portorium in Fiscum transit.':'Комісія переходить до Фіску.',
+  'Cotidianum ex unitatibus detrahitur et uritur; FISK non augetur.':'Денна комісія списується з одиниць і спалюється; FISK не зростає.',
+  'Portorium statim':'Комісія одразу','In app':'У застосунку','Web':'Веб',
+  'Permissum':'Дозволено','Interdictum':'Заборонено','Non sustinetur':'Не підтримується','Non petitum':'Не запитано',
+  'Pete permissionem':'Запросити дозвіл','Proba nuntium':'Тестове сповіщення','Permissio systematis':'Дозвіл системи',
+  'In rete':'У мережі','Extra rete':'Не в мережі','Aditus':'Вхід',
+  'In app — segnalum in indice. Web — nuntius systematis, dum pagina in alia parte aperta est. Situs clausus requirit Web Push (VAPID + servitor missor): in uno archivo HTML non continetur.':'У застосунку — сигнал у списку. Веб — системне сповіщення, поки сторінка відкрита в іншій вкладці. Для закритого сайту потрібен Web Push (VAPID + сервер-відправник): в одному HTML-файлі це не вміщується.',
+  'Proba nuntii: systema operatur.':'Тестове сповіщення: система працює.',
+  'Schema renovanda: applica schema-part5.sql et schema-part6.sql.':'Оновіть схему: застосуйте schema-part5.sql і schema-part6.sql.',
+  'Schema renovanda: schema-part6.sql necessaria.':'Оновіть схему: потрібен schema-part6.sql.',
+  'Nomen':'Імʼя','Descriptio':'Опис','Summa (h)':'Сума (h)'
+};
+Object.assign(UKD,L10N_INVIE);
 /* ---------- boot ---------- */
 const L10N_SHELL={
   'Connexio interrupta':'З’єднання перервано','Sine rete':'Немає з’єднання з мережею','Iterum conare':'Спробувати знову',
