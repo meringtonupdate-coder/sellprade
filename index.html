@@ -224,8 +224,8 @@ body{
   font:15px/1.55 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   background:
-    radial-gradient(1100px 720px at 84% -14%,rgba(255,255,255,.055),transparent 60%),
-    radial-gradient(900px 620px at -12% 10%,rgba(255,255,255,.035),transparent 58%),
+    radial-gradient(1100px 720px at 84% -14%,color-mix(in srgb,var(--p) 12%,transparent),transparent 60%),
+    radial-gradient(900px 620px at -12% 10%,color-mix(in srgb,var(--p) 7%,transparent),transparent 58%),
     linear-gradient(180deg,var(--bg),var(--bg2) 74%,var(--bg));
   background-attachment:fixed;
 }
@@ -358,6 +358,17 @@ html[data-theme=light] .bnav{background:color-mix(in srgb,var(--c) 92%,var(--bg)
 .seg{display:inline-flex;gap:3px;padding:3px;background:color-mix(in srgb,var(--bg) 70%,var(--c));border:1px solid var(--bd);border-radius:12px}
 .segbtn{padding:6px 11px;border:0;border-radius:9px;background:none;color:var(--mu);font:700 .73rem inherit;font-family:inherit;cursor:pointer;transition:background .18s,color .18s}
 .segbtn.on{background:var(--grad);color:#fff;box-shadow:0 4px 12px -8px var(--glow)}
+.accrow{flex-wrap:wrap}
+.accrow .accpick{flex:1 0 100%;display:flex;align-items:center;gap:7px;padding-top:4px}
+.accdot{width:28px;height:28px;border-radius:50%;border:2px solid transparent;background:var(--ac);cursor:pointer;padding:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 3px 8px -4px #000;transition:transform .15s,border-color .15s}
+.accdot.on{border-color:var(--tx);transform:scale(1.08)}
+.accdot:active{transform:scale(.94)}
+.acccustom{width:28px;height:28px;border-radius:50%;flex-shrink:0;padding:2px;cursor:pointer;background:conic-gradient(#f87171,#fbbf24,#34d399,#60a5fa,#a78bfa,#f87171);box-shadow:0 3px 8px -4px #000}
+.acccustom.on{box-shadow:0 0 0 2px var(--tx),0 3px 8px -4px #000}
+.acccustom input{display:block;width:100%;height:100%;border:0;padding:0;border-radius:50%;background:transparent;cursor:pointer;-webkit-appearance:none;appearance:none}
+.acccustom input::-webkit-color-swatch-wrapper{padding:0}
+.acccustom input::-webkit-color-swatch{border:2px solid var(--bg);border-radius:50%}
+.acccustom input::-moz-color-swatch{border:2px solid var(--bg);border-radius:50%}
 /* premium details */
 body{-webkit-tap-highlight-color:transparent}
 .bt.p,.tab.on,.sbt.on,.fchip.on,.segbtn.on,.bnav button.on,.ms.s{color:var(--onacc)}
@@ -1063,7 +1074,7 @@ const UI={
   hide:localStorage.getItem('app_hide')==='1',
   sound:localStorage.getItem('app_sound')==='1',
   lang:localStorage.getItem('app_lang')||'la',
-  theme:(()=>{const t=localStorage.getItem('app_theme');return ['dark','light','wine'].includes(t)?t:t==='brown'?'wine':'dark';})(),
+  accent:(()=>{const c=localStorage.getItem('app_accent')||'';return /^#[0-9a-f]{6}$/i.test(c)?c.toLowerCase():'#e7e7ee';})(),
   compact:localStorage.getItem('app_compact')==='1',
   tabOrder:(localStorage.getItem('app_tab_order')||'').split(',').filter(Boolean),
   quick:(localStorage.getItem('app_quick')||'holb,cards,bank,chat').split(',').filter(Boolean),
@@ -1106,17 +1117,50 @@ function setQuick(slot,id){
   localStorage.setItem('app_quick',q.join(','));
   render();
 }
+const ACCENTS=[['#e7e7ee','Album'],['#6d8bff','Caeruleus'],['#a78bfa','Violaceus'],['#34d399','Viridis'],['#f5c451','Aureus'],['#fb7185','Roseus']];
+function hexRgb(h){const n=parseInt(String(h).replace('#',''),16);return [(n>>16)&255,(n>>8)&255,n&255];}
+function rgbHex(r,g,b){const c=v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0');return '#'+c(r)+c(g)+c(b);}
+function accentShade(hex,amt){const [r,g,b]=hexRgb(hex),t=amt>0?255:0,k=Math.abs(amt);return rgbHex(r+(t-r)*k,g+(t-g)*k,b+(t-b)*k);}
+function accentLum(hex){const [r,g,b]=hexRgb(hex);return (0.2126*r+0.7152*g+0.0722*b)/255;}
+function rgbHsl(r,g,b){
+  r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn,l=(mx+mn)/2;
+  let h=0,s=0;
+  if(d){s=d/(1-Math.abs(2*l-1));h=mx===r?((g-b)/d)%6:mx===g?((b-r)/d)+2:((r-g)/d)+4;h*=60;if(h<0)h+=360;}
+  return [h,s,l];
+}
+function hslHex(h,s,l){
+  const c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2;
+  let rgb;
+  if(h<60)rgb=[c,x,0];else if(h<120)rgb=[x,c,0];else if(h<180)rgb=[0,c,x];
+  else if(h<240)rgb=[0,x,c];else if(h<300)rgb=[x,0,c];else rgb=[c,0,x];
+  return rgbHex((rgb[0]+m)*255,(rgb[1]+m)*255,(rgb[2]+m)*255);
+}
+function accentBase(hex){
+  const [r,g,b]=hexRgb(hex);let [h,s,l]=rgbHsl(r,g,b);
+  if(s<0.25)return l<0.45?hslHex(0,0,0.55):hex;
+  l=Math.max(0.50,Math.min(0.70,l));
+  return hslHex(h,s,l);
+}
 function applyTheme(){
-  const h=document.documentElement;
-  h.dataset.theme=UI.theme;
+  const h=document.documentElement,base=accentBase(UI.accent||'#e7e7ee');
+  h.dataset.theme='dark';
   h.dataset.compact=UI.compact?'1':'0';
+  h.style.setProperty('--p',base);
+  h.style.setProperty('--p2',accentShade(base,-0.28));
+  h.style.setProperty('--pt',accentShade(base,0.35));
+  h.style.setProperty('--glow','rgba('+hexRgb(base).join(',')+',.20)');
+  h.style.setProperty('--grad','linear-gradient(135deg,'+accentShade(base,.18)+','+accentShade(base,-.22)+')');
+  h.style.setProperty('--onacc',accentLum(base)>0.62?'#0a0a0c':'#ffffff');
   const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta){
-    const bg=getComputedStyle(h).getPropertyValue('--bg').trim();
-    meta.content=bg||(UI.theme==='light'?'#f4f3fa':UI.theme==='wine'?'#1a1113':'#08080a');
-  }
+  if(meta)meta.content='#08080a';
 }
 applyTheme();
+document.addEventListener('input',e=>{
+  if(e.target&&e.target.id==='accColor')A.accent(e.target.value);
+});
+document.addEventListener('change',e=>{
+  if(e.target&&e.target.id==='accColor'){A.accent(e.target.value);render();}
+});
 let DB=null,ME=null;
 
 /* ---------- small helpers ---------- */
@@ -2102,14 +2146,40 @@ function notifPref(cat){
   return ((DB&&DB.notif_prefs)||[]).find(p=>p.cat===cat)||{cat,inapp:true,push:false};
 }
 function notifPushOn(){return 'Notification' in window&&Notification.permission==='granted';}
-function shellBrowserNotify(list,after){
+let SW_REGISTER=null;
+function shellRegisterSW(){
+  if(SW_REGISTER||!('serviceWorker' in navigator)||location.protocol==='file:')return SW_REGISTER;
+  try{SW_REGISTER=navigator.serviceWorker.register('appentana-sw.js').catch(()=>null);}catch(e){SW_REGISTER=null;}
+  return SW_REGISTER;
+}
+shellRegisterSW();
+function shellShowNotification(title,options={}){
+  /* Desktop browsers allow the page-level constructor. Android Chrome and
+     iOS Safari throw "Illegal constructor" and only accept a notification
+     created by an active service worker. */
+  try{
+    const o=new Notification(title,options);
+    o.onclick=()=>{try{window.focus();}catch(e){}o.close();};
+    return Promise.resolve(true);
+  }catch(e){}
+  if(!('serviceWorker' in navigator))return Promise.resolve(false);
+  return new Promise(resolve=>{
+    let done=false;const fin=v=>{if(!done){done=true;resolve(v);}};
+    setTimeout(()=>fin(false),2500);
+    const ready=navigator.serviceWorker.ready;
+    if(!ready||typeof ready.then!=='function')return fin(false);
+    ready.then(reg=>{
+      if(!reg||typeof reg.showNotification!=='function')return fin(false);
+      reg.showNotification(title,options).then(()=>fin(true),()=>fin(false));
+    },()=>fin(false));
+  });
+}
+async function shellBrowserNotify(list,after){
   if(!notifPushOn()||document.visibilityState!=='hidden'||!(+after>0))return;
   const fresh=(list||[]).filter(n=>+n.id>+after&&!n.read&&notifPref(ncat(n.kind)).push).slice(-3);
   for(const n of fresh){
-    try{
-      const o=new Notification(trText(brandName()),{body:trText(n.text),tag:'appentana-'+n.id});
-      o.onclick=()=>{try{window.focus();}catch(e){}o.close();};
-    }catch(e){}
+    const ok=await shellShowNotification(trText(brandName()),{body:trText(n.text),tag:'appentana-'+n.id});
+    if(!ok)break;
   }
 }
 
@@ -3223,7 +3293,7 @@ function notifSettings(){
   };
   return C('Segnalи',`<div class="nfhead"><span>${esc(trText('Categoria'))}</span><span>${esc(trText('In app'))}</span><span>${esc(trText('Web'))}</span></div>
     ${NCATS.map(swRow).join('')}
-    <div class="hint">In app — segnalum in indice. Web — nuntius systematis, dum pagina in alia parte aperta est. Situs clausus requirit Web Push (VAPID + servitor missor): in uno archivo HTML non continetur.</div>
+    <div class="hint">In app — segnalum in indice. Web — nuntius systematis, dum pagina in alia parte aperta est. Telephonum requirit HTTPS et archivum appentana-sw.js iuxta HTML; iPhone — solum app ad scriptorium addita. Situs clausus requirit Web Push (VAPID + servitor missor).</div>
     <div class="rw"><span>Permissio systematis</span><b>${esc(trText(permLabel))}</b></div>
     <div class="gs" style="margin-top:8px">${perm==='default'?bt('Pete permissionem','notifperm','','p sm'):''}${perm==='granted'?bt('Proba nuntium','notiftest','','g sm'):''}</div>`);
 }
@@ -3255,11 +3325,11 @@ function ust(){
         <button class="segbtn ${UI.lang==='la'?'on':''}" data-a="lang" data-v="la">Appentanskie</button>
         <button class="segbtn ${UI.lang==='uk'?'on':''}" data-a="lang" data-v="uk">Українська</button>
       </div></div>
-      <div class="setrow"><span>Modus</span><div class="seg">
-        <button class="segbtn ${UI.theme==='dark'?'on':''}" data-a="theme" data-v="dark">${dot('#c9c9d2')}Tenebrae</button>
-        <button class="segbtn ${UI.theme==='light'?'on':''}" data-a="theme" data-v="light">${dot('#9d90e2')}Lux</button>
-        <button class="segbtn ${UI.theme==='wine'?'on':''}" data-a="theme" data-v="wine">${dot('#8b3b47')}Vinum</button>
+      <div class="setrow accrow"><span>Color thematis</span><div class="accpick">
+        ${ACCENTS.map(([hex,name])=>`<button type="button" class="accdot ${UI.accent===hex?'on':''}" data-a="accent" data-v="${hex}" style="--ac:${hex}" aria-label="${esc(name)}" aria-pressed="${UI.accent===hex}" title="${esc(name)}"></button>`).join('')}
+        <label class="acccustom ${ACCENTS.some(a=>a[0]===UI.accent)?'':'on'}" title="${esc('Color proprius')}"><input id="accColor" type="color" value="${UI.accent}" aria-label="${esc('Color proprius')}"></label>
       </div></div>
+      <div class="hint">Thema nigra manet; color tantum mutatur.</div>
       <div class="setrow"><span>Ordo sectionum</span><button class="bt g sm" data-a="taborderreset">Reset</button></div>
       <div class="sorder">${ord.map(([id,l,color],i)=>`<div class="sorow"><span>${dot(color)}</span><span class="sname">${l}</span><span class="sorbtns"><button class="bt g sm" data-a="tabup" data-v="${id}" aria-label="${esc(trText('Sursum')+': '+trText(l))}" ${i===0?'disabled':''}>↑</button><button class="bt g sm" data-a="tabdn" data-v="${id}" aria-label="${esc(trText('Deorsum')+': '+trText(l))}" ${i===ord.length-1?'disabled':''}>↓</button></span></div>`).join('')}</div>
       <div class="setrow"><span>Cellae celeres</span><button class="bt g sm" data-a="quickreset">Reset cellae</button></div>
@@ -3564,13 +3634,15 @@ const A={
     if(!('Notification' in window)){toast('Systema notificationes non sustinet','e');return;}
     try{
       const p=await Notification.requestPermission();
+      if(p==='granted')shellRegisterSW();
       toast(p==='granted'?'Permissio data':'Permissio non data',p==='granted'?'s':'e');
       render();
     }catch(err){toast(errMsg(err),'e');}
   },
-  notiftest(){
-    try{new Notification(trText(brandName()),{body:trText('Proba nuntii: systema operatur.')});toast('Nuntius missus','s');}
-    catch(err){toast(errMsg(err),'e');}
+  async notiftest(){
+    if(!notifPushOn()){toast('Permissio notificationum necessaria','e');return;}
+    const ok=await shellShowNotification(trText(brandName()),{body:trText('Proba nuntii: systema operatur.'),tag:'appentana-test'});
+    toast(ok?'Nuntius missus':'Systema notificationes in hoc navigatro clausum',ok?'s':'e');
   },
   async verify(){await run(()=>rpc('api_request_verify'),'Petitio missa');},
   /* money */
@@ -4314,9 +4386,21 @@ const A={
   },
   motion(v){if(!['system','reduce','full'].includes(v))return;localStorage.setItem('app_motion',v);shellMotion();render();},
   quickreset(){UI.quick=['holb','cards','bank','chat'];localStorage.removeItem('app_quick');render();},
-  theme(v){
-    UI.theme=['dark','light','wine'].includes(v)?v:(UI.theme==='dark'?'light':UI.theme==='light'?'wine':'dark');
-    localStorage.setItem('app_theme',UI.theme);applyTheme();render();
+  accent(v){
+    const c=String(v||'').toLowerCase();
+    if(!/^#[0-9a-f]{6}$/.test(c))return;
+    UI.accent=c;
+    localStorage.setItem('app_accent',c);
+    applyTheme();
+    document.querySelectorAll('.accdot').forEach(b=>{
+      const on=b.dataset.v===c;
+      b.classList.toggle('on',on);
+      b.setAttribute('aria-pressed',on?'true':'false');
+    });
+    const custom=document.querySelector('.acccustom');
+    if(custom)custom.classList.toggle('on',!ACCENTS.some(a=>a[0]===c));
+    const inp=document.getElementById('accColor');
+    if(inp&&inp.value.toLowerCase()!==c)inp.value=c;
   },
   tabup(v){moveTab(v,-1);},
   tabdn(v){moveTab(v,1);},
@@ -4865,8 +4949,13 @@ const L10N_INVIE={
   'Permissum':'Дозволено','Interdictum':'Заборонено','Non sustinetur':'Не підтримується','Non petitum':'Не запитано',
   'Pete permissionem':'Запросити дозвіл','Proba nuntium':'Тестове сповіщення','Permissio systematis':'Дозвіл системи',
   'In rete':'У мережі','Extra rete':'Не в мережі','Aditus':'Вхід',
-  'In app — segnalum in indice. Web — nuntius systematis, dum pagina in alia parte aperta est. Situs clausus requirit Web Push (VAPID + servitor missor): in uno archivo HTML non continetur.':'У застосунку — сигнал у списку. Веб — системне сповіщення, поки сторінка відкрита в іншій вкладці. Для закритого сайту потрібен Web Push (VAPID + сервер-відправник): в одному HTML-файлі це не вміщується.',
+  'In app — segnalum in indice. Web — nuntius systematis, dum pagina in alia parte aperta est. Telephonum requirit HTTPS et archivum appentana-sw.js iuxta HTML; iPhone — solum app ad scriptorium addita. Situs clausus requirit Web Push (VAPID + servitor missor).':'У застосунку — сигнал у списку. Веб — системне сповіщення, поки сторінка відкрита в іншій вкладці. Телефон потребує HTTPS і файлу appentana-sw.js поруч з HTML; iPhone — лише застосунок, доданий на робочий стіл. Для закритого сайту потрібен Web Push (VAPID + сервер-відправник).',
   'Proba nuntii: systema operatur.':'Тестове сповіщення: система працює.',
+  'Permissio notificationum necessaria':'Спочатку надайте дозвіл на сповіщення',
+  'Systema notificationes in hoc navigatro clausum':'Браузер не дозволив системне сповіщення',
+  'Album':'Білий','Caeruleus':'Синій','Violaceus':'Фіолетовий','Viridis':'Зелений','Aureus':'Бурштиновий','Roseus':'Рожевий',
+  'Color thematis':'Колір теми','Colores':'Кольори','Color proprius':'Свій колір',
+  'Thema nigra manet; color tantum mutatur.':'Чорна тема лишається; змінюється лише колір.',
   'Schema renovanda: applica schema-part5.sql et schema-part6.sql.':'Оновіть схему: застосуйте schema-part5.sql і schema-part6.sql.',
   'Schema renovanda: schema-part6.sql necessaria.':'Оновіть схему: потрібен schema-part6.sql.',
   'Nomen':'Імʼя','Descriptio':'Опис','Summa (h)':'Сума (h)'
