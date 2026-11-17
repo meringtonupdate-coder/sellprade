@@ -585,6 +585,8 @@ html[data-theme=light] .sharp{color:color-mix(in srgb,var(--sc,#c8a24a) 52%,var(
 #shell-main #cm{scroll-behavior:auto;overflow-anchor:none;overscroll-behavior:contain;touch-action:pan-y}
 .onl{display:inline-block;width:7px;height:7px;border-radius:50%;background:#5b6478;margin-left:6px;vertical-align:middle;flex-shrink:0;transition:background .25s}
 .onl.on{background:#22c55e;box-shadow:0 0 0 2px color-mix(in srgb,#22c55e 22%,transparent)}
+.onl.act{background:#3b82f6;box-shadow:0 0 0 2px color-mix(in srgb,#3b82f6 24%,transparent)}
+.onl.red{background:#ef4444;box-shadow:0 0 0 2px color-mix(in srgb,#ef4444 24%,transparent)}
 .cr-chips{display:flex;gap:7px;overflow-x:auto;padding:2px 0 9px;scrollbar-width:none}
 .cr-chips::-webkit-scrollbar{display:none}
 .cr-chip{flex:0 0 auto;display:flex;flex-direction:column;gap:2px;align-items:flex-start;min-width:82px;padding:8px 10px;border-radius:12px;border:1px solid var(--bd);background:color-mix(in srgb,var(--bg) 58%,transparent);color:var(--tx);font:inherit;cursor:pointer}
@@ -1004,13 +1006,15 @@ const sb=window.supabase.createClient(SB_URL,SB_KEY,{
 });
 
 /* ---------- invented alphabet / validation (same rules as the server) ---------- */
-const L='ABCDEFGHIJKLMNOPQRSTUVWXYZŚĆÉĴÁЬИЮ',LS=L+L.toLowerCase();
-const MAP={A:'Á',S:'Ś',C:'Ć',E:'É',J:'Ĵ',B:'Ь',I:'И',U:'Ю'};
+const L='ABCDEFGHIJKLMNOPQRSTUVWXYZŚŜĆĈẐÉÊĴÁÂЬИÎЮ',LS=L+L.toLowerCase();
+const MAP={A:'Â',S:'Ŝ',C:'Ĉ',Z:'Ẑ',E:'Ê',J:'Ĵ',B:'Ь',I:'Î',U:'Ю'};
 const isL=c=>LS.includes(c),isD=c=>c>='0'&&c<='9';
-const TRMAP={'Ś':'S','Ć':'C','É':'E','Ĵ':'J','Á':'A','Ь':'B','И':'I','Ю':'U',
-  'ś':'s','ć':'c','é':'e','ĵ':'j','á':'a','ь':'b','и':'i','ю':'u'};
+const TRMAP={'Ś':'S','Ŝ':'S','Ć':'C','Ĉ':'C','Ẑ':'Z','É':'E','Ê':'E','Ĵ':'J','Á':'A','Â':'A',
+  'Ь':'B','И':'I','Î':'I','Ю':'U',
+  'ś':'s','ŝ':'s','ć':'c','ĉ':'c','ẑ':'z','é':'e','ê':'e','ĵ':'j','á':'a','â':'a',
+  'ь':'b','и':'i','î':'i','ю':'u'};
 function emailFor(nick){
-  return String(nick||'').replace(/[ŚĆÉĴÁЬИЮśćéĵáьию]/g,c=>TRMAP[c]).toLowerCase()+'@appentana.app';
+  return String(nick||'').replace(/[ŚŜĆĈẐÉÊĴÁÂЬИÎЮśŝćĉẑéêĵáâьиîю]/g,c=>TRMAP[c]).toLowerCase()+'@appentana.app';
 }
 function vNick(s){
   if(!s||s.length<2||s.length>16)return'Nomen: 2–16 signa';
@@ -1273,7 +1277,18 @@ function errMsg(e){
     'Optiones invalidae':uk?'Невірні параметри':'Invalid options',
     'Categoria ignota':uk?'Невідома категорія':'Unknown category',
     'Optio invalida':uk?'Невірний параметр':'Invalid option',
-    'Optiones notificationum invalidae':uk?'Невірні налаштування сповіщень':'Invalid notification preferences'
+    'Optiones notificationum invalidae':uk?'Невірні налаштування сповіщень':'Invalid notification preferences',
+    'Acta censurata':uk?'Новину цензуровано':'Item censored',
+    'Tema censurata':uk?'Тему цензуровано':'Topic censored',
+    'Acta clausa':uk?'Новину закрито':'Item closed',
+    'Tema clausa':uk?'Тему закрито':'Topic closed',
+    'Acta non inventa':uk?'Новину не знайдено':'Item not found',
+    'Tema non inventa':uk?'Тему не знайдено':'Topic not found',
+    'Typus falsus':uk?'Невірний тип':'Invalid kind',
+    'Modus falsus':uk?'Невірний режим':'Invalid mode',
+    'Poll non disponibilis':uk?'Опитування недоступне':'Poll unavailable',
+    'Iam votavisti':uk?'Ви вже голосували':'Already voted',
+    'Optio falsa':uk?'Невірний варіант':'Invalid option'
   };
   for(const k in map)if(m.startsWith(k))return m.replace(k,map[k]);
   return m;
@@ -1353,6 +1368,7 @@ const UKD={
 'Dele raritatem?':'Видалити рідкість?','Dele collectionem?':'Видалити колекцію?','Dele kartam?':'Видалити картку?','Dele pack?':'Видалити пак?','Recense collection':'Редагувати колекцію','Cardae':'Картки','Raritas deleta':'Рідкість видалено','Collectio servata':'Колекцію збережено','Collectio deleta':'Колекцію видалено','Karta deleta':'Картку видалено','Pack deletus':'Пак видалено','Schema renovanda: schema-part5.sql necessaria.':'Оновіть схему: потрібен schema-part5.sql.','Collectio non vacua':'Колекція не порожня','Raritas in usu':'Рідкість використовується','Karta in usu':'Картка використовується','Karta in packis':'Картка є в паках','Karta in foro':'Картка на ринку',
 /* card revocation */
 'Revoca':'Відкликати','Revocare kartam?':'Відкликати картку?','Compensatio pro copia (h)':'Компенсація за копію (h)','0 — manualis postea':'0 — вручну пізніше','Karta revocata':'Картку відкликано','Revocationes':'Відкликання','Revocationes desunt':'Відкликань немає','Manualis':'Вручну','Soluta':'Сплачено','Revocatio cardis':'Відкликання картки','Copiae revocatae':'Відкликано копій','Compensatio totalis':'Загальна компенсація','Compensatio 0–1000000':'Компенсація 0–1000000','Omnes copiae revocabuntur, etiam in foro; auctiones refundentur; karta claudetur.':'Усі копії буде відкликано, навіть на ринку; ставки аукціонів повернуто; картку закрито.','Compensatio ex aerario iam soluta.':'Компенсацію зі скарбниці вже сплачено.','Compensatio manualis: solve possessoribus postea.':'Компенсація вручну: сплатіть власникам пізніше.','Una linea per copiam revocatam. Compensatio manualis solvi potest postea.':'Один рядок на кожну відкликану копію. Ручну компенсацію можна сплатити пізніше.','pack':'Пак','gift':'Подарунок','auction':'Аукціон','market':'Ринок','return':'Повернення',
+'Status ruber':'Червоний статус','Status normalis':'Звичайний статус','Actio recens':'Нещодавня активність','In rete':'У мережі','Extra rete':'Поза мережею','Sequi rem':'Стежити за темою','Sequi auctorem':'Стежити за автором','Censura':'Цензурувати','Uncensor':'Зняти цензуру','Cela':'Приховати','Ostende':'Показати','Unicae':'Унікальні','Ius rubri':'Право на червоний','Sine iure rubri':'Без права на червоний','Cardky':'Колекції',
 'Quaere homines…':'Пошук людей…','Scribe primum nuntium':'Напишіть перше повідомлення','Chat privatus':'Приватний чат','nuntii live':'повідомлення в реальному часі'
 };
 function trCore(t){return UKD[t]!=null?UKD[t]:null;}
@@ -1418,16 +1434,57 @@ function trDom(root){
 /* ---------- data helpers ---------- */
 const users=()=>(DB&&DB.users)||[];
 const unick=n=>users().find(u=>u.nick===n);
-const isOnline=n=>!!n&&SHELL.online.has(String(n));
-const onDot=n=>`<span class="onl${isOnline(n)?' on':''}" data-onl="${esc(String(n))}" aria-label="${esc(trText(isOnline(n)?'In rete':'Extra rete'))}" title="${esc(trText(isOnline(n)?'In rete':'Extra rete'))}"></span>`;
+const presenceOf=n=>SHELL.presence.get(String(n||''))||{};
+const isOnline=n=>!!n&&(SHELL.online.has(String(n))||!!presenceOf(n).online);
+const dotState=n=>{
+  const k=String(n||'');
+  if(ME&&k===ME.nick){if(ME.red)return'red';if(ME.typed)return'act';if(ME.online||SHELL.online.has(k))return'on';return'';}
+  let p=SHELL.presence.get(k);
+  if(!p){const u=users().find(x=>x.nick===k);p=u?{red:u.red,typed:u.typed,online:u.online}:{};}
+  if(p.red)return'red';
+  if(p.typed)return'act';
+  if(p.online||SHELL.online.has(k))return'on';
+  return'';
+};
+const dotLabel=s=>s==='red'?'Status ruber':s==='act'?'Actio recens':s==='on'?'In rete':'Extra rete';
+function onDot(n){
+  const s=dotState(n),label=trText(dotLabel(s));
+  return `<span class="onl ${s}" data-onl="${esc(String(n))}" aria-label="${esc(label)}" title="${esc(label)}"></span>`;
+}
+function refreshDots(){
+  document.querySelectorAll('[data-onl]').forEach(el=>{
+    const n=el.dataset.onl,s=dotState(n),label=trText(dotLabel(s));
+    el.className='onl '+s;el.setAttribute('aria-label',label);el.title=label;
+  });
+}
 function shellPresence(list,merge=false){
   if(!Array.isArray(list))return;
   const set=merge?new Set([...SHELL.online,...list.map(String)]):new Set(list.map(String));
   SHELL.online=set;
-  document.querySelectorAll('[data-onl]').forEach(el=>{
-    const on=set.has(el.dataset.onl),label=trText(on?'In rete':'Extra rete');
-    el.classList.toggle('on',on);el.setAttribute('aria-label',label);el.title=label;
-  });
+  for(const [nick,p] of SHELL.presence)p.online=set.has(nick);
+  for(const nick of set){const p=presenceOf(nick);SHELL.presence.set(nick,{...p,online:true});}
+  refreshDots();
+}
+function shellPresenceMeta(list){
+  if(!Array.isArray(list))return;
+  for(const x of list){
+    if(!x||!x.nick)continue;
+    const nick=String(x.nick),p=presenceOf(nick);
+    SHELL.presence.set(nick,{...p,red:!!x.red,typed:!!x.typed});
+  }
+  refreshDots();
+}
+function shellPresenceUsers(list,merge=false){
+  if(!Array.isArray(list))return;
+  if(!merge)SHELL.online=new Set();
+  for(const u of list){
+    if(!u||!u.nick)continue;
+    const nick=String(u.nick),p=merge?presenceOf(nick):{};
+    const online=!!u.online;
+    SHELL.presence.set(nick,{red:!!u.red,typed:!!u.typed,online});
+    if(online)SHELL.online.add(nick);else SHELL.online.delete(nick);
+  }
+  refreshDots();
 }
 const unread=()=>((DB&&DB.notifications)||[]).filter(n=>!n.read&&notifPref(ncat(n.kind)).inapp).length;
 const myChats=()=>(DB&&DB.chats)||[];
@@ -1441,7 +1498,7 @@ const myLaws=()=>(DB&&DB.laws)||[];
 const myReports=()=>(DB&&DB.reports)||[];
 const myAudit=()=>(DB&&DB.audit)||[];
 const mySalaries=()=>(DB&&DB.salaries)||[];
-const gl=s=>String(s==null?'':s).replace(/([ASCEJBIU])\//gi,(m,ch)=>{const g=MAP[ch.toUpperCase()];return ch===ch.toUpperCase()?g:g.toLowerCase();});
+const gl=s=>String(s==null?'':s).replace(/([ASCEJZBIU])\//gi,(m,ch)=>{const g=MAP[ch.toUpperCase()];return ch===ch.toUpperCase()?g:g.toLowerCase();});
 const cfg=()=>{
   const c=(DB&&DB.config)||{};
   return {...c,tax:c.tax??3,title:gl(c.title||'Republa Appentanskié'),brand:gl(c.brand||'Sellprade Appentanskié'),version:c.version||'gamma 3.0',byline:gl(c.byline||'Kurilkinsoft'),motto:gl(c.motto||'Slava Republié!'),year:c.year||2026,limits:c.limits||{}};
@@ -1497,6 +1554,7 @@ const cardById=id=>catalog().find(c=>c.id===id)||null;
 const canPurge=()=>Number(DB&&DB.api_version)>=5;
 const canRevoke=()=>canPurge()&&!!(ME&&ME.admin);
 const canCrypto=()=>Number(DB&&DB.api_version)>=6;
+const canV8=()=>Number(DB&&DB.api_version)>=8;
 const cryptoData=()=>(DB&&DB.crypto)||null;
 const revocations=()=>{
   const seen=new Set(),out=[];
@@ -1634,6 +1692,7 @@ async function pollPulse(){
   try{
     const d=await rpc('api_pulse');if(!shellCurrent(token))return;
     if(Array.isArray(d.online)){shellPresence(d.online);SHELL.onlineReady=true;}
+    if(Array.isArray(d.presence))shellPresenceMeta(d.presence);
     const recovering=!!SHELL.network; shellNetwork();
     const n=+d.notif||0,m=+d.msg||0;
     if(!UI._pulseReady||n>UI._notifMax||m>UI._msgMax||recovering){
@@ -1733,8 +1792,8 @@ async function sync(options={}){
     const prevNotif=UI._notifMax||0;
     DB=data;ME=data.me;UI.hide=!!ME.hide_bal;
     if(!SHELL.pushReady){SHELL.pushReady=true;await shellPushStatus();}
-    shellPresence((data.users||[]).filter(u=>u.online).map(u=>u.nick),true);
-    if((data.users||[]).some(u=>u.online))SHELL.onlineReady=true;
+    shellPresenceUsers(data.users||[]);
+    if((data.users||[]).some(u=>u.online||u.red))SHELL.onlineReady=true;
     if(UI.tab==='root'&&!ME.admin)UI.tab='holb';
     shellNetwork();pollingStart();
     const nu=unread()+unreadChats();if(UI._unread&&nu>UI._unread)beep();UI._unread=nu;
@@ -1766,7 +1825,7 @@ async function rpcRaw(name,args){
   if(!/^api_[a-z0-9_]+$/.test(name))throw new Error('API invalida');
   const {data,error}=await sb.rpc(name,args||{});
   if(error){
-    if(error.code==='PGRST202')error.message=trText('Schema renovanda: applica schema-part5.sql et schema-part6.sql.');
+    if(error.code==='PGRST202')error.message=trText('Schema renovanda: applica schema-part5.sql … part8.sql.');
     throw error;
   }
   return data;
@@ -1856,7 +1915,7 @@ function authErrBox(msg){const el=$('#a-err');if(el)el.textContent=trText(msg||'
 
 /* ---------- stable shell / private view state ---------- */
 const SHELL_DEFAULTS={...UI};
-const SHELL={account:null,epoch:0,sync:0,chatEpoch:0,chatKey:'',view:null,forms:new Map(),markup:new Map(),mainSig:'',online:new Set(),onlineReady:false,pending:false,failures:0,retryAt:0,network:'',sending:new Set(),dialog:null,opener:null,pushTried:false,pushReady:false};
+const SHELL={account:null,epoch:0,sync:0,chatEpoch:0,chatKey:'',view:null,forms:new Map(),markup:new Map(),mainSig:'',online:new Set(),presence:new Map(),typedAt:0,onlineReady:false,pending:false,failures:0,retryAt:0,network:'',sending:new Set(),dialog:null,opener:null,pushTried:false,pushReady:false};
 function shellToken(){return {uid:SHELL.account||ME?.uid,epoch:SHELL.epoch};}
 function shellCurrent(t){return !!t.uid&&t.uid===SHELL.account&&t.epoch===SHELL.epoch;}
 function shellChatKey(){return ME&&UI.tab==='chat'&&(UI.grp||UI.chat)?`${ME.uid}:${UI.grp?'group':'dm'}:${UI.grp||UI.chat}`:'';}
@@ -1880,7 +1939,7 @@ function shellReset(){
   for(const k of Object.keys(UI))delete UI[k];
   Object.assign(UI,SHELL_DEFAULTS,prefs,{open:new Set(),hide:false,pushState:'off'});
   ME=null;DB=null;SHELL.account=null;SHELL.view=null;SHELL.chatKey='';SHELL.pending=false;
-  SHELL.forms.clear();SHELL.markup.clear();SHELL.mainSig='';SHELL.online=new Set();SHELL.onlineReady=false;SHELL.sending.clear();SHELL.newMessages=0;
+  SHELL.forms.clear();SHELL.markup.clear();SHELL.mainSig='';SHELL.online=new Set();SHELL.presence=new Map();SHELL.typedAt=0;SHELL.onlineReady=false;SHELL.sending.clear();SHELL.newMessages=0;
   SHELL.failures=0;SHELL.retryAt=0;SHELL.network='';SHELL.pushTried=false;SHELL.pushReady=false;
   document.querySelectorAll('input[type="password"]').forEach(el=>{el.value='';});
   $('#app')?.replaceChildren();$('#tw')?.replaceChildren();
@@ -2483,7 +2542,7 @@ function cardTile(c,count,val,action='cardmenu'){
     <span class="rlab" data-no-tr="true">${esc(rarLabel(c.rarity))}</span>
     ${cardArt(c)}
     <div class="cbody"><div class="cname" data-no-tr="true">${esc(c.name)}</div>
-      <div class="cmeta" data-no-tr="true"><span>${esc(collName(c.collection))}</span><span>${esc(c.rarity?rarLabel(c.rarity):'')}</span></div>
+      <div class="cmeta" data-no-tr="true"><span>${esc(c.collection_name||collName(c.collection))}</span><span>${esc(c.rarity?rarLabel(c.rarity):'')}</span></div>
     </div>
   </div>`;
 }
@@ -3123,7 +3182,7 @@ function pollHtml(t){
   return `<div class="quote">${esc(p.q)} · ${total} vota${my!=null?' · votum tuum':' · elige unum'}</div>`+
     (p.opts||[]).map((o,i)=>{
       const pc=total?Math.round((o.v||[]).length*100/total):0;
-      const can=my==null&&!t.locked;
+      const can=my==null&&!t.locked&&!t.censored;
       return `<div class="pollopt ${my===i?'on':''}"${can?` data-a="pollvote" data-v="${t.id}:${i}"`:''}><span class="pbar" style="width:${pc}%"></span><span class="pv"><span>${esc(o.t)}</span><span>${(o.v||[]).length} · ${pc}%</span></span></div>`;
     }).join('');
 }
@@ -3131,24 +3190,26 @@ function jur(){
   if(UI.th){
     const t=myTopics().find(x=>x.id===UI.th);
     if(!t){UI.th=null;return jur();}
-    const mine=t.by===ME.nick,canPost=!t.locked||ME.admin;
+    const mine=t.by===ME.nick,cen=!!t.censored,canPost=(!t.locked||ME.admin)&&!cen;
     return `<div class="tb">${bt('Retro','topicexit')}<div class="grow"><b>${esc(t.cat)}</b><div class="tiny">@${esc(t.by)} · ${dt(t.ts)}</div></div>${tag(t.locked?'LOCK':'OPEN',t.locked?'er':'ok')}</div>
-      <div class="card"><h3>${t.pinned?'<span class="tg pin">PIN</span> ':''}${esc(t.title)} <span class="hp">${tag(t.cat,'pp2')}</span></h3>
+      <div class="card"><h3>${t.pinned?'<span class="tg pin">PIN</span> ':''}${cen?'<span class="tg er">CENS</span> ':''}${t.hidden?'<span class="tg er">HID</span> ':''}${esc(t.title)} <span class="hp">${tag(t.cat,'pp2')}</span></h3>
       <div class="mut">@${esc(t.by)} · ${dt(t.ts)} · ${t.views||0} visus · ${(t.posts||[]).length} responsa · ${(t.likes||[]).length} likes</div>
       <div class="dt" data-no-tr style="font-size:.88rem;line-height:1.7">${esc(t.body)}</div>
       ${pollHtml(t)}
       <div class="gs" style="margin-top:9px">
-        <button class="like ${t.liked?'on':''}" data-a="topiclike" data-v="${t.id}">${t.liked?'♥':'♡'} ${(t.likes||[]).length}</button>
+        ${cen?'<button class="like" disabled aria-disabled="true">♡ '+(t.likes||[]).length+'</button>':`<button class="like ${t.liked?'on':''}" data-a="topiclike" data-v="${t.id}">${t.liked?'♥':'♡'} ${(t.likes||[]).length}</button>`}
         ${(mine||ME.admin)?bt('Dele','topicdel',t.id,'d sm'):''}
+        ${cen?'':bt(isSub('topic',t.id)?'Sequi desine':'Sequi rem','subscribe','topic|'+t.id,isSub('topic',t.id)?'ok sm':'g sm')}
         ${ME.admin?bt(t.pinned?'Unpin':'PIN','topicpin',t.id,'g sm'):''}
         ${ME.admin?bt(t.locked?'Unlock':'LOCK','topiclock',t.id,'g sm'):''}
         ${ME.admin?bt('Recense','adminedit','topic|'+t.id,'g sm'):''}
+        ${ME.admin?bt(t.censored?'Uncensor':'Censura','censor','topic|'+t.id+'|'+(t.censored?'uncensor':'censor'),'g sm')+bt(t.hidden?'Ostende':'Cela','censor','topic|'+t.id+'|'+(t.hidden?'unhide':'hide'),'g sm'):''}
         ${!mine?bt('Delatio','report','topic|'+t.id+'|'+t.title,'d sm'):''}
       </div></div>
       <div class="card"><h3>Responsa <small class="mu">${(t.posts||[]).length}</small></h3>
         ${(t.posts||[]).map((p,i)=>`<div class="it"><div class="r">${ava(unick(p.by)||{nick:p.by},'av-sm')}<div class="in"><b>@${esc(p.by)}</b><small>${dt(p.ts)}</small></div>${(p.by===ME.nick||ME.admin)?bt('×','delpost',p.id,'d sm'):''}</div><div class="dt" data-no-tr>${esc(p.text)}</div>
           <div class="gs" style="margin-top:6px">${ME.admin?bt('Recense','adminedit','post|'+p.id,'g sm'):''}${p.by!==ME.nick?bt('Delatio','report','post|'+p.id+'|responsum','d sm'):''}</div></div>`).join('')||e('Responsa desunt','#f472b6')}
-        ${canPost?`<div class="sr"><input id="ri" maxlength="500" placeholder="Responsum tuum..."><button class="bt p" data-a="ftreply" data-v="${t.id}">Mitte</button></div>`:'<div class="al">Tema clausa est.</div>'}
+        ${canPost?`<div class="sr"><input id="ri" maxlength="500" placeholder="Responsum tuum..."><button class="bt p" data-a="ftreply" data-v="${t.id}">Mitte</button></div>`:cen?'<div class="al e">Tema censurata: responsa clausa.</div>':'<div class="al">Tema clausa est.</div>'}
       </div>`;
   }
   const catList=cats('topic').map(c=>c.name);
@@ -3164,13 +3225,15 @@ function jur(){
     ${list.map(topicCard).join('')||C('Temata',e('Temata hoc filtro desunt','#f472b6'))}`;
 }
 function topicCard(t){
-  return `<div class="card"><h3>${t.pinned?'<span class="tg pin">PIN</span> ':''}${t.locked?'<span class="tg lock">LOCK</span> ':''}${esc(t.title)} <span class="hp">${tag(t.cat,'pp2')}</span></h3>
+  const cen=!!t.censored;
+  return `<div class="card"><h3>${t.pinned?'<span class="tg pin">PIN</span> ':''}${t.locked?'<span class="tg lock">LOCK</span> ':''}${cen?'<span class="tg">CENS</span> ':''}${t.hidden?'<span class="tg">HID</span> ':''}${esc(t.title)} <span class="hp">${tag(t.cat,'pp2')}</span></h3>
     <div class="mut">@${esc(t.by)} · ${dt(t.ts)} · ${t.views||0} visus · ${(t.posts||[]).length} responsa · ${(t.likes||[]).length} likes${t.poll?' · poll':''}</div>
     <div class="dt" style="font-size:.82rem">${esc(t.body.slice(0,220))}${t.body.length>220?'…':''}</div>
     <div class="gs" style="margin-top:8px">
-      <button class="like ${t.liked?'on':''}" data-a="topiclike" data-v="${t.id}">${t.liked?'♥':'♡'} ${(t.likes||[]).length}</button>
+      ${cen?'<button class="like" disabled aria-disabled="true">♡ '+(t.likes||[]).length+'</button>':`<button class="like ${t.liked?'on':''}" data-a="topiclike" data-v="${t.id}">${t.liked?'♥':'♡'} ${(t.likes||[]).length}</button>`}
       ${bt('Lege','topicopen',t.id,'g sm')}
       ${ME.admin?bt('Recense','adminedit','topic|'+t.id,'g sm'):''}
+      ${ME.admin?bt(t.censored?'Uncensor':'Censura','censor','topic|'+t.id+'|'+(t.censored?'uncensor':'censor'),'g sm')+bt(t.hidden?'Ostende':'Cela','censor','topic|'+t.id+'|'+(t.hidden?'unhide':'hide'),'g sm'):''}
       ${t.by!==ME.nick?bt('Delatio','report','topic|'+t.id+'|'+t.title,'d sm'):''}
     </div>
   </div>`;
@@ -3185,22 +3248,24 @@ function news(){
   if(UI.nwOpen){
     const n=list.find(x=>x.id===UI.nwOpen);
     if(!n){UI.nwOpen=null;return news();}
-    const mine=n.mine||n.by===ME.nick;
+    const mine=n.mine||n.by===ME.nick,cen=!!n.censored;
     return `<div class="tb">${bt('Retro','nwexit')}<div class="grow"><b>Vesti civitatis</b><div class="tiny">@${esc(n.by)} · ${dt(n.ts)}</div></div></div>
-      <div class="card"><h3><span data-no-tr>${esc(n.title)}</span> <span class="hp">${newsBadges(n)}</span></h3>
+      <div class="card"><h3>${cen?'<span class="tg er">CENS</span> ':''}${n.hidden?'<span class="tg er">HID</span> ':''}<span data-no-tr>${esc(n.title)}</span> <span class="hp">${newsBadges(n)}</span></h3>
       <div class="quote">@${esc(n.by)} · ${dt(n.ts)} · ${(n.likes||[]).length} likes · ${(n.comments||[]).length} commenta</div>
       <div class="dt" data-no-tr style="font-size:.9rem;line-height:1.7">${esc(n.body)}</div>
       <div class="gs" style="margin-top:9px">
-        <button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'♥':'♡'} ${(n.likes||[]).length}</button>
+        ${cen?'<button class="like" disabled aria-disabled="true">♡ '+(n.likes||[]).length+'</button>':`<button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'♥':'♡'} ${(n.likes||[]).length}</button>`}
         ${!mine?bt(isSub('author',n.author)?'Sequi desine':'Sequi auctorem','subscribe','author|'+n.author,isSub('author',n.author)?'ok sm':'g sm'):''}
+        ${cen?'':bt(isSub('news',n.id)?'Sequi desine':'Sequi rem','subscribe','news|'+n.id,isSub('news',n.id)?'ok sm':'g sm')}
         ${ME.admin?bt('Recense','adminedit','news|'+n.id,'g sm'):''}
+        ${ME.admin?bt(n.censored?'Uncensor':'Censura','censor','news|'+n.id+'|'+(n.censored?'uncensor':'censor'),'g sm')+bt(n.hidden?'Ostende':'Cela','censor','news|'+n.id+'|'+(n.hidden?'unhide':'hide'),'g sm'):''}
         ${(mine||ME.admin)?bt('Dele','delnews',n.id,'d sm'):''}
         ${!mine?bt('Delatio','report','news|'+n.id+'|'+n.title,'d sm'):''}
       </div></div>
       <div class="card"><h3>Commenta <small class="mu">${(n.comments||[]).length}</small></h3>
       ${(n.comments||[]).map(c=>`<div class="it"><div class="r">${ava(unick(c.by)||{nick:c.by},'av-sm')}<div class="in"><b>@${esc(c.by)}</b><small>${dt(c.ts)}</small></div>${(c.by===ME.nick||ME.admin)?bt('×','delcomment',c.id,'d sm'):''}</div><div class="dt" data-no-tr>${esc(c.text)}</div>
         <div class="gs" style="margin-top:6px">${ME.admin?bt('Recense','adminedit','news_comment|'+c.id,'g sm'):''}${c.by!==ME.nick?bt('Delatio','report','news_comment|'+c.id+'|commentum','d sm'):''}</div></div>`).join('')||e('Commenta desunt','#e8c37a')}
-      <div class="sr"><input id="nci" maxlength="400" placeholder="Commentum..."><button class="bt p" data-a="nwcm" data-v="${n.id}">Mitte</button></div></div>`;
+      ${cen?'<div class="al e">Acta censurata: commenta clausa.</div>':'<div class="sr"><input id="nci" maxlength="400" placeholder="Commentum..."><button class="bt p" data-a="nwcm" data-v="'+n.id+'">Mitte</button></div>'}</div>`;
   }
   const catList=cats('news').map(c=>c.name);
   const cat=catList.includes(UI.nwCat)?UI.nwCat:'Omnes';
@@ -3214,10 +3279,10 @@ function news(){
   return `<div class="tb">${bt('Acta nova','newnews','','p')}<span class="mut">${filtered.length} acta</span>${catList.length?'':'<button class="bt g sm" data-a="tab" data-v="root">Categoriae</button>'}</div>
     <div class="tb"><input class="srch" id="nwq" maxlength="60" value="${esc(UI.nwQ||'')}" placeholder="Quaere acta…"><button class="bt p sm" data-a="nwsearch">Quaere</button></div>
     <div class="tb"><div class="filters">${['Omnes',...catList].map(c=>`<button class="fchip ${cat===c?'on':''}" data-a="nwcat" data-v="${c}">${c}</button>`).join('')}<button class="fchip ${UI.nwSub?'on':''}" data-a="nwsub">Subscriptiones</button></div></div>
-    ${filtered.map(n=>{const mine=n.mine||n.by===ME.nick;return `<div class="card"><h3><span data-no-tr>${esc(n.title)}</span> <span class="hp">${newsBadges(n)}</span></h3>
+    ${filtered.map(n=>{const mine=n.mine||n.by===ME.nick,cen=!!n.censored;return `<div class="card"><h3>${cen?'<span class="tg">CENS</span> ':''}${n.hidden?'<span class="tg">HID</span> ':''}<span data-no-tr>${esc(n.title)}</span> <span class="hp">${newsBadges(n)}</span></h3>
       <div class="mut">@${esc(n.by)} · ${dt(n.ts)} · ${(n.likes||[]).length} likes · ${(n.comments||[]).length} commenta</div>
       <div class="dt" style="font-size:.82rem">${esc(n.body.slice(0,240))}${n.body.length>240?'…':''}</div>
-      <div class="gs" style="margin-top:8px"><button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'♥':'♡'} ${(n.likes||[]).length}</button>${bt('Lege','nwopen',n.id,'g sm')}${!mine?bt(isSub('author',n.author)?'Sequi desine':'Sequi','subscribe','author|'+n.author,isSub('author',n.author)?'ok sm':'g sm'):''}${ME.admin?bt('Recense','adminedit','news|'+n.id,'g sm'):''}${!mine?bt('Delatio','report','news|'+n.id+'|'+n.title,'d sm'):''}</div>
+      <div class="gs" style="margin-top:8px">${cen?'<button class="like" disabled aria-disabled="true">♡ '+(n.likes||[]).length+'</button>':`<button class="like ${n.liked?'on':''}" data-a="newslike" data-v="${n.id}">${n.liked?'♥':'♡'} ${(n.likes||[]).length}</button>`}${bt('Lege','nwopen',n.id,'g sm')}${!mine?bt(isSub('author',n.author)?'Sequi desine':'Sequi','subscribe','author|'+n.author,isSub('author',n.author)?'ok sm':'g sm'):''}${ME.admin?bt('Recense','adminedit','news|'+n.id,'g sm'):''}${!mine?bt('Delatio','report','news|'+n.id+'|'+n.title,'d sm'):''}</div>
     </div>`;}).join('')||C('Acta',e('Acta desunt — categoriae in ROOT adduntur','#e8c37a'))}`;
 }
 
@@ -3437,7 +3502,7 @@ function notifSettings(){
 }
 function ust(){
   const m=ME,r=m.rating||{avg:0,n:0},a=m.activity||{ops:0,topics:0,lots:0,cards:0,bets:0};
-  const sw=(on,act)=>`<button type="button" class="sw ${on?'on':''}" data-a="${act}" role="switch" aria-checked="${on}" aria-label="${{compact:'Modus compactus',hide:'Celare Kapol aliis',sound:'Sonus'}[act]||act}"></button>`;
+  const sw=(on,act)=>`<button type="button" class="sw ${on?'on':''}" data-a="${act}" role="switch" aria-checked="${on}" aria-label="${{compact:'Modus compactus',hide:'Celare Kapol aliis',sound:'Sonus',redtoggle:'Status ruber'}[act]||act}"></button>`;
   const lim=k=>`<div class="rw"><span>${LIMIT_LABEL[k]||k}</span><b>${capLine(k)}</b></div>`;
   const sal=mySalaries().find(s=>s.uid===m.uid&&s.active);
   const subs=(DB.subs||[]).length;
@@ -3452,6 +3517,8 @@ function ust(){
       <div class="rw"><span>Rébnostь</span><b data-no-tr>${esc(m.reb)}</b></div>
       <div class="rw"><span>Sharpy</span><b>${tagsHtml(m)||'—'}</b></div>
       <div class="rw"><span>Fama</span><b>${r.n?`<span class="stars">${starsHtml(r.avg)}</span> ${r.avg} (${r.n})`:'—'}</b></div>
+      <div class="rw"><span>Status</span><span class="gs" style="align-items:center;gap:6px">${onDot(m.nick)}<b>${esc(trText(dotLabel(dotState(m.nick))||'Extra rete'))}</b></span></div>
+      ${m.can_red?`<div class="setrow"><span>Status ruber</span>${sw(!!m.red,'redtoggle')}</div><div class="hint">Status ruber activus semper rubet et ultimum aditum celat.</div>`:''}
       <div class="rw"><span>Operationes</span><b>${a.ops} · temata ${a.topics} · lots ${a.lots} · cardky ${a.cards||0} · stavky ${a.bets||0}</b></div>
       <div class="rw"><span>Subscriptiones</span><b>${subs}</b></div>
       <div class="rw"><span>Salarium</span><b>${sal?fm(sal.amount)+' h / dies':'—'}</b></div>
@@ -3564,7 +3631,7 @@ function root(){
         <div class="quote">Roy ${esc(u.roy)} · balans ${fm(u.balance||0)} h · salarium ${sa?fm(sa.amount)+' h / dies':'—'} · creatus ${dt(u.created)}</div>
         <div class="tb" style="margin:6px 0">${tagsHtml(u)||'<span class="mut">nulli Sharpy</span>'}</div>
         <details class="quote"><summary>Clavis</summary><span class="mono">${esc(u.pass||'—')}</span></details>
-        <div class="gs" style="margin-top:8px">${bt('Polog / Rang','adminstatus',u.uid)}${bt('Sharpy','admintag',u.uid)}${bt('Salarium','adminsalary',u.uid)}${bt('Mutus','adminmute',u.uid)}${bt('Cude','adminmint',u.uid)}${u.status==='neophyte'?bt('Proba','approve',u.nick,'ok sm'):''}${u.nick!==ME.nick?bt('Chat','newchat',u.nick):''}${u.uid!==ME.uid?bt('Dele','admindel',u.uid,'d'):''}</div></div>`;}).join('')||e('Nemo inventus','#8aa4ff')}</div>
+        <div class="gs" style="margin-top:8px">${bt('Cardky','ucards',u.nick,'g sm')}${bt('Polog / Rang','adminstatus',u.uid)}${bt('Sharpy','admintag',u.uid)}${bt('Salarium','adminsalary',u.uid)}${bt('Mutus','adminmute',u.uid)}${bt('Cude','adminmint',u.uid)}${u.status==='neophyte'?bt('Proba','approve',u.nick,'ok sm'):''}${bt(u.can_red?'Sine iure rubri':'Ius rubri','adminred',u.uid,u.can_red?'d sm':'g sm')}${u.nick!==ME.nick?bt('Chat','newchat',u.nick):''}${u.uid!==ME.uid?bt('Dele','admindel',u.uid,'d'):''}</div></div>`;}).join('')||e('Nemo inventus','#8aa4ff')}</div>
       ${pend.length?C('Neophyti',pend.map(u=>`<div class="rw"><span>@${esc(u.nick)} · ${esc(u.name)} ${esc(u.sur)}</span><button class="bt ok sm" data-a="approve" data-v="${esc(u.nick)}">Proba</button></div>`).join('')):''}`;
   } else if(tab==='reports'){
     body=C('Delationes',myReports().map(r=>`<div class="it"><div class="r"><i>${dot('#fb7185')}</i><div class="in"><b>@${esc(r.by)} · ${esc(r.kind)}</b><small>${esc(r.label||'')} · ${dt(r.ts)}</small></div>${tag(r.status,r.status==='open'?'wn':'ok')}</div>
@@ -3611,7 +3678,7 @@ function renderAuth(msg){
   ME=null;DB=null;UI.rootOk=false;
   const reg=UI.authMode==='reg';
   const base='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const vars=[['Á','A/'],['Ś','S/'],['Ć','C/'],['É','E/'],['Ĵ','J/'],['Ь','B/'],['И','I/'],['Ю','U/']];
+  const vars=[['Ŝ','S/'],['Ĉ','C/'],['Ẑ','Z/'],['Î','I/'],['Ĵ','J/'],['Ê','E/'],['Â','A/'],['Ь','B/'],['Ю','U/']];
   const alpha=[...base].map(c=>`<div class="alet"><b>${c}</b><small>${c.toLowerCase()}</small></div>`)
     .concat(vars.map(([c,k])=>`<div class="alet var"><b>${c}</b><small>${k}</small></div>`)).join('');
   $('#app').innerHTML=`<div class="aw"><div class="au">
@@ -4499,6 +4566,28 @@ const A={
       toast(d&&d.on?'Subscriptio addita':'Subscriptio remota','s');
     }catch(err){toast(errMsg(err),'e');}
   },
+  async censor(v){
+    const [kind,id,mode]=String(v||'').split('|');
+    if(!['news','topic'].includes(kind)||!id)return;
+    const m=mode||'censor';
+    const question={censor:'Censurare rem?',uncensor:'Censuram removere?',hide:'Celare rem? Server eam retinet.',unhide:'Ostendere rem?'}[m]||'Confirma?';
+    if(!await ask(question,[],'Confirma'))return;
+    await run(()=>rpc('api_admin_censor',{p_kind:kind,p_id:id,p_mode:m}),'Moderatio facta');
+  },
+  async redtoggle(){
+    try{
+      const d=await rpc('api_red_toggle');
+      await sync();
+      toast(d&&d.red?'Status ruber':'Status normalis','s');
+    }catch(err){toast(errMsg(err),'e');}
+  },
+  async adminred(uidv){
+    const u=users().find(x=>x.uid===uidv);
+    if(!u)return;
+    const on=!u.can_red;
+    if(!await ask((on?'Dare':'Revocare')+' ius status rubri @'+u.nick+'?',[],'Confirma'))return;
+    await run(()=>rpc('api_admin_red',{p_target:uidv,p_can:on}),'Ius status mutatum');
+  },
   async adminedit(v){
     const [kind,id]=String(v||'').split('|');
     if(!kind||!id)return;
@@ -4590,25 +4679,40 @@ const A={
       const d=await rpc('api_user_profile',{p_nick:String(nickv)});
       const u=d.user,rt=d.rating||{avg:0,n:0},st=d.stats||{};
       const own=u.nick===ME.nick;
-      if(u.online)shellPresence([u.nick],true);
+      shellPresenceUsers([u],true);
       showInfo(`<h3>@${esc(u.nick)}${onDot(u.nick)}</h3>
         <div class="it"><div class="r">${ava(u,'av')}<div class="in"><b>${esc(u.name)} ${esc(u.sur)}${onDot(u.nick)}</b><small>${esc(u.roy)} · ${esc(u.id)}${u.muted?' · Mutus':''}</small></div>${statusTag(u.status)}</div></div>
         <div class="gs" style="margin:6px 0">${rankTag(u)}${tagsHtml(u)}</div>
         ${rows([
           ['Rébnostь',esc(u.reb)],
           ['Fama',rt.n?`<span class="stars">${starsHtml(rt.avg)}</span> ${rt.avg} (${rt.n})`:'—'],
-          ['Aditus',(u.online||isOnline(u.nick))?'In rete':'Extra rete'],
+          ['Aditus',u.red?'Status ruber':u.typed?'Actio recens':(u.online||isOnline(u.nick))?'In rete':'Extra rete'],
+          ...(u.red?[]:[['Ultimus aditus',dt(u.last)]]),
           ['Inscriptio',dt(u.created)],
-          ['Ultimus aditus',dt(u.last)],
           ['Kapol',balOther(d.balance)+(d.hidden?' · celatum':'')],
           ['Salarium',d.salary>0?fm(d.salary)+' h / dies':'—'],
           ['Operationes',(+st.sent||0)+(+st.recv||0)],
           ['Temata / Lots / Acta',(+st.topics||0)+' / '+(+st.lots||0)+' / '+(+st.news||0)],
           ['Cardky / Stavky',(st.cards!=null?+st.cards:'—')+' / '+(st.bets!=null?+st.bets:'—')]
         ])}
-        <div class="gs" style="margin-top:10px">${own?'<span class="pl">profil tuum</span>':bt('Chat','newchat',u.nick,'p sm')+bt('Mitte','newtransfer',u.nick,'g sm')+bt('Delatio','report','user|'+u.nick+'|@'+u.nick,'d sm')}<button class="bt g sm" data-a="modalcancel">Claude</button></div>`);
+        <div class="gs" style="margin-top:10px">${bt('Cardky','ucards',u.nick,'g sm')}${own?'<span class="pl">profil tuum</span>':bt('Chat','newchat',u.nick,'p sm')+bt('Mitte','newtransfer',u.nick,'g sm')+bt('Delatio','report','user|'+u.nick+'|@'+u.nick,'d sm')}<button class="bt g sm" data-a="modalcancel">Claude</button></div>`);
     }catch(err){
       showInfo(`<h3>Profil</h3><div class="al e">${esc(errMsg(err))}</div><div class="gs"><button class="bt g" data-a="modalcancel">Claude</button></div>`);
+    }
+  },
+  async ucards(nickv){
+    if(!nickv)return;
+    showInfo(`<h3>Cardky</h3><div class="mut">Aperi…</div>`);
+    try{
+      const d=await rpc('api_user_cards',{p_nick:String(nickv)});
+      const list=Array.isArray(d.cards)?d.cards:[];
+      showInfo(`<h3>Cardky · @${esc((d.user&&d.user.nick)||nickv)}${onDot((d.user&&d.user.nick)||nickv)}</h3>
+        <div class="gr">${statBox('Unicae',+d.totals.unique||0)}${statBox('Omnes',+d.totals.count||0)}</div>
+        ${list.length?`<div class="cgrid">${list.map(x=>cardTile({id:x.card,name:x.name,rarity:x.rarity,about:x.about,img:x.img,collection:x.collection,collection_name:x.collection_name},+x.count||1)).join('')}</div>`:e('Cardky desunt','#e8c37a')}
+        <div class="gs" style="margin-top:10px"><button class="bt g sm" data-a="modalcancel">Claude</button></div>`);
+      const md=document.querySelector('#modal .md');if(md)md.scrollTop=0;
+    }catch(err){
+      showInfo(`<h3>Cardky</h3><div class="al e">${esc(errMsg(err))}</div><div class="gs"><button class="bt g" data-a="modalcancel">Claude</button></div>`);
     }
   },
   async editprofile(){
@@ -4935,14 +5039,20 @@ document.addEventListener('submit',ev=>{
   ev.preventDefault();
 });
 /* Simplified alphabet never rewrites passwords, URLs, or active IME composition. */
+function shellTyped(){
+  if(!ME||!canV8()||Date.now()-SHELL.typedAt<10000)return;
+  SHELL.typedAt=Date.now();
+  rpcRaw('api_typed').catch(()=>{});
+}
 function shellInput(ev){
   const el=ev.target;
   if(!el||(el.tagName!=='INPUT'&&el.tagName!=='TEXTAREA')||el.type==='password')return;
   if(!ev.isComposing&&!el.matches('[type="number"],[type="color"],[type="date"],[type="url"],[type="email"]')&&!/url|image|img|avatar/i.test(el.name+' '+el.id)&&!/:\/\/|data:/.test(el.value)){
-    const v=el.value,n=v.replace(/([ASCEJBIU])\//gi,(m,c)=>{const x=MAP[c.toUpperCase()];return c===c.toUpperCase()?x:x.toLowerCase();});
+    const v=el.value,n=v.replace(/([ASCEJZBIU])\//gi,(m,c)=>{const x=MAP[c.toUpperCase()];return c===c.toUpperCase()?x:x.toLowerCase();});
     if(n!==v){const pos=Math.max(0,(el.selectionStart??n.length)-(v.length-n.length));el.value=n;try{el.setSelectionRange(pos,pos);}catch{}}
   }
   if(el.id==='ci'&&ME)shellDraftSave(shellChatKey(),el.value);
+  if(!ev.isComposing)shellTyped();
 }
 document.addEventListener('input',shellInput);
 document.addEventListener('compositionend',shellInput);
@@ -5134,7 +5244,7 @@ const L10N_INVIE={
   'Album':'Білий','Caeruleus':'Синій','Violaceus':'Фіолетовий','Viridis':'Зелений','Aureus':'Бурштиновий','Roseus':'Рожевий',
   'Color thematis':'Колір теми','Colores':'Кольори','Color proprius':'Свій колір',
   'Thema nigra manet; color tantum mutatur.':'Чорна тема лишається; змінюється лише колір.',
-  'Schema renovanda: applica schema-part5.sql et schema-part6.sql.':'Оновіть схему: застосуйте schema-part5.sql і schema-part6.sql.',
+  'Schema renovanda: applica schema-part5.sql … part8.sql.':'Оновіть схему: застосуйте schema-part5.sql … part8.sql.',
   'Schema renovanda: schema-part6.sql necessaria.':'Оновіть схему: потрібен schema-part6.sql.',
   'Nomen':'Імʼя','Descriptio':'Опис','Summa (h)':'Сума (h)'
 };
