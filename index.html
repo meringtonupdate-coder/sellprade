@@ -1007,12 +1007,12 @@ const sb=window.supabase.createClient(SB_URL,SB_KEY,{
 
 /* ---------- invented alphabet / validation (same rules as the server) ---------- */
 const L='ABCDEFGHIJKLMNOPQRSTUVWXYZŚŜĆĈẐÉÊĴÁÂЬИÎЮ',LS=L+L.toLowerCase();
-const MAP={A:'Â',S:'Ŝ',C:'Ĉ',Z:'Ẑ',E:'Ê',J:'Ĵ',B:'Ь',I:'Î',U:'Ю'};
+const MAP={A:'Â',S:'Ŝ',C:'Ĉ',Z:'Ẑ',E:'Ê',J:'Ĵ',B:'Ь',I:'И',Y:'Î',U:'Ю'};
 const isL=c=>LS.includes(c),isD=c=>c>='0'&&c<='9';
 const TRMAP={'Ś':'S','Ŝ':'S','Ć':'C','Ĉ':'C','Ẑ':'Z','É':'E','Ê':'E','Ĵ':'J','Á':'A','Â':'A',
-  'Ь':'B','И':'I','Î':'I','Ю':'U',
+  'Ь':'B','И':'I','Î':'Y','Ю':'U',
   'ś':'s','ŝ':'s','ć':'c','ĉ':'c','ẑ':'z','é':'e','ê':'e','ĵ':'j','á':'a','â':'a',
-  'ь':'b','и':'i','î':'i','ю':'u'};
+  'ь':'b','и':'i','î':'y','ю':'u'};
 function emailFor(nick){
   return String(nick||'').replace(/[ŚŜĆĈẐÉÊĴÁÂЬИÎЮśŝćĉẑéêĵáâьиîю]/g,c=>TRMAP[c]).toLowerCase()+'@appentana.app';
 }
@@ -1498,7 +1498,7 @@ const myLaws=()=>(DB&&DB.laws)||[];
 const myReports=()=>(DB&&DB.reports)||[];
 const myAudit=()=>(DB&&DB.audit)||[];
 const mySalaries=()=>(DB&&DB.salaries)||[];
-const gl=s=>String(s==null?'':s).replace(/([ASCEJZBIU])\//gi,(m,ch)=>{const g=MAP[ch.toUpperCase()];return ch===ch.toUpperCase()?g:g.toLowerCase();});
+const gl=s=>String(s==null?'':s).replace(/([ASCEJZBIUY])\//gi,(m,ch)=>{const g=MAP[ch.toUpperCase()];return ch===ch.toUpperCase()?g:g.toLowerCase();});
 const cfg=()=>{
   const c=(DB&&DB.config)||{};
   return {...c,tax:c.tax??3,title:gl(c.title||'Republa Appentanskié'),brand:gl(c.brand||'Sellprade Appentanskié'),version:c.version||'gamma 3.0',byline:gl(c.byline||'Kurilkinsoft'),motto:gl(c.motto||'Slava Republié!'),year:c.year||2026,limits:c.limits||{}};
@@ -3678,7 +3678,7 @@ function renderAuth(msg){
   ME=null;DB=null;UI.rootOk=false;
   const reg=UI.authMode==='reg';
   const base='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const vars=[['Ŝ','S/'],['Ĉ','C/'],['Ẑ','Z/'],['Î','I/'],['Ĵ','J/'],['Ê','E/'],['Â','A/'],['Ь','B/'],['Ю','U/']];
+  const vars=[['Ŝ','S/'],['Ĉ','C/'],['Ẑ','Z/'],['И','I/'],['Î','Y/'],['Ĵ','J/'],['Ê','E/'],['Â','A/'],['Ь','B/'],['Ю','U/']];
   const alpha=[...base].map(c=>`<div class="alet"><b>${c}</b><small>${c.toLowerCase()}</small></div>`)
     .concat(vars.map(([c,k])=>`<div class="alet var"><b>${c}</b><small>${k}</small></div>`)).join('');
   $('#app').innerHTML=`<div class="aw"><div class="au">
@@ -5048,7 +5048,7 @@ function shellInput(ev){
   const el=ev.target;
   if(!el||(el.tagName!=='INPUT'&&el.tagName!=='TEXTAREA')||el.type==='password')return;
   if(!ev.isComposing&&!el.matches('[type="number"],[type="color"],[type="date"],[type="url"],[type="email"]')&&!/url|image|img|avatar/i.test(el.name+' '+el.id)&&!/:\/\/|data:/.test(el.value)){
-    const v=el.value,n=v.replace(/([ASCEJZBIU])\//gi,(m,c)=>{const x=MAP[c.toUpperCase()];return c===c.toUpperCase()?x:x.toLowerCase();});
+    const v=el.value,n=v.replace(/([ASCEJZBIUY])\//gi,(m,c)=>{const x=MAP[c.toUpperCase()];return c===c.toUpperCase()?x:x.toLowerCase();});
     if(n!==v){const pos=Math.max(0,(el.selectionStart??n.length)-(v.length-n.length));el.value=n;try{el.setSelectionRange(pos,pos);}catch{}}
   }
   if(el.id==='ci'&&ME)shellDraftSave(shellChatKey(),el.value);
